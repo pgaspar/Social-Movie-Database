@@ -1,0 +1,46 @@
+@prefix _3: <http://www.smdb.com/smdb.owl#> .
+
+<http://www.smdb.com/smdb.owl#character:1> a <http://www.smdb.com/smdb.owl#Character>;
+    _3:Name "Vincent Vega";
+    _3:inMovie <http://www.smdb.com/smdb.owl#movie:1>;
+    _3:portrayedBy "http://www.smdb.com/smdb.owl#person:1" .
+
+<http://www.smdb.com/smdb.owl#character:2> a <http://www.smdb.com/smdb.owl#Character>;
+    _3:Name "Mia Wallace";
+    _3:inMovie <http://www.smdb.com/smdb.owl#movie:1>;
+    _3:portrayedBy "http://www.smdb.com/smdb.owl#person:2" .
+
+<http://www.smdb.com/smdb.owl#person:1> a <http://www.smdb.com/smdb.owl#Person>;
+    _3:Biography "Test Biography";
+    _3:Name "John Travolta";
+    _3:performedIn <http://www.smdb.com/smdb.owl#movie:1> .
+
+<http://www.smdb.com/smdb.owl#person:2> a <http://www.smdb.com/smdb.owl#Person>;
+    _3:Name "Uma Thurman";
+    _3:performedIn <http://www.smdb.com/smdb.owl#movie:1> .
+
+<http://www.smdb.com/smdb.owl#person:3> a <http://www.smdb.com/smdb.owl#Person>;
+    _3:Biography "Quentin\\'s biography";
+    _3:Name "Quentin Tarantino";
+    _3:directed <http://www.smdb.com/smdb.owl#movie:1>;
+    _3:performedIn <http://www.smdb.com/smdb.owl#movie:1>;
+    _3:wrote <http://www.smdb.com/smdb.owl#movie:1> .
+
+<http://www.smdb.com/smdb.owl#review:1> a <http://www.smdb.com/smdb.owl#MovieReview>;
+    _3:ReviewText "This movie is awesome[*****]";
+    _3:refersTo <http://www.smdb.com/smdb.owl#movie:1>;
+    _3:writtenByUser <http://www.smdb.com/smdb.owl#user:1> .
+
+<http://www.smdb.com/smdb.owl#user:2> a <http://www.smdb.com/smdb.owl#SMDBUser>;
+    _3:Username "pgaspar";
+    _3:isFriendsWith <http://www.smdb.com/smdb.owl#user:1> .
+
+<http://www.smdb.com/smdb.owl#user:1> a <http://www.smdb.com/smdb.owl#SMDBUser>;
+    _3:Username "mtavares";
+    _3:hasSeen <http://www.smdb.com/smdb.owl#movie:1>;
+    _3:isFriendsWith <http://www.smdb.com/smdb.owl#user:2> .
+
+<http://www.smdb.com/smdb.owl#movie:1> a <http://www.smdb.com/smdb.owl#Movie>;
+    _3:Duration 154;
+    _3:Title "Pulp Fiction" .
+
