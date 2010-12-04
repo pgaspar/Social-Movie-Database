@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>
+		Pedro Gaspar
+		<a href="#"><span class="button done">Add as Friend</span></a>
+	</h2>
+	
+	<div class="description">
+		<p><b class="label">Date of Join:</b> March 27, 2009</p>
+		<p><b class="label">Last Login:</b> November 20, 2010</p>
+	</div>
+	
+	<div class="section">
+		<h3 class="context-header"><span>Has Seen</span></h3>
+		
+		<table class="movie-list">
+			<tr>
+				<td><a href="/movie/">Pulp Fiction</a></td>
+				<td>1994</td>
+			</tr>
+			
+			<tr>
+				<td><a href="/movie/">Inglourious Basterds</a></td>
+				<td>2009</td>
+			</tr>
+			
+			<tr>
+				<td><a href="/movie/">Harry Potter e os Talismãs da Morte: Parte 1</a></td>
+				<td>2010</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="section">
+		<h3 class="context-header"><span>Friends</span></h3>
+		
+		<table class="user-list">
+			<tr>
+				<td><img src="http://a3.twimg.com/profile_images/1152336459/avatar_instagram_reasonably_small.jpg" /></td>
+				<td><a href="/user/">Miguel Tavares</a></td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="section">
+		<h3 class="context-header"><span>Reviews</span></h3>
+		
+		<p>This user has not written any reviews yet.</p>
+	</div>
+	
+{% endblock %}

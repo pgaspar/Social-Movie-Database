@@ -20,64 +20,94 @@ class SMDB():
 		print "Triples in graph: ", len(self.graph)
 
 	
-	def addPerson(self, uri='', name='', biography=''):
+	def addPerson(self, name):
 
-		if not uri: uri = BNode()
+		uri = self.smdb[name]
 
 		self.graph.add((uri, RDF.type, self.smdb['Person']))
-		if name: self.graph.add((uri, self.smdb['Name'], Literal(name)))
-		if biography: self.graph.add((uri, self.smdb['Biography'], Literal(biography)))
+		self.graph.add((uri, self.smdb['Name'], Literal(name)))
 		
 		self.graph.commit()
 	
 	def addPerformance(self, actor, movie):
 		
-		self.graph.add((actor, self.smdb['performedIn'], movie))
+		uriActor = self.smdb[actor]
+		uriMovie = self.smdb[movie]
+		
+		self.graph.add((uriActor, self.smdb['performedIn'], urlMovie))
 		
 		self.graph.commit()
 	
-	def addDirection(self, director, movie):
+	def addDirector(self, director, movie):
 		
-		self.graph.add((director, self.smdb['directed'], movie))
+		uriDirector = self.smdb[director]
+		uriMovie = self.smdb[movie]
+		
+		self.graph.add((uriDirector, self.smdb['directed'], uriMovie))
 		
 		self.graph.commit()
 		
-	def addWriting(self, writer, movie):
+	def addWriter(self, writer, movie):
 
-		self.graph.add((writer, self.smdb['wrote'], movie))
+		uriWriter = self.smdb[writer]
+		uriMovie = self.smdb[movie]
+
+		self.graph.add((uriWriter, self.smdb['wrote'], uriMovie))
 
 		self.graph.commit()
 
 		
-	def addCharacter(self, uri='', name='', portrayed_by_uri='', in_movie_uris=[]):
+	def addCharacter(self, movie, actor, character):
 
-		if not uri: uri = BNode()
+		uriMovie = self.smdb[movie]
+		uriActor = self.smdb[actor]
+		uriCharacter = self.smdb[character]
 
-		self.graph.add((uri, RDF.type, self.smdb['Character']))
-		if name: self.graph.add((uri, self.smdb['Name'], Literal(name)))
-		if portrayed_by_uri: self.graph.add((uri, self.smdb['portrayedBy'], Literal(portrayed_by_uri)))
+		self.graph.add((uriCharacter, RDF.type, self.smdb['Character']))
+		self.graph.add((uriCharacter, self.smdb['Name'], Literal(character)))
+		self.graph.add((uriCharacter, self.smdb['portrayedBy'], uriActor))
 		
-		for m_uri in in_movie_uris:
-			self.graph.add((uri, self.smdb['inMovie'], m_uri))
+		
+		self.graph.add((uriCharacter, self.smdb['inMovie'], uriMovie))
 			
 		self.graph.commit()
 	
-	def addMovie(self, uri='', title='', duration=0, synopsis='', genres_uris=[]):
+	
+	def addMovie(self, title, releaseDate):
 
-		if not uri: uri = BNode()
+		uri = self.smdb[title]
 
 		self.graph.add((uri, RDF.type, self.smdb['Movie']))
-		if title: self.graph.add((uri, self.smdb['Title'], Literal(title)))
-		if duration: self.graph.add((uri, self.smdb['Duration'], Literal(duration)))
-		if synopsis: self.graph.add((uri, self.smdb['Synopsis'], Literal(synopsis)))
-		
-		
-		for g_uri in genres_uris:
-			self.graph.add((uri, self.smdb['isOfGenre'], g_uri))
-		
+		self.graph.add((uri, self.smdb['Title'], Literal(title)))
+		self.graph.add((uri, self.smdb['ReleaseDate'], Literal(releaseDate)))
 			
 		self.graph.commit()
+		
+	def addGenre(self, movie, genre):
+		
+		uri = self.smdb[movie]
+		uriGenre = self.smdb[genre]
+		
+		self.graph.add((uri, self.smdb['isOfGenre'], uriGenre))
+		
+		self.graph.commit()
 	
+	def addRating(self, movie, rating):
+		
+		uriMovie = self.smdb[movie]
+		uriRating = self.smdb[rating]
+		
+		self.graph.add((uriMovie, self.smdb['hasRating'], uriRating))
+		
+		self.graph.commit()
+		
+	
+	def addLocation(self, movie, location):
+		
+		uriMovie = self.smdb[movie]
+		uriLocation = self.smdb[location]
+		
+		self.graph.add((uriMovie, self.smdb['shotIn'], uriLocation))
 	
 	def addSMDBUser(self, uri='', username=''):
 		

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Search</h2>
+	
+	<div class="description">
+		<form method="get" action="#">
+			<label for="id_find">Looking for:</label> <input type="text" name="find" id="id_find">
+			<input type="submit" value="Find">
+		</form>
+	</div>
+	
+	<div class="section search-results">
+		<h3 class="context-header"><span>Results</span></h3>
+		
+		<h4>Movies</h4>
+		<table class="movie-list">
+			<tr>
+				<td><a href="/movie/">Pulp Fiction</a></td>
+				<td>1994</td>
+			</tr>
+		</table>
+		<div class="clear-both"></div>
+		
+		<br /><br />
+		
+		<h4>People</h4>
+		<table class="movie-list">
+			<tr>
+				<td><a href="/person/">Quentin Tarantino</a></td>
+				<td><a href="/person/#director-section" class="not-bold">Director</a>, <a href="/person/#writer-section" class="not-bold">Writer</a> and <a href="/person/#actor-section" class="not-bold">Actor</a></p>
+			</tr>
+			
+			<tr>
+				<td><a href="/person/">John Travolta</a></td>
+				<td><a href="/person/#actor-section" class="not-bold">Actor</a></p>
+			</tr>
+			
+			<tr>
+				<td><a href="/person/">Uma Thurman</a></td>
+				<td><a href="/person/#actor-section" class="not-bold">Actor</a></p>
+			</tr>
+		</table>
+		<div class="clear-both"></div>
+	</div>
+	
+{% endblock %}

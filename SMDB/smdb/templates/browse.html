@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Browse Movies</h2>
+	
+	<div class="description">
+		<table class="filter">
+			<tr>
+				<th>Year</th>
+				<th>Genre</th>
+				<th>Director</th>
+			</th>
+			
+			<tr>
+				<td class="selected">All</td>
+				<td class="selected">All</td>
+				<td class="selected">All</td>
+			</tr>
+			<tr>
+				<td>1994</td>
+				<td>Action</td>
+				<td>David Yates</td>
+			</tr>
+			<tr>
+				<td>2009</td>
+				<td>Adventure</td>
+				<td>Quentin Tarantino</td>
+			</tr>
+			<tr>
+				<td>2010</td>
+				<td>Crime</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>Drama</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>Fantasy</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>Thriller</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><a href="#">more...</a></td>
+				<td></td>
+			</tr>
+		</table>
+		
+	</div>
+	
+	<div class="section">
+		<h3 class="context-header"><span>Results</span></h3>
+		
+		<table class="movie-list">
+			<tr>
+				<td><a href="/movie/">Pulp Fiction</a></td>
+				<td>1994</td>
+			</tr>
+			<tr>
+				<td><a href="/movie/">Inglorious Basterds</a></td>
+				<td>2009</td>
+			</tr>
+			<tr>
+				<td><a href="/movie/">Harry Potter e os Talismãs da Morte: Parte 1</a></td>
+				<td>2010</td>
+			</tr>
+		</table>
+	</div>
+	
+{% endblock %}
