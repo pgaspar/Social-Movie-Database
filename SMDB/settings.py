@@ -65,6 +65,7 @@ MIDDLEWARE_CLASSES = (
 	'django.middleware.common.CommonMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'smdb.semantic_manager_middleware.SemanticMiddleware',
 )
 
 ROOT_URLCONF = 'SMDB.urls'
@@ -82,4 +83,8 @@ INSTALLED_APPS = (
 	'django.contrib.sessions',
 	'django.contrib.sites',
 	'smdb',
+	'django_rdf',
 )
+
+DEFAULT_GRAPH_URI = 'http://www.smdb.com/smdb.owl'
+RDF_DATABASE_NAME = relative('database/rdf')

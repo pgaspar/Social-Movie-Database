@@ -3,6 +3,7 @@ html, body {
 	font-family: arial; 
 	color: #000;
 	height:100%;
+	background: #FDFDF7;
 }
 
 a {
@@ -141,6 +142,14 @@ h1#header-title a {
 #content {
 	float: right;
 	width: 79.9%;
+	
+	border-left: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
+	background: white;
+	
+	height:auto !important; /* real browsers */
+	height:87%; /* IE6: treaded as min-height*/
+	min-height:86.4%; /* real browsers */
 }
 
 #content table {
@@ -217,29 +226,6 @@ h1#header-title a {
 	padding: 10px;
 }
 
-.todo-item {
-	margin: 10px 0px;
-	font-size: 16px;
-}
-
-.priority-item {
-	float: left;
-	width: 80px;
-	margin-right: 10px;
-	color: #FFF;
-	font-weight: bold;
-	margin-bottom: 10px;
-	padding-right: 4px;
-	text-align: right;
-	font-size: 14px;
-}
-
-.priority-item   span {
-	padding: 1px 8px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-}
-
 .button {
 	float: right;
 	padding: 1px 8px;
@@ -256,31 +242,6 @@ h1#header-title a {
 }
 .done {
 	background: #56BB61;
-}
-
-.project-note-author {
-	float: left;
-	height: 100%;
-	width: 140px;
-	margin-right: 10px;
-	color: #FFF;
-	font-weight: bold;
-	font-size: 14px;
-}
-
-.project-note-author-inside {
-	float: right;
-	padding: 1px 8px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	background: #56BB61;
-}
-
-.project-note {
-	float: left;
-	width: 100%;
-	margin-bottom: 16px;
-	line-height: 20px;
 }
 
 /*** PROFILE ***/
@@ -314,13 +275,6 @@ h1#header-title a {
 #sidebar {
 	float: left;
 	width: 20%; 
-	
-	height:auto !important; /* real browsers */
-	height:87%; /* IE6: treaded as min-height*/
-	min-height:86.5%; /* real browsers */
-
-	background: #FDFDF7; 
-	border-right: 1px solid #DDDDDD
 }
 
 #sidebar h1 {
@@ -402,6 +356,44 @@ h1#header-title a {
 	text-align: right;
 	width: 0%;
 }
+
+/*** REVIEW-LIST ***/
+
+#content .review-list {
+	width: 90%;
+	margin: auto;
+	border-spacing: 10px;
+}
+
+#content .review-list tr {
+	border: 1px #EEE solid;
+	cursor: pointer;
+}
+
+#content .review-list tr:hover {
+	background-color: #FDFDF7;
+}
+
+#content .review-list td {
+	padding: 10px;
+}
+
+#content .review-list td:first-child {
+	border-right: 1px solid #EEE;
+	width: 20%;
+}
+
+#content .review-list td:last-child p {
+	text-align: justify;
+	margin: 5px 10px;
+	font-size: 12px;
+	border: 1px solid #CCC;
+	padding: 10px;
+	background-color: white;
+}
+
+
+/*** SEARCH-RESULTS ***/
 
 #content .search-results table {
 	width: 75%;

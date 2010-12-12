@@ -31,5 +31,10 @@ urlpatterns = patterns('',
 	(r'^suggestion/$', direct_to_template, {'template': 'suggestion.html'}),
 	
 	(r'^browse/$', direct_to_template, {'template': 'browse.html'}),
+	(r'^browse/movies/$', 'smdb.views.test'),
 	(r'^browse/.*/$', direct_to_template, {'template': 'browse.html'}),
+	
+	(r'^movie/(?P<slug>[-\w]+)/$', 'smdb.views.movie_detail'),
+	
+	(r'^test/$', 'smdb.views.test'),
 )

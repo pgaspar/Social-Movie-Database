@@ -2,7 +2,7 @@
 
 {% block content %}
 	<h2>
-		Pulp Fiction <span>(1994)</span>
+		{{ movie.title }} <span>({{ movie.releaseDate|date:"Y" }})</span>
 		<a href="#"><span class="button done">Mark as Seen</span></a>
 	</h2>
 	
@@ -11,39 +11,38 @@
 		
 		<p>
 			<b class="label">Synopsis:</b><br />
-			<div class="text-box">The lives of two mob hit men, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.</div>
+			<div class="text-box">{{ movie.smdb__synopsis }}</div>
 		</p>
 		
-		<p><b class="label">Director:</b> <a href="/person/">Quentin Tarantino</a></p>
-		<p><b class="label">Writers:</b> <a href="/person/">Quentin Tarantino</a>, <a href="/person/">Roger Avary</a></p>
+		<p><b class="label">Director:</b> <a href="{{ movie.directedBy.get_absolute_url }}">{{ movie.directedBy.name }}</a></p>
+		<p><b class="label">Writers:</b> {% for obj in movie.writtenBy %}<a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a> {% if not forloop.last %}, {% endif %}{% endfor %}</p>
 		
-		<p><b class="label">Genres:</b> <a href="/search/">Crime</a>, <a href="/search/">Thriller</a></p>
-		<p><b class="label">Duration:</b> 154 min</p>
-		<p><b class="label">Release Date:</b> November 25, 1994</p>
-		<p><b class="label">Setting Date:</b> March 27, 1994</p>
+		<p><b class="label">Genres:</b> {% for obj in movie.isOfGenre %}<a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a> {% if not forloop.last %}, {% endif %}{% empty %}&nbsp;{% endfor %}</p>
+		<p><b class="label">Duration:</b> {{ movie.duration|default:"0" }} min</p>
+		<p><b class="label">Release Date:</b> {{ movie.releaseDate|date:"F d, Y" }}</p>
+		<p><b class="label">Setting Date:</b> ?</p>
 		
-		<p><b class="label">Filmed In:</b> <a href="/search/">Los Angeles</a>, <a href="/search/">Pasadena</a></p>
-		<p><b class="label">Takes Place In:</b> <a href="/search/">Los Angeles</a></p>
+		<p><b class="label">Filmed In:</b> &nbsp;</p>
+		<p><b class="label">Takes Place In:</b> &nbsp;</p>
 		
 	</div>
 	
-	<div class="section" id="director-section">
+	<div class="section">
 		<h3 class="context-header"><span>Featured</span></h3>
 		
 		<table class="movie-list">
-			<tr>
-				<td><a href="/person/">John Travolta</a></td>
-				<td><a href="/character/" class="not-bold">Vicent Vega</a></td>
-			</tr>
 			
-			<tr>
-				<td><a href="/person/">Uma Thurman</a></td>
-				<td><a href="/character/" class="not-bold">Mia Wallace</a></td>
-			</tr>
-			<tr>
-				<td><a href="/person/">Quentin Tarantino</a></td>
-				<td><a href="/character/" class="not-bold">Jimmie Dimmick</a></td>
-			</tr>
+			{% for actor, character in movie.get_actor_character %}
+				
+				<tr>
+					<td><a href="{{ actor.get_absolute_url }}">{{ actor.name }}</a></td>
+					<td><a href="{{ character.get_absolute_url }}" class="not-bold">{{ character.name }}</a></td>
+				</tr>
+				
+			{% empty %}
+				No Actors found.
+			{% endfor %}
+			
 		</table>
 	</div>
 	
@@ -51,17 +50,37 @@
 		<h3 class="context-header"><span>Friends who watched this Movie</span></h3>
 		
 		<table class="user-list">
+		
 			<tr>
 				<td><img src="http://a3.twimg.com/profile_images/1152336459/avatar_instagram_reasonably_small.jpg" /></td>
 				<td><a href="/user/">Miguel Tavares</a></td>
 			</tr>
+		
 		</table>
 	</div>
 	
 	<div class="section">
-		<h3 class="context-header"><span>Reviews</span></h3>
+		<h3 class="context-header"><span>Reviews - <a href="#" style="font-size: 16px; font-weight: normal">Write a Review</a></span></h3>
 		
-		<p>No reviews. <a href="#">Write one?</a></p>
+		<table class="review-list">
+		
+		{% for review in movie.hasReview %}
+		
+			<tr id="review-{{ review.id }}" onclick="window.location.href = '{{ review.get_absolute_url }}';">
+				<td>
+					<b>Author:</b> <a href="{{ review.writtenByUser.get_absolute_url }}">{{ review.writtenByUser.username }}</a><br />
+					<b>About:</b> <a href="{{ review.refersTo.get_absolute_url }}">{{ review.refersTo.title }}</a><br />
+					
+				</td>
+				<td><p>{{ review.reviewText }}</p></td>
+			</tr>
+		
+		{% empty %}
+			<p>No reviews.</p>
+		{% endfor %}
+		
+		</table>
+		
 	</div>
 	
 	<div class="section">

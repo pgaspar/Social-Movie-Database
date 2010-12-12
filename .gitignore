@@ -4,3 +4,6 @@
 Thumbs.db
 *.list
 *.sqlite3
+*/rdf-db/*
+SMDB/database/rdf/*
+

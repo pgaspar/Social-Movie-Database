@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="section">
+	<h3 class="context-header"><span>Complete Movie List</span></h3>
+	
+	<table class="movie-list">
+		
+		<tr>
+			<th>Title</th>
+			<th>URI</th>
+		</tr>
+		
+		{% for uri, title, slug in movie_list %}
+			<tr>
+				<td><a href="/movie/{{ slug }}">{{ title }}</a></td>
+				<td>{{ uri }}</td>
+			</tr>
+		{% endfor %}
+		
+	</table>
+</div>
+
+
+{% endblock %}

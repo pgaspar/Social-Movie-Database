@@ -1,32 +1,33 @@
 from SMDB import SMDB
+import datetime
 
 s = SMDB()
 
 s.printTripleCount()
 
-s.addMovie(s.smdb['movie:1'], 'Pulp Fiction', 154)
+s.addMovie('Pulp Fiction (1994)', datetime.date(1994, 11, 25))
 
-s.addPerson(s.smdb['person:1'], 'John Travolta', 'Test Biography')
-s.addPerson(s.smdb['person:2'], 'Uma Thurman')
-s.addPerson(s.smdb['person:3'], 'Quentin Tarantino', "Quentin's biography")
+s.addPerson('John Travolta')
+s.addPerson('Uma Thurman')
+s.addPerson('Quentin Tarantino')
 
-s.addPerformance(s.smdb['person:1'], s.smdb['movie:1'])
-s.addPerformance(s.smdb['person:2'], s.smdb['movie:1'])
-s.addPerformance(s.smdb['person:3'], s.smdb['movie:1'])
+s.addPerformance('John Travolta', 'Pulp Fiction (1994)')
+s.addPerformance('Uma Thurman', 'Pulp Fiction (1994)')
+s.addPerformance('Quentin Tarantino', 'Pulp Fiction (1994)')
 
-s.addDirection(s.smdb['person:3'], s.smdb['movie:1'])
+s.addDirector('Quentin Tarantino', 'Pulp Fiction (1994)')
 
-s.addWriting(s.smdb['person:3'], s.smdb['movie:1'])
+s.addWriter('Quentin Tarantino', 'Pulp Fiction (1994)')
 
-s.addCharacter(s.smdb['character:1'], 'Vincent Vega', s.smdb['person:1'], [s.smdb['movie:1']])
-s.addCharacter(s.smdb['character:2'], 'Mia Wallace', s.smdb['person:2'], [s.smdb['movie:1']])
+s.addCharacter('Pulp Fiction (1994)', 'John Travolta', 'Vincent Vega')
+s.addCharacter('Pulp Fiction (1994)', 'Uma Thurman', 'Mia Wallace')
 
-s.addSMDBUser(s.smdb['user:1'], 'mtavares')
-s.addSMDBUser(s.smdb['user:2'], 'pgaspar')
+s.addSMDBUser('mtavares')
+s.addSMDBUser('pgaspar')
 
-s.addFriendship(s.smdb['user:1'], s.smdb['user:2'])
-s.addMovieSeen(s.smdb['user:1'], s.smdb['movie:1'])
-s.addMovieReview(s.smdb['review:1'], 'This movie is awesome[*****]', s.smdb['movie:1'], s.smdb['user:1'])
+s.addFriendship('mtavares', 'pgaspar')
+s.addMovieSeen('mtavares', 'Pulp Fiction (1994)')
+s.addMovieReview(1, 'This movie is awesome[*****]', 'Pulp Fiction (1994)', 'mtavares')
 
 s.printTripleCount()
 

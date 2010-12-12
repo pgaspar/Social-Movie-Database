@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+   xmlns:_3="http://www.smdb.com/smdb.owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#John Travolta">
+    <_3:slug>john-travolta</_3:slug>
+    <_3:name>John Travolta</_3:name>
+    <_3:performedIn rdf:resource="http://www.smdb.com/smdb.owl#Pulp Fiction (1994)"/>
+    <rdf:type rdf:resource="http://www.smdb.com/smdb.owl#Person"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#Uma Thurman">
+    <_3:slug>uma-thurman</_3:slug>
+    <_3:name>Uma Thurman</_3:name>
+    <_3:performedIn rdf:resource="http://www.smdb.com/smdb.owl#Pulp Fiction (1994)"/>
+    <rdf:type rdf:resource="http://www.smdb.com/smdb.owl#Person"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#Quentin Tarantino">
+    <_3:slug>quentin-tarantino</_3:slug>
+    <_3:name>Quentin Tarantino</_3:name>
+    <_3:performedIn rdf:resource="http://www.smdb.com/smdb.owl#Pulp Fiction (1994)"/>
+    <_3:directed rdf:resource="http://www.smdb.com/smdb.owl#Pulp Fiction (1994)"/>
+    <_3:wrote rdf:resource="http://www.smdb.com/smdb.owl#Pulp Fiction (1994)"/>
+    <rdf:type rdf:resource="http://www.smdb.com/smdb.owl#Person"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#Vincent Vega">
+    <_3:slug>vincent-vega</_3:slug>
+    <_3:name>Vincent Vega</_3:name>
+    <_3:portrayedBy rdf:resource="http://www.smdb.com/smdb.owl#John Travolta"/>
+    <_3:inMovie rdf:resource="http://www.smdb.com/smdb.owl#Pulp Fiction (1994)"/>
+    <rdf:type rdf:resource="http://www.smdb.com/smdb.owl#Character"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#Mia Wallace">
+    <_3:slug>mia-wallace</_3:slug>
+    <_3:name>Mia Wallace</_3:name>
+    <_3:portrayedBy rdf:resource="http://www.smdb.com/smdb.owl#Uma Thurman"/>
+    <_3:inMovie rdf:resource="http://www.smdb.com/smdb.owl#Pulp Fiction (1994)"/>
+    <rdf:type rdf:resource="http://www.smdb.com/smdb.owl#Character"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#user:mtavares">
+    <_3:slug>mtavares</_3:slug>
+    <_3:username>mtavares</_3:username>
+    <rdf:type rdf:resource="http://www.smdb.com/smdb.owl#SMDBUser"/>
+    <_3:isFriendsWith rdf:resource="http://www.smdb.com/smdb.owl#user:pgaspar"/>
+    <_3:hasSeen rdf:resource="http://www.smdb.com/smdb.owl#Pulp Fiction (1994)"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#user:pgaspar">
+    <_3:slug>pgaspar</_3:slug>
+    <_3:username>pgaspar</_3:username>
+    <rdf:type rdf:resource="http://www.smdb.com/smdb.owl#SMDBUser"/>
+    <_3:isFriendsWith rdf:resource="http://www.smdb.com/smdb.owl#user:mtavares"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#review:1">
+    <rdf:type rdf:resource="http://www.smdb.com/smdb.owl#MovieReview"/>
+    <_3:refersTo rdf:resource="http://www.smdb.com/smdb.owl#Pulp Fuction"/>
+    <_3:writtenByUser rdf:resource="http://www.smdb.com/smdb.owl#user:mtavares"/>
+    <_3:reviewText>This movie is awesome[*****]</_3:reviewText>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#Pulp Fiction (1994)">
+    <_3:slug>pulp-fiction-1994</_3:slug>
+    <rdf:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
+    <_3:title>Pulp Fiction</_3:title>
+    <_3:releaseDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1994-01-01</_3:releaseDate>
+  </rdf:Description>
+</rdf:RDF>
