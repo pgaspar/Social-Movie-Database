@@ -2,7 +2,7 @@
 
 {% block content %}
 	<h2>
-		Pedro Gaspar
+		{{ user.username }}
 		<a href="#"><span class="button done">Add as Friend</span></a>
 	</h2>
 	
@@ -15,20 +15,13 @@
 		<h3 class="context-header"><span>Has Seen</span></h3>
 		
 		<table class="movie-list">
-			<tr>
-				<td><a href="/movie/">Pulp Fiction</a></td>
-				<td>1994</td>
-			</tr>
 			
-			<tr>
-				<td><a href="/movie/">Inglourious Basterds</a></td>
-				<td>2009</td>
-			</tr>
+			{% for movie in user.hasSeen %}
+				{% include 'widgets/movie-list.html' %}
+			{% empty %}
+				<p>This user has not seen any movies yet.</p>
+			{% endfor %}
 			
-			<tr>
-				<td><a href="/movie/">Harry Potter e os Talismãs da Morte: Parte 1</a></td>
-				<td>2010</td>
-			</tr>
 		</table>
 	</div>
 	
@@ -36,17 +29,31 @@
 		<h3 class="context-header"><span>Friends</span></h3>
 		
 		<table class="user-list">
-			<tr>
-				<td><img src="http://a3.twimg.com/profile_images/1152336459/avatar_instagram_reasonably_small.jpg" /></td>
-				<td><a href="/user/">Miguel Tavares</a></td>
-			</tr>
+			
+			{% for user in user.isFriendsWith %}
+				{% include 'widgets/user-list.html' %}
+			{% empty %}
+				<p>This user has no friends yet.</p>
+			{% endfor %}
+		
 		</table>
 	</div>
 	
 	<div class="section">
 		<h3 class="context-header"><span>Reviews</span></h3>
 		
-		<p>This user has not written any reviews yet.</p>
+		<table class="review-list">
+		
+		{% for review in user.hasWritten %}
+		
+			{% include 'widgets/review-list.html' %}
+		
+		{% empty %}
+			<p>This user has not written any reviews yet.</p>
+		{% endfor %}
+		
+		</table>
+		
 	</div>
 	
 {% endblock %}

@@ -40,7 +40,7 @@
 				</tr>
 				
 			{% empty %}
-				No Actors found.
+				<p>No Actors found.</p>
 			{% endfor %}
 			
 		</table>
@@ -66,17 +66,10 @@
 		
 		{% for review in movie.hasReview %}
 		
-			<tr id="review-{{ review.id }}" onclick="window.location.href = '{{ review.get_absolute_url }}';">
-				<td>
-					<b>Author:</b> <a href="{{ review.writtenByUser.get_absolute_url }}">{{ review.writtenByUser.username }}</a><br />
-					<b>About:</b> <a href="{{ review.refersTo.get_absolute_url }}">{{ review.refersTo.title }}</a><br />
-					
-				</td>
-				<td><p>{{ review.reviewText }}</p></td>
-			</tr>
+			{% include 'widgets/review-list.html' %}
 		
 		{% empty %}
-			<p>No reviews.</p>
+			<p>No reviews. <a href="#">Write one?</a></p>
 		{% endfor %}
 		
 		</table>

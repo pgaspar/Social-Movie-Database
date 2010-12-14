@@ -170,6 +170,10 @@ h1#header-title a {
 	margin-bottom: 30px;
 }
 
+#content .section p {
+	margin-left: 20px;
+}
+
 #content .activity {
 	width: 110px;
 	margin-right: 6px;
@@ -321,7 +325,7 @@ h1#header-title a {
 /*** USER-LIST ***/
 
 #content .user-list {
-	border-collapse: separate;
+	border-collapse: collapse;
 	border-spacing: 5px;
 	margin: 0px 60px;
 }
@@ -334,7 +338,26 @@ h1#header-title a {
 
 #content .user-list td:first-child {
 	width: 0%;
+	border: none;
+	padding: 5px;
 }
+
+#content .user-list td {
+	border: none;
+	padding-right: 5px;
+	line-height: 0px;
+	vertical-align: center;
+}
+
+#content .user-list tr:hover {
+	background-color: #F6F5E9;
+	cursor: pointer;
+}
+
+#content .user-list tr {
+	border: 1px solid #CCC;
+}
+
 
 /*** MOVIE-LIST ***/
 

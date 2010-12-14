@@ -44,5 +44,5 @@ for review in s.graph.query("""SELECT ?u WHERE {
 #			}""", initNs=initNs, initBindings={Variable("?a"): director}):
 #	print name, slug
 
-#s.exportData('res_read')
+s.exportData('res_read')
 

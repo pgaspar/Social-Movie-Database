@@ -125,7 +125,7 @@ class SMDB():
 		uri = self.smdb['user:' + username.replace(' ', '_').replace('(', '').replace(')', '')]
 		
 		self.graph.add((uri, RDF.type, self.smdb['SMDBUser']))
-		self.graph.add((uri, self.smdb['username'], Literal(username)))
+		self.graph.add((uri, self.smdb['username'], Literal(slugify(username).replace('-', '_'))))
 		
 		self.graph.commit()
 		

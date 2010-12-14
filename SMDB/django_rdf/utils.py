@@ -69,7 +69,7 @@ class LazySubject(object):
 				if isinstance(o, URIRef): yield LazySubject(self.graph, o)
 				else: yield o
 		else:
-			for o in self.graph.query("SELECT ?o WHERE { { ?s %s ?o } UNION { ?o %s ?s } }" % (name, reverse.get(name, 'smdb:none')), initBindings={'s': self.uri}):
+			for o in self.graph.query("SELECT DISTINCT ?o WHERE { { ?s %s ?o } UNION { ?o %s ?s } }" % (name, reverse.get(name, 'smdb:none')), initBindings={'s': self.uri}):
 				if isinstance(o, URIRef): yield LazySubject(self.graph, o)
 				else: yield o
 

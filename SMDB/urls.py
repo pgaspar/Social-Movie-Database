@@ -24,7 +24,6 @@ urlpatterns = patterns('',
 	(r'^movie/$', direct_to_template, {'template': 'movie.html'}),
 	(r'^person/$', direct_to_template, {'template': 'person.html'}),
 	(r'^character/$', direct_to_template, {'template': 'character.html'}),
-	(r'^user/$', direct_to_template, {'template': 'user.html'}),
 	(r'^profile/$', direct_to_template, {'template': 'user.html'}),
 	
 	(r'^search/$', direct_to_template, {'template': 'search.html'}),
@@ -35,6 +34,7 @@ urlpatterns = patterns('',
 	(r'^browse/.*/$', direct_to_template, {'template': 'browse.html'}),
 	
 	(r'^movie/(?P<slug>[-\w]+)/$', 'smdb.views.movie_detail'),
+	(r'^user/(?P<username>[\w]+)/$', 'smdb.views.user_detail'),
 	
 	(r'^test/$', 'smdb.views.test'),
 )
