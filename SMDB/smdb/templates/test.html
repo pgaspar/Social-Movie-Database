@@ -12,9 +12,9 @@
 			<th>URI</th>
 		</tr>
 		
-		{% for uri, title, slug in movie_list %}
+		{% for uri, title in movie_list %}
 			<tr>
-				<td><a href="/movie/{{ slug }}">{{ title }}</a></td>
+				<td><a href="{{ uri }}">{{ title }}</a></td>
 				<td>{{ uri }}</td>
 			</tr>
 		{% endfor %}

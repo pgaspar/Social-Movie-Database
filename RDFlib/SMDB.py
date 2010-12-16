@@ -29,7 +29,7 @@ class SMDB():
 	
 	def addPerson(self, name):
 
-		uri = self.person[name.replace(' ', '_').replace('(', '').replace(')', '')]
+		uri = self.person[slugify(name) + '/']
 
 		self.graph.add((uri, RDF.type, self.smdb['Person']))
 		self.graph.add((uri, self.smdb['name'], Literal(name)))
@@ -38,8 +38,8 @@ class SMDB():
 	
 	def addPerformance(self, actor, movie):
 		
-		uriActor = self.person[actor.replace(' ', '_').replace('(', '').replace(')', '')]
-		uriMovie = self.movie[movie.replace(' ', '_').replace('(', '').replace(')', '')]
+		uriActor = self.person[slugify(actor) + '/']
+		uriMovie = self.movie[slugify(movie) + '/']
 		
 		self.graph.add((uriActor, self.smdb['performedIn'], uriMovie))
 		
@@ -47,8 +47,8 @@ class SMDB():
 	
 	def addDirector(self, director, movie):
 		
-		uriDirector = self.person[director.replace(' ', '_').replace('(', '').replace(')', '')]
-		uriMovie = self.movie[movie.replace(' ', '_').replace('(', '').replace(')', '')]
+		uriDirector = self.person[slugify(director) + '/']
+		uriMovie = self.movie[slugify(movie) + '/']
 		
 		self.graph.add((uriDirector, self.smdb['directed'], uriMovie))
 		
@@ -56,8 +56,8 @@ class SMDB():
 		
 	def addWriter(self, writer, movie):
 
-		uriWriter = self.person[writer.replace(' ', '_').replace('(', '').replace(')', '')]
-		uriMovie = self.movie[movie.replace(' ', '_').replace('(', '').replace(')', '')]
+		uriWriter = self.person[slugify(writer) + '/']
+		uriMovie = self.movie[slugify(movie) + '/']
 
 		self.graph.add((uriWriter, self.smdb['wrote'], uriMovie))
 
@@ -66,9 +66,9 @@ class SMDB():
 		
 	def addCharacter(self, movie, actor, character):
 
-		uriMovie = self.movie[movie.replace(' ', '_').replace('(', '').replace(')', '')]
-		uriActor = self.person[actor.replace(' ', '_').replace('(', '').replace(')', '')]
-		uriCharacter = self.person[character.replace(' ', '_').replace('(', '').replace(')', '')]
+		uriMovie = self.movie[slugify(movie) + '/']
+		uriActor = self.person[slugify(actor) + '/']
+		uriCharacter = self.character[slugify(character) + '/']
 
 		self.graph.add((uriCharacter, RDF.type, self.smdb['Character']))
 		self.graph.add((uriCharacter, self.smdb['name'], Literal(character)))
@@ -81,7 +81,7 @@ class SMDB():
 	
 	def addMovie(self, title, releaseDate):
 
-		uri = self.movie[title.replace(' ', '_').replace('(', '').replace(')', '')]
+		uri = self.movie[slugify(title) + '/']
 		
 		if '(' in title: clean_title = title[:title.find('(')-1]
 		
@@ -93,8 +93,8 @@ class SMDB():
 		
 	def addGenre(self, movie, genre):
 		
-		uri = self.movie[movie.replace(' ', '_').replace('(', '').replace(')', '')]
-		uriGenre = self.smdb[genre.replace(' ', '_').replace('(', '').replace(')', '')]
+		uri = self.movie[slugify(movie) + '/']
+		uriGenre = self.smdb[slugify(genre) + '/']
 		
 		self.graph.add((uri, self.smdb['isOfGenre'], uriGenre))
 		
@@ -102,8 +102,8 @@ class SMDB():
 	
 	def addRating(self, movie, rating):
 		
-		uriMovie = self.movie[movie.replace(' ', '_').replace('(', '').replace(')', '')]
-		uriRating = self.smdb[rating.replace(' ', '_').replace('(', '').replace(')', '')]
+		uriMovie = self.movie[slugify(movie) + '/']
+		uriRating = self.smdb[slugify(rating) + '/']
 		
 		self.graph.add((uriMovie, self.smdb['hasRating'], uriRating))
 		
@@ -112,7 +112,7 @@ class SMDB():
 	
 	def addLocation(self, movie, location):
 		
-		uriMovie = self.movie[movie.replace(' ', '_').replace('(', '').replace(')', '')]
+		uriMovie = self.movie[slugify(movie) + '/']
 		
 		self.graph.add((uriMovie, self.smdb['shotIn'], uriLocation))
 		
@@ -120,18 +120,18 @@ class SMDB():
 	
 	def addSMDBUser(self, username):
 		
-		uri = self.user[username.replace(' ', '_').replace('(', '').replace(')', '')]
+		uri = self.user[slugify(username) + '/']
 		
 		self.graph.add((uri, RDF.type, self.smdb['SMDBUser']))
-		self.graph.add((uri, self.smdb['username'], Literal(slugify(username).replace('-', '_'))))
+		self.graph.add((uri, self.smdb['username'], Literal(username)))
 		
 		self.graph.commit()
 		
 	
 	def addFriendship(self, user1, user2):
 		
-		uriUser1 = self.user[user1.replace(' ', '_').replace('(', '').replace(')', '')]
-		uriUser2 = self.user[user2.replace(' ', '_').replace('(', '').replace(')', '')]
+		uriUser1 = self.user[slugify(user1) + '/']
+		uriUser2 = self.user[slugify(user2) + '/']
 		
 		self.graph.add((uriUser1, self.smdb['isFriendsWith'], uriUser2))
 		self.graph.add((uriUser2, self.smdb['isFriendsWith'], uriUser1))
@@ -140,8 +140,8 @@ class SMDB():
 	
 	def addMovieSeen(self, user, movie):
 		
-		uriUser = self.user[user.replace(' ', '_').replace('(', '').replace(')', '')]
-		uriMovie = self.movie[movie.replace(' ', '_').replace('(', '').replace(')', '')]
+		uriUser = self.user[slugify(user) + '/']
+		uriMovie = self.movie[slugify(movie) + '/']
 		
 		self.graph.add((uriUser, self.smdb['hasSeen'], uriMovie))
 		
@@ -150,11 +150,11 @@ class SMDB():
 	
 	def addMovieReview(self, review_id, text, movie, author):
 		
-		cleanMovie = movie.replace(' ', '_').replace('(', '').replace(')', '')
+		cleanMovie = slugify(movie) + '/'
 		
 		uri = self.movie[cleanMovie + '#review-' + str(review_id)]
 		uriMovie = self.movie[cleanMovie]
-		uriUser = self.user[author.replace(' ', '_').replace('(', '').replace(')', '')]
+		uriUser = self.user[slugify(author) + '/']
 		
 		self.graph.add((uri,RDF.type, self.smdb['MovieReview']))
 		self.graph.add((uri, self.smdb['id'], Literal(review_id)))
