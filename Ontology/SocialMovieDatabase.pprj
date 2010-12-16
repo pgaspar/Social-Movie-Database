@@ -1,4 +1,4 @@
-; Thu Dec 16 17:32:36 WET 2010
+; Thu Dec 16 17:42:32 WET 2010
 ; 
 ;+ (version "3.4.4")
 ;+ (build "Build 579")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[SocialMovieDatabase_ProjectKB_Class91]
-		[SocialMovieDatabase_ProjectKB_Class92]
-		[SocialMovieDatabase_ProjectKB_Class93]
-		[SocialMovieDatabase_ProjectKB_Class94]
-		[SocialMovieDatabase_ProjectKB_Class95]))
+		[SocialMovieDatabase_ProjectKB_Class101]
+		[SocialMovieDatabase_ProjectKB_Class102]
+		[SocialMovieDatabase_ProjectKB_Class103]
+		[SocialMovieDatabase_ProjectKB_Class104]
+		[SocialMovieDatabase_ProjectKB_Class105]))
 
 ([CLSES_TAB] of  Widget
 
@@ -5612,6 +5612,31 @@
 ([SocialMovieDatabase_ProjectKB_Class10] of  Property_List
 )
 
+([SocialMovieDatabase_ProjectKB_Class101] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Class")
+	(string_value "%3ANAME"))
+
+([SocialMovieDatabase_ProjectKB_Class102] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([SocialMovieDatabase_ProjectKB_Class103] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([SocialMovieDatabase_ProjectKB_Class104] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([SocialMovieDatabase_ProjectKB_Class105] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Thing")
+	(string_value "%3ANAME"))
+
 ([SocialMovieDatabase_ProjectKB_Class11] of  Widget
 
 	(is_hidden TRUE)
@@ -5872,31 +5897,6 @@
 	(is_hidden TRUE)
 	(property_list [SocialMovieDatabase_ProjectKB_Class10])
 	(widget_class_name "ca.uvic.csr.shrimp.jambalaya.JambalayaTab"))
-
-([SocialMovieDatabase_ProjectKB_Class91] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Class")
-	(string_value "%3ANAME"))
-
-([SocialMovieDatabase_ProjectKB_Class92] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([SocialMovieDatabase_ProjectKB_Class93] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([SocialMovieDatabase_ProjectKB_Class94] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([SocialMovieDatabase_ProjectKB_Class95] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Thing")
-	(string_value "%3ANAME"))
 
 ([SOURCES] of  Property_List
 
