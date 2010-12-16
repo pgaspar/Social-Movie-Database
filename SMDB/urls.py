@@ -35,6 +35,8 @@ urlpatterns = patterns('',
 	
 	(r'^movie/(?P<slug>[-\w]+)/$', 'smdb.views.movie_detail'),
 	(r'^user/(?P<username>[\w]+)/$', 'smdb.views.user_detail'),
+	(r'^person/(?P<slug>[-\w]+)/$', 'smdb.views.person_detail'),
+	(r'^character/(?P<slug>[-\w]+)/$', 'smdb.views.character_detail'),
 	
 	(r'^test/$', 'smdb.views.test'),
 )

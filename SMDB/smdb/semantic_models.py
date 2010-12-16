@@ -109,7 +109,7 @@ class Person(BaseModel):
 		self.dynamic = {
 			'directed': None,
 			'wrote': None,
-			'performed': None,
+			'performedIn': None,
 			'playsCharacter': None,
 		}
 		
@@ -122,9 +122,9 @@ class Person(BaseModel):
 		print '>> fetching [Person-wrote]'
 		return [ Movie(obj.uri) for obj in self.smdb__wrote__m ]
 		
-	def get_performed(self):
-		print '>> fetching [Person-performed]'
-		return [ Movie(obj.uri) for obj in self.smdb__performed__m ]
+	def get_performedIn(self):
+		print '>> fetching [Person-performedIn]'
+		return [ Movie(obj.uri) for obj in self.smdb__performedIn__m ]
 	
 	def get_playsCharacter(self):
 		print '>> fetching [Person-playsCharacter]'
@@ -160,6 +160,15 @@ class Character(BaseModel):
 	def get_inMovie(self):
 		print '>> fetching [Character-inMovie]'
 		return [ Movie(obj.uri) for obj in self.smdb__inMovie__m ]
+	
+	def get_movie_actors(self):
+		for uriMovie, uriActor in graph.query("""SELECT ?m ?a WHERE {
+										?a smdb:performedIn ?u.
+										?c smdb:inMovie ?m .
+										?c smdb:portrayedBy ?a .
+										}""", initBindings={'c': self.uri}):
+			yield Movie(uriMovie), Person(uriActor)
+	
 	
 	def get_absolute_url(self):
 		return u'/character/%s/' %(self.slug)

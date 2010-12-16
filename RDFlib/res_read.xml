@@ -44,22 +44,22 @@
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Character"/>
     <_3:slug>mia-wallace</_3:slug>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#user_mtavares">
+  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#user:mtavares">
     <_3:username>mtavares</_3:username>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#SMDBUser"/>
-    <_3:isFriendsWith rdf:resource="http://www.smdb.com/smdb.owl#user_pgaspar"/>
+    <_3:isFriendsWith rdf:resource="http://www.smdb.com/smdb.owl#user:pgaspar"/>
     <_3:hasSeen rdf:resource="http://www.smdb.com/smdb.owl#Pulp_Fiction_1994"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#user_pgaspar">
+  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#user:pgaspar">
     <_3:username>pgaspar</_3:username>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#SMDBUser"/>
-    <_3:isFriendsWith rdf:resource="http://www.smdb.com/smdb.owl#user_mtavares"/>
+    <_3:isFriendsWith rdf:resource="http://www.smdb.com/smdb.owl#user:mtavares"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#review_1">
+  <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#review:1">
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#MovieReview"/>
     <_3:id rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</_3:id>
     <_3:refersTo rdf:resource="http://www.smdb.com/smdb.owl#Pulp_Fiction_1994"/>
-    <_3:writtenByUser rdf:resource="http://www.smdb.com/smdb.owl#user_mtavares"/>
+    <_3:writtenByUser rdf:resource="http://www.smdb.com/smdb.owl#user:mtavares"/>
     <_3:reviewText>This movie is awesome[*****]</_3:reviewText>
   </rdf:Description>
 </rdf:RDF>

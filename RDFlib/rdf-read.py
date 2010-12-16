@@ -1,5 +1,6 @@
 from SMDB import SMDB
 from rdflib.namespace import Namespace
+from rdflib import URIRef
 from rdflib.term import Variable
 
 s = SMDB()
@@ -37,12 +38,15 @@ for review in s.graph.query("""SELECT ?u WHERE {
 			}""", initNs=initNs, initBindings={'m': uri}):
 	print review
 
-#for name, slug in s.graph.query("""SELECT ?n ?s WHERE {
-# 			?a rdf:type smdb:Person .
-#			?a smdb:name ?n .
-#			?a smdb:slug ?s .
-#			}""", initNs=initNs, initBindings={Variable("?a"): director}):
-#	print name, slug
+for directed, wrote, performedIn in s.graph.query("""SELECT ?d ?w ?p WHERE {
+ 			?a rdf:type smdb:Person .
+			?a smdb:directed ?d .
+			?a smdb:wrote ?w .
+			?a smdb:performedIn ?p .
+			}""", initNs=initNs, initBindings={'a': URIRef(s.smdb['Quentin_Tarantino'])}):
+	print 'Directed:', directed
+	print 'Wrote:', wrote
+	print 'Performed In', performedIn
 
 s.exportData('res_read')
 

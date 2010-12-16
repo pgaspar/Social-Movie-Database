@@ -37,9 +37,31 @@ def user_detail(request, username):
 	
 	uri = graph.query_single("""SELECT ?u WHERE {
 				?u rdf:type smdb:SMDBUser .
-				?u smdb:username ?a .
-			}""", initBindings={'a': Literal(username)})
+				?u smdb:username ?un .
+			}""", initBindings={'un': Literal(username)})
 	
 	user = SMDBUser(uri)
 	
 	return render(request, 'user.html', {'user': user})
+	
+def person_detail(request, slug):
+	
+	uri = graph.query_single("""SELECT ?u WHERE {
+				?u rdf:type smdb:Person .
+				?u smdb:slug ?s .
+			}""", initBindings={'s': Literal(slug)})
+	
+	person = Person(uri)
+	
+	return render(request, 'person.html', {'person': person})
+	
+def character_detail(request, slug):
+	
+	uri = graph.query_single("""SELECT ?u WHERE {
+				?u rdf:type smdb:Character .
+				?u smdb:slug ?s .
+			}""", initBindings={'s': Literal(slug)})
+	
+	character = Character(uri)
+	
+	return render(request, 'character.html', {'character': character})

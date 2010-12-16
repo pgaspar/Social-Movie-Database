@@ -19,11 +19,11 @@
     _3:portrayedBy <http://www.smdb.com/smdb.owl#John_Travolta>;
     _3:slug "vincent-vega" .
 
-<http://www.smdb.com/smdb.owl#review_1> a <http://www.smdb.com/smdb.owl#MovieReview>;
+<http://www.smdb.com/smdb.owl#review:1> a <http://www.smdb.com/smdb.owl#MovieReview>;
     _3:id 1;
     _3:refersTo <http://www.smdb.com/smdb.owl#Pulp_Fiction_1994>;
     _3:reviewText "This movie is awesome[*****]";
-    _3:writtenByUser <http://www.smdb.com/smdb.owl#user_mtavares> .
+    _3:writtenByUser <http://www.smdb.com/smdb.owl#user:mtavares> .
 
 <http://www.smdb.com/smdb.owl#John_Travolta> a <http://www.smdb.com/smdb.owl#Person>;
     _3:name "John Travolta";
@@ -35,13 +35,13 @@
     _3:performedIn <http://www.smdb.com/smdb.owl#Pulp_Fiction_1994>;
     _3:slug "uma-thurman" .
 
-<http://www.smdb.com/smdb.owl#user_pgaspar> a <http://www.smdb.com/smdb.owl#SMDBUser>;
-    _3:isFriendsWith <http://www.smdb.com/smdb.owl#user_mtavares>;
+<http://www.smdb.com/smdb.owl#user:pgaspar> a <http://www.smdb.com/smdb.owl#SMDBUser>;
+    _3:isFriendsWith <http://www.smdb.com/smdb.owl#user:mtavares>;
     _3:username "pgaspar" .
 
-<http://www.smdb.com/smdb.owl#user_mtavares> a <http://www.smdb.com/smdb.owl#SMDBUser>;
+<http://www.smdb.com/smdb.owl#user:mtavares> a <http://www.smdb.com/smdb.owl#SMDBUser>;
     _3:hasSeen <http://www.smdb.com/smdb.owl#Pulp_Fiction_1994>;
-    _3:isFriendsWith <http://www.smdb.com/smdb.owl#user_pgaspar>;
+    _3:isFriendsWith <http://www.smdb.com/smdb.owl#user:pgaspar>;
     _3:username "mtavares" .
 
 <http://www.smdb.com/smdb.owl#Pulp_Fiction_1994> a <http://www.smdb.com/smdb.owl#Movie>;
