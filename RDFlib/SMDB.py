@@ -17,6 +17,11 @@ class SMDB():
 		
 		self.graph = Graph(self.store, identifier = URIRef(identifier))
 		
+		self.printTripleCount()
+		
+		if(len(self.graph) == 0):
+			self.graph.parse('../Ontology/SocialMovieDatabase.owl')
+		
 		self.smdb = Namespace(identifier + '#')
 		self.person = Namespace("/person/")
 		self.movie = Namespace("/movie/")

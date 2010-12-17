@@ -1,7 +1,7 @@
 import re
 from SMDB import SMDB
 
-PATH = './Data/'
+PATH = '../../Data/'
 MOVIE_FILE = 'movies.list'
 ACTOR_FILE = 'actors.list'
 ACTRESS_FILE = 'actresses.list'
@@ -11,7 +11,24 @@ PLOT_FILE = 'plot.list'
 GENRE_FILE = 'genres.list'
 LOCATION_FILE = 'locations.list'
 RATING_FILE = 'mpaa-ratings-reasons.list'
+PICKS_FILE = 'pickedTitles.dat'
 
+
+def cleanName(name):
+	
+	nameCleaner= re.compile('(.*?),\s(.*)(\s\(.*\))')
+	nameNormal = re.compile('(.*?),\s(.*)')
+	cleanName = ""
+	
+	names = nameCleaner.match(name)
+	if(names):
+		cleanName = names.group(2) + " " + names.group(1) + names.group(3)
+	else:
+		names = nameNormal.match(name)
+		cleanName = names.group(2) + " " + names.group(1)
+	
+	return cleanName
+	
 
 if __name__ == "__main__":
 	
@@ -24,6 +41,15 @@ if __name__ == "__main__":
 	splitRegex = '\s*\t'
 	
 	s = SMDB()
+	
+	pickedFile = open(PATH + PICKS_FILE)
+	
+	titles = []
+	i = 0
+	
+	for line in pickedFile:
+		titles.append(line.replace("\n",""))
+	
 	
 	#--------------------------------------------------------------------------------------
 	#MOVIES
@@ -40,11 +66,14 @@ if __name__ == "__main__":
 		matches = regex.match(line)
 		if(matches and matches.group(1) and not matches.group(2) and not matches.group(3)):
 			#print matches.group(1) + " ::: " + matches.group(4)
-			try:
-				s.addMovie(matches.group(1),matches.group(4))
-			except:
-				continue
-			nMovies += 1
+			if(matches.group(1) in titles):
+				try:
+					s.addMovie(matches.group(1),matches.group(4))
+					print matches.group(1)
+				except:
+					print matches.group(1) + " FAILED"
+					continue
+				nMovies += 1
 	
 	print "FINISHED PARSING MOVIES : " + str(nMovies)
 
@@ -64,13 +93,20 @@ if __name__ == "__main__":
 
 	for line in actorFile:
 		matches = regex.match(line)
+		if(matches and len(matches.group(1)) != 0):
+			actorName = matches.group(1)
+			addedPerson = False
+		
 		if(matches and matches.group(2) and not matches.group(3) and not matches.group(4)):
 			try:
-				if(len(matches.group(1)) != 0):
-					actorName = matches.group(1)
-					s.addPerson(matches.group(1))
-				s.addPerformance(actorName, matches.group(2))
-				s.addCharacter(matches.group(2), actorName.group(1), matches.group(5))
+				if(matches.group(2) in titles):
+					if(not addedPerson):
+						clean = cleanName(actorName)
+						s.addPerson(clean)
+						addedPerson = True
+					s.addPerformance(clean, matches.group(2))
+					s.addCharacter(matches.group(2), clean, matches.group(5))
+					print clean + " AS " + matches.group(5)
 			except:
 				continue
 	#		print actorName + " ::: " + matches.group(2) + " ::: " + matches.group(5)
@@ -88,13 +124,20 @@ if __name__ == "__main__":
 
 	for line in actressFile:
 		matches = regex.match(line)
+		if(matches and len(matches.group(1)) != 0):
+			actorName = matches.group(1)
+			addedPerson = False
+		
 		if(matches and matches.group(2) and not matches.group(3) and not matches.group(4)):
 			try:
-				if(len(matches.group(1)) != 0):
-					actorName = matches.group(1)
-					s.addPerson(matches.group(1))
-				s.addPerformance(actorName, matches.group(2))
-				s.addCharacter(matches.group(2), actorName, matches.group(5))
+				if(matches.group(2) in titles):
+					if(not addedPerson):
+						clean = cleanName(actorName)	
+						s.addPerson(clean)
+						addedPerson = True
+					s.addPerformance(clean, matches.group(2))
+					s.addCharacter(matches.group(2), clean, matches.group(5))
+					print clean + " AS " + matches.group(5)
 			except:
 				continue
 	#		print actorName + " ::: " + matches.group(2) + " ::: " + matches.group(5)
@@ -116,12 +159,17 @@ if __name__ == "__main__":
 	
 	for line in writersFile:
 		matches = regex.match(line)
+		if(matches and len(matches.group(1)) != 0):
+			actorName = matches.group(1)
+			addedPerson = False
 		if(matches and matches.group(2) and not matches.group(3) and not matches.group(4)):
 			try:
-				if(len(matches.group(1)) != 0):
-					writerName = matches.group(1)
-					s.addPerson(matches.group(1))
-				s.addWriter(writerName, matches.group(2))
+				if(matches.group(2) in titles):
+					if(not addedPerson):
+						clean = cleanName(actorName)	
+						s.addPerson(clean)
+						addedPerson = True
+					s.addWriter(clean, matches.group(2))
 			except:
 				continue
 	#		print writerName + " ::: " + matches.group(2)
@@ -138,16 +186,21 @@ if __name__ == "__main__":
 	
 	for line in directorsFile:
 		matches = regex.match(line)
+		if(matches and len(matches.group(1)) != 0):
+			actorName = matches.group(1)
+			addedPerson = False
 		if(matches and matches.group(2) and not matches.group(3) and not matches.group(4)):
 			try:
-				if(len(matches.group(1)) != 0):
-					directorName = matches.group(1)
-					s.addPerson(matches.group(1))
-				s.addDirector(directorName, matches.group(2))
+				if(matches.group(2) in titles):
+					if(not addedPerson):
+						clean = cleanName(actorName)	
+						s.addPerson(clean)
+						addedPerson = True
+					s.addDirector(clean, matches.group(2))
+					nDirects += 1
 			except:
 				continue
 	#		print directorName + " ::: " + matches.group(2)
-			nDirects += 1
 			
 	print "FINISHED PARSING DIRECTORS : " + str(nDirects)
 	
@@ -166,7 +219,9 @@ if __name__ == "__main__":
 		matches = regex.match(line)
 		if(matches and matches.group(1) and not matches.group(2) and not matches.group(3)):
 			try:
-				s.addGenre(matches.group(1), matches.group(4))
+				if(matches.group(1) in titles):
+					s.addGenre(matches.group(1), matches.group(4))
+					print matches.group(4) + " IS GENRE OF " + matches.group(1)
 			except:
 				continue
 	#		print matches.group(1) + " ::: " + matches.group(4)
@@ -187,7 +242,9 @@ if __name__ == "__main__":
 		matches = regex.match(line)
 		if(matches and matches.group(1) and not matches.group(2) and not matches.group(3)):
 			try:
-				s.addLocation(matches.group(1), matches.group(6))
+				if(matches.group(1) in titles):
+					s.addLocation(matches.group(1), matches.group(6))
+					print matches.group(1) + " SHOT IN " + matches.group(6)
 			except:
 				continue
 	#		print matches.group(1) + " ::: " + matches.group(6)
@@ -210,10 +267,11 @@ if __name__ == "__main__":
 		if(ratingMatch and movieFound):
 			rating = ratingMatch.group(1)
 			try:
-				s.addRating(movie, rating)
+				if(movie in titles):
+					s.addRating(movie, rating)
+					print movie + " ::: " + rating
 			except:
 				continue
-			#print movie + " ::: " + rating
 			movieFound = False
 		
 	s.exportData()
