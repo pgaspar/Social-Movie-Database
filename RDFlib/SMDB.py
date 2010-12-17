@@ -32,12 +32,13 @@ class SMDB():
 		print "Triples in graph: ", len(self.graph)
 
 	
-	def addPerson(self, name):
+	def addPerson(self, name, bio="LOREM IPSUM"):
 
 		uri = self.person[slugify(name) + '/']
 
 		self.graph.add((uri, RDF.type, self.smdb['Person']))
 		self.graph.add((uri, self.smdb['name'], Literal(name)))
+		self.graph.add((uri, self.smdb['biography'], Literal(bio)))
 		
 		self.graph.commit()
 	
@@ -84,7 +85,7 @@ class SMDB():
 		self.graph.commit()
 	
 	
-	def addMovie(self, title, releaseDate):
+	def addMovie(self, title, releaseDate, synopsis="Sample synopsis here"):
 
 		uri = self.movie[slugify(title) + '/']
 		
@@ -93,7 +94,7 @@ class SMDB():
 		self.graph.add((uri, RDF.type, self.smdb['Movie']))
 		self.graph.add((uri, self.smdb['title'], Literal(clean_title)))
 		self.graph.add((uri, self.smdb['releaseDate'], Literal(releaseDate)))
-		self.graph.add((uri, self.smdb['year'], Literal(releaseDate.year)))
+		self.graph.add((uri, self.smdb['synopsis'], Literal(synopsis)))
 		
 		self.graph.commit()
 		

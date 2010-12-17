@@ -1,5 +1,7 @@
 import re
 from SMDB import SMDB
+import sys
+import django
 
 PATH = '../../Data/'
 MOVIE_FILE = 'movies.list'
@@ -70,7 +72,7 @@ if __name__ == "__main__":
 				try:
 					s.addMovie(matches.group(1),matches.group(4))
 					print matches.group(1)
-				except:
+				except django.utils.encoding.DjangoUnicodeDecodeError:
 					print matches.group(1) + " FAILED"
 					continue
 				nMovies += 1
