@@ -29,12 +29,12 @@ urlpatterns = patterns('',
 	(r'^search/$', direct_to_template, {'template': 'search.html'}),
 	(r'^suggestion/$', direct_to_template, {'template': 'suggestion.html'}),
 	
-	(r'^browse/$', direct_to_template, {'template': 'browse.html'}),
-	(r'^browse/movies/$', 'smdb.views.test'),
+	url(r'^browse/$', direct_to_template, {'template': 'browse.html'}, name='browse-all'),
+	url(r'^browse/movies/$', 'smdb.views.browse_movies', name='browse-movies'),
 	(r'^browse/.*/$', direct_to_template, {'template': 'browse.html'}),
 	
 	(r'^movie/(?P<slug>[-\w]+)/$', 'smdb.views.movie_detail'),
-	(r'^user/(?P<username>[\w]+)/$', 'smdb.views.user_detail'),
-	
-	(r'^test/$', 'smdb.views.test'),
+	(r'^user/(?P<username>[-_\w]+)/$', 'smdb.views.user_detail'),
+	(r'^person/(?P<slug>[-\w]+)/$', 'smdb.views.person_detail'),
+	(r'^character/(?P<slug>[-\w]+)/$', 'smdb.views.character_detail'),
 )

@@ -6,4 +6,5 @@ Thumbs.db
 *.sqlite3
 */rdf-db/*
 SMDB/database/rdf/*
-
+*.n3
+*.xml

@@ -1,6 +1,7 @@
 from django_rdf.utils import LazySubject
 from django_rdf import graph
 from smdb import manager
+from smdb.browsing.filter_list import FilterList
 
 class BaseModel(LazySubject):
 	
@@ -42,11 +43,10 @@ class Movie(BaseModel):
 	def __init__(self, uri):
 		if super(Movie, self).__init__(uri): return		# Call super and exit if this is a created instance
 		
-		self.title, self.slug, self.releaseDate = graph.query_single(
-			"""SELECT ?t ?s ?d WHERE {
+		self.title, self.releaseDate = graph.query_single(
+			"""SELECT ?t ?d WHERE {
 						?u rdf:type smdb:Movie .
 						?u smdb:title ?t .
-						?u smdb:slug ?s .
 						?u smdb:releaseDate ?d .
 					}""", initBindings={'u': self.uri})
 		
@@ -91,25 +91,34 @@ class Movie(BaseModel):
 										}""", initBindings={'u': self.uri}):
 			yield Person(uriActor), Character(uriCharacter)
 	
+	@classmethod
+	def getFilterList(model, year=None):
+		
+		# Years
+		years = graph.query("SELECT ?y WHERE { ?u rdf:type smdb:Movie . ?u smdb:year ?y . }")
+		years = [ (y, y == year, 'year') for y in years]	# Add the "selected" field and some info
+		years = [('All', not year)] + years			# Add the "All" option
+		
+		return FilterList({'Year':years})
+		
 	def get_absolute_url(self):
-		return u'/movie/%s/' %(self.slug)
+		return self.uri
 		
 class Person(BaseModel):
 	
 	def __init__(self, uri):
 		if super(Person, self).__init__(uri): return		# Call super and exit if this is a created instance
 		
-		self.name, self.slug = graph.query_single(
-			"""SELECT ?n ?s WHERE {
+		self.name = graph.query_single(
+			"""SELECT ?n WHERE {
 						?u rdf:type smdb:Person .
 						?u smdb:name ?n .
-						?u smdb:slug ?s .
 					}""", initBindings={'u': self.uri})
 		
 		self.dynamic = {
 			'directed': None,
 			'wrote': None,
-			'performed': None,
+			'performedIn': None,
 			'playsCharacter': None,
 		}
 		
@@ -122,16 +131,16 @@ class Person(BaseModel):
 		print '>> fetching [Person-wrote]'
 		return [ Movie(obj.uri) for obj in self.smdb__wrote__m ]
 		
-	def get_performed(self):
-		print '>> fetching [Person-performed]'
-		return [ Movie(obj.uri) for obj in self.smdb__performed__m ]
+	def get_performedIn(self):
+		print '>> fetching [Person-performedIn]'
+		return [ Movie(obj.uri) for obj in self.smdb__performedIn__m ]
 	
 	def get_playsCharacter(self):
 		print '>> fetching [Person-playsCharacter]'
 		return [ Character(obj.uri) for obj in self.smdb__playsCharacter__m ]
 
 	def get_absolute_url(self):
-		return u'/person/%s/' %(self.slug)
+		return self.uri
 		
 		
 class Character(BaseModel):
@@ -139,11 +148,10 @@ class Character(BaseModel):
 	def __init__(self, uri):
 		if super(Character, self).__init__(uri): return		# Call super and exit if this is a created instance
 		
-		self.name, self.slug = graph.query_single(
-			"""SELECT ?n ?s WHERE {
+		self.name = graph.query_single(
+			"""SELECT ?n WHERE {
 						?u rdf:type smdb:Character .
 						?u smdb:name ?n .
-						?u smdb:slug ?s .
 					}""", initBindings={'u': self.uri})
 					
 		
@@ -161,8 +169,17 @@ class Character(BaseModel):
 		print '>> fetching [Character-inMovie]'
 		return [ Movie(obj.uri) for obj in self.smdb__inMovie__m ]
 	
+	def get_movie_actors(self):
+		for uriMovie, uriActor in graph.query("""SELECT ?m ?a WHERE {
+										?a smdb:performedIn ?u.
+										?c smdb:inMovie ?m .
+										?c smdb:portrayedBy ?a .
+										}""", initBindings={'c': self.uri}):
+			yield Movie(uriMovie), Person(uriActor)
+	
+	
 	def get_absolute_url(self):
-		return u'/character/%s/' %(self.slug)
+		return self.uri
 	
 	
 class SMDBUser(BaseModel):
@@ -175,7 +192,6 @@ class SMDBUser(BaseModel):
 						?u rdf:type smdb:SMDBUser .
 						?u smdb:username ?un .
 					}""", initBindings={'u': self.uri})
-					
 		
 		self.dynamic = {
 			'isFriendsWith': None,
@@ -197,7 +213,7 @@ class SMDBUser(BaseModel):
 		return [ Movie(obj.uri) for obj in self.smdb__hasSeen__m ]
 	
 	def get_absolute_url(self):
-		return u'/user/%s/' %(self.username)
+		return self.uri
 	
 	
 class MovieReview(BaseModel):

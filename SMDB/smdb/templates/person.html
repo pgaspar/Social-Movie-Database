@@ -1,59 +1,58 @@
 {% extends "base.html" %}
 
+{% load utils %}
+
 {% block content %}
-	<h2>Quentin Tarantino</h2>
+	<h2>{{ person.name }}</h2>
 	
 	<div class="description">
-		<p><a href="#director-section">Director</a>, <a href="#writer-section">Writer</a> and <a href="#actor-section">Actor</a>.</p>
+		<p>{{ person|getOccupations|safe }}</p>
 		<br />
 		<p>
 			<b class="label">Biography:</b><br />
-			<div class="text-box">In January of 1992, Reservoir Dogs appeared at the Sundance Film Festival, by first-time writer-director Quentin Tarantino. The film garnered critical acclaim and the director became a legend immediately. Two years later, he followed up Dogs success with Pulp Fiction.</div>
+			<div class="text-box">{{ person.biography }}</div>
 		</p>
-		<p><b class="label">Date of Birth:</b> March 27, 1963</p>
+		<p><b class="label">Date of Birth:</b> {{ person.dateOfBirth|date:"F d, Y" }}</p>
 	</div>
 	
+	{% if person.directed %}
 	<div class="section" id="director-section">
 		<h3 class="context-header"><span>Directed</span></h3>
 		
 		<table class="movie-list">
-			<tr>
-				<td><a href="/movie/">Pulp Fiction</a></td>
-				<td>1994</td>
-			</tr>
 			
-			<tr>
-				<td><a href="/movie/">Inglourious Basterds</a></td>
-				<td>2009</td>
-			</tr>
+			{% for movie in person.directed %}
+				{% include 'widgets/movie-list.html' %}
+			{% endfor %}
+			
 		</table>
 	</div>
+	{% endif %}
 	
+	{% if person.wrote %}
 	<div class="section" id="writer-section">
 		<h3 class="context-header"><span>Wrote</span></h3>
 		
 		<table class="movie-list">
-			<tr>
-				<td><a href="/movie/">Pulp Fiction</a></td>
-				<td>1994</td>
-			</tr>
 			
-			<tr>
-				<td><a href="/movie/">Inglourious Basterds</a></td>
-				<td>2009</td>
-			</tr>
+			{% for movie in person.wrote %}
+				{% include 'widgets/movie-list.html' %}
+			{% endfor %}
+			
 		</table>
 	</div>
+	{% endif %}
 	
+	{% if person.performedIn %}
 	<div class="section" id="actor-section">
 		<h3 class="context-header"><span>Performed in</span></h3>
 		
 		<table class="movie-list">
-			<tr>
-				<td><a href="/movie/">Pulp Fiction</a> - <a href="/character/" class="not-bold">Jimmie Dimmick</a></td>
-				<td>1994</td>
-			</tr>
+			{% for movie in person.performedIn %}
+				{% include 'widgets/movie-list.html' %}
+			{% endfor %}
 		</table>
 	</div>
+	{% endif %}
 	
 {% endblock %}

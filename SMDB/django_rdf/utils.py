@@ -17,8 +17,8 @@ class PowerGraph(Graph):
 	def query(self, q, **kwargs):
 		d = self.ontologies.copy()
 		if 'initNs' in kwargs:
-			d.update(kwargs.pop("initNs"))		
-		return super(PowerGraph, self).query(q, initNs=d, **kwargs)
+			d.update(kwargs.pop("initNs"))
+		return super(PowerGraph, self).query(q, initNs=d, **kwargs).result
 	
 	def query_single(self, q, **kwargs):
 		for result in self.query(q, **kwargs):
@@ -86,7 +86,7 @@ class LazySubject(object):
 		name = name.replace('__',':')
 		
 		# Anything that is not controlled by us...
-		if True not in map(name.startswith, self.graph.ontologies.keys()):
+		if True not in map(name.startswith, self.graph.ontologies.keys()) or ':' not in name:
 			attr = super(LazySubject, self).__getattribute__(name)
 			if hasattr(attr, '__call__'): raise AttributeError	# Let Django find the functions later...
 			return attr

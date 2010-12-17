@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<h2>Jimmie Dimmick <span>(Character)</span></h2>
+	<h2>{{ character.name }} <span>(Character)</span></h2>
 	
 	<div class="section">
 		<h3 class="context-header"><span>Portrayed In</span></h3>
 		
 		<table class="movie-list">
+			
+			{% for movie, actor in character.get_movie_actors %}
 			<tr>
-				<td><a href="/movie/">Pulp Fiction</a> by <a href="/person/" class="not-bold">Quentin Tarantino</a></td>
-				<td>1994</td>
+				<td><a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a> by <a href="{{ actor.get_absolute_url }}" class="not-bold">{{ actor.name }}</a></td>
+				<td>{{ movie.releaseDate|date:"Y" }}</td>
 			</tr>
+			{% empty %}
+				<p>No movies found.</p>
+			{% endfor %}
 		</table>
 	</div>
 	

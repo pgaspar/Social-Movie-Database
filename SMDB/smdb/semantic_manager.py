@@ -18,7 +18,7 @@ class SemanticModelManager(object):
 		if not instance:
 			instance = new_instance
 			self._data[uri] = instance
-			
+		
 		return instance
 	
 	def __setitem__(self, uri, modelClass):
