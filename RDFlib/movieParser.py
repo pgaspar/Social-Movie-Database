@@ -105,7 +105,7 @@ if __name__ == "__main__":
 						s.addPerson(clean)
 						addedPerson = True
 					s.addPerformance(clean, matches.group(2))
-					s.addCharacter(matches.group(2), clean, matches.group(5))
+					s.addCharacter(matches.group(2), clean, matches.group(5).replace("[","").replace("]",""))
 					print clean + " AS " + matches.group(5)
 			except:
 				continue
