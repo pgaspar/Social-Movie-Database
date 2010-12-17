@@ -1,4 +1,4 @@
-; Thu Dec 16 17:42:32 WET 2010
+; Fri Dec 17 17:04:42 WET 2010
 ; 
 ;+ (version "3.4.4")
 ;+ (build "Build 579")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[SocialMovieDatabase_ProjectKB_Class101]
-		[SocialMovieDatabase_ProjectKB_Class102]
-		[SocialMovieDatabase_ProjectKB_Class103]
-		[SocialMovieDatabase_ProjectKB_Class104]
-		[SocialMovieDatabase_ProjectKB_Class105]))
+		[SocialMovieDatabase_ProjectKB_Class106]
+		[SocialMovieDatabase_ProjectKB_Class107]
+		[SocialMovieDatabase_ProjectKB_Class108]
+		[SocialMovieDatabase_ProjectKB_Class109]
+		[SocialMovieDatabase_ProjectKB_Class110]))
 
 ([CLSES_TAB] of  Widget
 
@@ -5612,36 +5612,36 @@
 ([SocialMovieDatabase_ProjectKB_Class10] of  Property_List
 )
 
-([SocialMovieDatabase_ProjectKB_Class101] of  String
+([SocialMovieDatabase_ProjectKB_Class106] of  String
 
 	(name "http://www.w3.org/2002/07/owl#Class")
 	(string_value "%3ANAME"))
 
-([SocialMovieDatabase_ProjectKB_Class102] of  String
+([SocialMovieDatabase_ProjectKB_Class107] of  String
 
 	(name ":INSTANCE-ANNOTATION")
 	(string_value "%3AANNOTATION-TEXT"))
 
-([SocialMovieDatabase_ProjectKB_Class103] of  String
+([SocialMovieDatabase_ProjectKB_Class108] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
 
-([SocialMovieDatabase_ProjectKB_Class104] of  String
+([SocialMovieDatabase_ProjectKB_Class109] of  String
 
 	(name ":PAL-CONSTRAINT")
 	(string_value "%3APAL-NAME"))
-
-([SocialMovieDatabase_ProjectKB_Class105] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Thing")
-	(string_value "%3ANAME"))
 
 ([SocialMovieDatabase_ProjectKB_Class11] of  Widget
 
 	(is_hidden TRUE)
 	(property_list [SocialMovieDatabase_ProjectKB_Class12])
 	(widget_class_name "edu.stanford.smi.protege.widget.instance_tree.InstanceTreeTab"))
+
+([SocialMovieDatabase_ProjectKB_Class110] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Thing")
+	(string_value "%3ANAME"))
 
 ([SocialMovieDatabase_ProjectKB_Class12] of  Property_List
 )
