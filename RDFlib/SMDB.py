@@ -88,6 +88,7 @@ class SMDB():
 		self.graph.add((uri, RDF.type, self.smdb['Movie']))
 		self.graph.add((uri, self.smdb['title'], Literal(clean_title)))
 		self.graph.add((uri, self.smdb['releaseDate'], Literal(releaseDate)))
+		self.graph.add((uri, self.smdb['year'], Literal(releaseDate.year)))
 		
 		self.graph.commit()
 		

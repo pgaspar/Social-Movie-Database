@@ -6,6 +6,7 @@ s = SMDB()
 s.printTripleCount()
 
 s.addMovie('Pulp Fiction (1994)', datetime.date(1994, 11, 25))
+s.addMovie('Something Else (1992)', datetime.date(1992, 12, 01))
 
 s.addPerson('John Travolta')
 s.addPerson('Uma Thurman')

@@ -1,6 +1,7 @@
 from django_rdf.utils import LazySubject
 from django_rdf import graph
 from smdb import manager
+from smdb.browsing.filter_list import FilterList
 
 class BaseModel(LazySubject):
 	
@@ -90,6 +91,16 @@ class Movie(BaseModel):
 										}""", initBindings={'u': self.uri}):
 			yield Person(uriActor), Character(uriCharacter)
 	
+	@classmethod
+	def getFilterList(model, year=None):
+		
+		# Years
+		years = graph.query("SELECT ?y WHERE { ?u rdf:type smdb:Movie . ?u smdb:year ?y . }")
+		years = [ (y, y == year, 'year') for y in years]	# Add the "selected" field and some info
+		years = [('All', not year)] + years			# Add the "All" option
+		
+		return FilterList({'Year':years})
+		
 	def get_absolute_url(self):
 		return self.uri
 		

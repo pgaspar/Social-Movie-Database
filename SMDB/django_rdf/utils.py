@@ -18,7 +18,7 @@ class PowerGraph(Graph):
 		d = self.ontologies.copy()
 		if 'initNs' in kwargs:
 			d.update(kwargs.pop("initNs"))
-		return super(PowerGraph, self).query(q, initNs=d, **kwargs)
+		return super(PowerGraph, self).query(q, initNs=d, **kwargs).result
 	
 	def query_single(self, q, **kwargs):
 		for result in self.query(q, **kwargs):

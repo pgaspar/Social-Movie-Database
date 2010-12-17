@@ -1,7 +1,8 @@
 from SMDB import SMDB
 from rdflib.namespace import Namespace
 from rdflib import URIRef
-from rdflib.term import Variable
+from rdflib.term import Variable, Literal
+import datetime
 
 s = SMDB()
 s.printTripleCount()
@@ -15,6 +16,9 @@ initNs = dict(
 			character=Namespace("/character/"),
 			user=Namespace("/user/"),
 		)
+
+rdf=Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
+xsd=Namespace("http://www.w3.org/2001/XMLSchema#")
 
 for a, b, c in s.graph.query('SELECT ?a ?b ?c WHERE { ?a smdb:wrote ?c . }', initNs=initNs):
 	print a, "\n WROTE \n", c, '\n'
@@ -57,6 +61,20 @@ for user in s.graph.query("""SELECT ?un WHERE {
 			?u smdb:username ?un .
 			}""", initNs=initNs, initBindings={'u': s.user['pgaspar/']}):
 	print user
+
+print ''
+
+d = datetime.date(1994, 11, 25)
+
+print 'Filtering:'
+for a, b in s.graph.query("""SELECT ?a ?b WHERE {
+			?a rdf:type smdb:Movie .
+			?a smdb:title ?b .
+			?a smdb:year ?d .
+			FILTER( ?d = %s )
+		}""" % d.year, initNs=initNs, DEBUG=True) :
+	print a, b
+
 
 s.exportData('res_read')
 

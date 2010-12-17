@@ -55,9 +55,18 @@ def character_detail(request, slug):
 
 def browse_movies(request):
 	
-	res = graph.query("""SELECT ?a ?b WHERE {
+	year = request.GET.get('year', None)
+	
+	f = Movie.getFilterList(year)
+	
+	query = """SELECT ?a ?b ?d WHERE {
 				?a rdf:type smdb:Movie .
 				?a smdb:title ?b .
-			}""")
+				?a smdb:year ?d .
+				"""
 	
-	return render(request, 'test.html', {'movie_list': res})
+	if year: query += " FILTER( ?d = %d ) ." %int(year)
+	
+	res = graph.query(query + "}")
+	
+	return render(request, 'browse.html', {'f':f, 'movie_list': res})
