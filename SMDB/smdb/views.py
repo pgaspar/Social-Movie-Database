@@ -55,18 +55,37 @@ def character_detail(request, slug):
 
 def browse_movies(request):
 	
+	initBindings = {}
+	
 	year = request.GET.get('year', None)
+	director = request.GET.get('director', None)
 	
-	f = Movie.getFilterList(year)
+	print 'Year:', year
+	print 'Director:', director
 	
-	query = """SELECT ?a ?b ?d WHERE {
+	f = Movie.getFilterList(year, director)
+	
+	query = """SELECT ?a ?b ?y WHERE {
 				?a rdf:type smdb:Movie .
 				?a smdb:title ?b .
-				?a smdb:year ?d .
+				?a smdb:releaseDate ?y .
 				"""
 	
-	if year: query += " FILTER( ?d = %d ) ." %int(year)
+	if year: query += """ FILTER( ?y = "%s" ) .""" % Literal(year)
 	
-	res = graph.query(query + "}")
+	if director:
+		query += '?d smdb:directed ?a .'
+		initBindings.update( {'d': URIRef(director)} )
+	
+	res = graph.query(query + "}", initBindings=initBindings)
 	
 	return render(request, 'browse.html', {'f':f, 'movie_list': res})
+	
+def browse_people(request):
+	
+	res = graph.query("""SELECT ?a ?b WHERE {
+					?a rdf:type smdb:Person .
+					?a smdb:name ?b .
+				}""")
+	
+	return render(request, 'browse.html', {'people_list': res})

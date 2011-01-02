@@ -50,8 +50,6 @@ class Movie(BaseModel):
 						?u smdb:releaseDate ?d .
 					}""", initBindings={'u': self.uri})
 		
-		self.releaseDate = self.releaseDate.toPython()
-		
 		self.dynamic = {
 			'directedBy': None,
 			'writtenBy': None,
@@ -77,7 +75,7 @@ class Movie(BaseModel):
 	
 	def get_isOfGenre(self):
 		print '>> fetching [Movie-isOfGenre]'
-		return [ Genre(obj.uri) for obj in self.smdb__isOfGenre__m ]
+		return [] #[ Genre(obj.uri) for obj in self.smdb__isOfGenre__m ]
 	
 	def get_hasReview(self):
 		print '>> fetching [Movie-hasReview]'
@@ -92,18 +90,24 @@ class Movie(BaseModel):
 			yield Person(uriActor), Character(uriCharacter)
 	
 	@classmethod
-	def getFilterList(model, year=None):
+	def getFilterList(model, year=None, director=None):
 		
 		# Years
-		years = graph.query("SELECT ?y WHERE { ?u rdf:type smdb:Movie . ?u smdb:year ?y . }")
-		years = [ (y, y == year, 'year') for y in years]	# Add the "selected" field and some info
-		years = [('All', not year)] + years			# Add the "All" option
+		years = graph.query("SELECT DISTINCT ?y WHERE { ?u rdf:type smdb:Movie . ?u smdb:releaseDate ?y . } ORDER BY ?y")
 		
-		return FilterList({'Year':years})
+		# Directors
+		directors = graph.query("SELECT DISTINCT ?n ?d WHERE { ?d smdb:name ?n . ?d smdb:directed ?m . }")
+		
+		
+		years = FilterList.normalize(years, year, 'year')
+		directors = FilterList.normalize(directors, director, 'director')
+		
+		return FilterList({'Year':years, 'Director':directors})
 		
 	def get_absolute_url(self):
 		return self.uri
 		
+
 class Person(BaseModel):
 	
 	def __init__(self, uri):

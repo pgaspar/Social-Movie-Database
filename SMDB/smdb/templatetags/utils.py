@@ -16,4 +16,7 @@ def getOccupations(person):
 	
 	return " - ".join(html)
 	
+@register.filter
+def lowerThan(value, target):
+	return value < target
 	

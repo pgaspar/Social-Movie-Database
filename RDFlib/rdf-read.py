@@ -5,7 +5,6 @@ from rdflib.term import Variable, Literal
 import datetime
 
 s = SMDB()
-s.printTripleCount()
 
 initNs = dict(
 			rdf=Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#"), 
@@ -75,6 +74,10 @@ for a, b in s.graph.query("""SELECT ?a ?b WHERE {
 		}""" % d.year, initNs=initNs, DEBUG=True) :
 	print a, b
 
+
+print 'Directors:'
+for n, d in s.graph.query("SELECT ?n ?d WHERE { ?d smdb:name ?n . ?d smdb:directed ?m . }", initNs=initNs):
+	print 'n:', n, '\nd:', d
 
 s.exportData('res_read')
 
