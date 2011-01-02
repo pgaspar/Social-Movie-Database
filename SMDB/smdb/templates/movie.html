@@ -2,7 +2,7 @@
 
 {% block content %}
 	<h2>
-		{{ movie.title }} <span>({{ movie.releaseDate|date:"Y" }})</span>
+		{{ movie.title }} <span>({{ movie.releaseDate }})</span>
 		<a href="#"><span class="button done">Mark as Seen</span></a>
 	</h2>
 	
@@ -19,8 +19,7 @@
 		
 		<p><b class="label">Genres:</b> {% for obj in movie.isOfGenre %}<a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a> {% if not forloop.last %}, {% endif %}{% empty %}&nbsp;{% endfor %}</p>
 		<p><b class="label">Duration:</b> {{ movie.duration|default:"0" }} min</p>
-		<p><b class="label">Release Date:</b> {{ movie.releaseDate|date:"F d, Y" }}</p>
-		<p><b class="label">Setting Date:</b> ?</p>
+		<p><b class="label">Release Date:</b> {{ movie.releaseDate }}</p>
 		
 		<p><b class="label">Filmed In:</b> &nbsp;</p>
 		<p><b class="label">Takes Place In:</b> &nbsp;</p>

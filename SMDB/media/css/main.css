@@ -438,6 +438,7 @@ h1#header-title a {
 	font-size: 12px;
 	border-collapse: separate;
 	text-align: center;
+	empty-cells: hidden;
 }
 
 #content .filter td {

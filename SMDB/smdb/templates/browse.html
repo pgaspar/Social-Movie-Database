@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load utils %}
 
 {% block content %}
 	<h2>Browse Movies</h2>
@@ -12,13 +13,24 @@
 			</th>
 			<!--class="selected"-->
 			{% for row in f.getData %}
-			<tr>
-				{% for data, selected, type in row %}
-					<td {% if selected %}class="selected" {% else %} onclick="window.location.href = '?{{ type }}={{ data }}';" {% endif %}>
-						{{ data }}
-					</td>
-				{% endfor %}
-			</tr>
+			{% if forloop.counter|lowerThan:10 %}
+				<tr>
+					{% for el in row %}
+						<td {% if el.selected %}class="selected" {% else %} onclick="window.location.href = '?{{ el.label }}={{ el.id }}';" {% endif %}
+							{% if not el.data %}style="background-color: white; border: 1px white solid; cursor: default;"{% endif %}>
+							{{ el.data }}
+						</td>
+					{% endfor %}
+				</tr>
+			{% endif %}
+			
+			{% if forloop.last %}
+				<tr>
+					{% for el in row %}
+						<td><a href="javascript:{for (var tag in document.getElementsByTagName('td')) {tag.style.display=''}">more...</a></td>
+					{% endfor %}
+				</tr>
+			{% endif %}
 			{% endfor %}
 			<!--<tr>
 				<td></td>
@@ -30,7 +42,7 @@
 	</div>
 	
 	<div class="section">
-		<h3 class="context-header"><span>Results</span></h3>
+		<h3 class="context-header"><span>Movie Results</span></h3>
 		
 		<table class="movie-list">
 			
@@ -40,7 +52,24 @@
 					<td>{{ year }}</td>
 				</tr>
 			{% empty %}
-				<p>No movies found.</p>
+				<p>No Movie found.</p>
+			{% endfor %}
+			
+		</table>
+	</div>
+	
+	<div class="section">
+		<h3 class="context-header"><span>People Results</span></h3>
+		
+		<table class="movie-list">
+			
+			{% for uri, name in people_list %}
+				<tr>
+					<td><a href="{{ uri }}">{{ name }}</a></td>
+					<td>&nbsp;</td>
+				</tr>
+			{% empty %}
+				<p>No People found.</p>
 			{% endfor %}
 			
 		</table>

@@ -11,7 +11,7 @@
 			{% for movie, actor in character.get_movie_actors %}
 			<tr>
 				<td><a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a> by <a href="{{ actor.get_absolute_url }}" class="not-bold">{{ actor.name }}</a></td>
-				<td>{{ movie.releaseDate|date:"Y" }}</td>
+				<td>{{ movie.releaseDate }}</td>
 			</tr>
 			{% empty %}
 				<p>No movies found.</p>
