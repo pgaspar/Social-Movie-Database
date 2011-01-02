@@ -74,9 +74,6 @@ if __name__ == "__main__":
 					print matches.group(1)
 				except django.utils.encoding.DjangoUnicodeDecodeError:
 					print matches.group(1) + " FAILED"
-					continue
-				nMovies += 1
-	
 	print "FINISHED PARSING MOVIES : " + str(nMovies)
 
 	#-------------------------------------------------------------------------------------

@@ -76,6 +76,8 @@ class SMDB():
 		uriActor = self.person[slugify(actor) + '/']
 		uriCharacter = self.character[slugify(character) + '/']
 
+		character = character.replace("[","").replace("]","")
+
 		self.graph.add((uriCharacter, RDF.type, self.smdb['Character']))
 		self.graph.add((uriCharacter, self.smdb['name'], Literal(character)))
 		self.graph.add((uriCharacter, self.smdb['portrayedBy'], uriActor))

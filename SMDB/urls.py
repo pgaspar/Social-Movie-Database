@@ -26,7 +26,7 @@ urlpatterns = patterns('',
 	(r'^character/$', direct_to_template, {'template': 'character.html'}),
 	(r'^profile/$', direct_to_template, {'template': 'user.html'}),
 	
-	(r'^search/$', direct_to_template, {'template': 'search.html'}),
+	#(r'^search/$', direct_to_template, {'template': 'search.html'}),
 	(r'^suggestion/$', direct_to_template, {'template': 'suggestion.html'}),
 	
 	url(r'^browse/$', direct_to_template, {'template': 'browse.html'}, name='browse-all'),
@@ -37,4 +37,6 @@ urlpatterns = patterns('',
 	(r'^user/(?P<username>[-_\w]+)/$', 'smdb.views.user_detail'),
 	(r'^person/(?P<slug>[-\w]+)/$', 'smdb.views.person_detail'),
 	(r'^character/(?P<slug>[-\w]+)/$', 'smdb.views.character_detail'),
+	
+	(r'^search/.*$', 'smdb.views.search'),
 )
