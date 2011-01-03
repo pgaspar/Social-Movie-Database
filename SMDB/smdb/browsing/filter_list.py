@@ -1,31 +1,27 @@
-class FilterList(object):
+class Filter(object):
 	
-	def __init__(self, data):
-		super(FilterList, self).__init__()
+	def __init__(self, header, label, obj_list, target_o):
+		super(Filter, self).__init__()
 		
-		self._data = []
-		self._keys = []
+		self.header = header
+		self.label = label
+		self.obj_list = obj_list
+		self.target_o = target_o
 		
-		for key, value in data.items():
-			self._data.append( value )
-			self._keys.append( key )
+		self._normalize()
 		
-	def getHeaders(self):
-		return self._keys
+	def _normalize(self):
+		self.obj_list = [ FilterData(o, self.target_o, self.label) for o in self.obj_list]	# Add the "selected" field and some info
+		self.obj_list = [ FilterData('All', self.target_o, self.label) ] + self.obj_list				# Add the "All" option
 	
-	def getData(self):
-		return map( None, *self._data )
-	
-	@classmethod
-	def normalize(model, obj_list, target_o, label):
-		obj_list = [ FilterData(o, target_o, label) for o in obj_list]	# Add the "selected" field and some info
-		obj_list = [ FilterData('All', target_o) ] + obj_list			# Add the "All" option
+	def __iter__(self, *args, **kwargs):
+		return self.obj_list.__iter__(*args, **kwargs)
 		
-		return obj_list
-	
-	
+	def __len__(self):
+		return self.obj_list.__len__()
+
 class FilterData(object):
-	def __init__(self, object_list, target_o, label=''):
+	def __init__(self, object_list, target_o, label):
 		super(FilterData, self).__init__()
 		
 		if isinstance(object_list, tuple):
