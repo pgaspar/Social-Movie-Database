@@ -4,7 +4,7 @@ PATH = '../../Data/'
 DIRECTOR_FILE = 'directors.list'
 PICKS_FILE = 'pickedTitles.dat'
 
-directors = ['Tarantino, Quentin','Kubrick, Stanley (I)','Jackson, Peter (I)', 'Burton, Tim (I)', 'Bay, Michael', 'Spielberg, Steven', 'Allen, Woody','Coppola, Francis Ford']
+directors = ['Tarantino, Quentin','Kubrick, Stanley (I)','Jackson, Peter (I)', 'Burton, Tim (I)', 'Bay, Michael', 'Coppola, Francis Ford']
 								
 if __name__ == "__main__":
 	

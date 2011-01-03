@@ -14,6 +14,7 @@ GENRE_FILE = 'genres.list'
 LOCATION_FILE = 'locations.list'
 RATING_FILE = 'mpaa-ratings-reasons.list'
 PICKS_FILE = 'pickedTitles.dat'
+DURATION_FILE = 'running-times.list'
 
 
 def cleanName(name):
@@ -71,9 +72,11 @@ if __name__ == "__main__":
 			if(matches.group(1) in titles):
 				try:
 					s.addMovie(matches.group(1),matches.group(4))
-					print matches.group(1)
+					nMovies += 1
+					#print matches.group(1)
 				except django.utils.encoding.DjangoUnicodeDecodeError:
 					print matches.group(1) + " FAILED"
+					
 	print "FINISHED PARSING MOVIES : " + str(nMovies)
 
 	#-------------------------------------------------------------------------------------
@@ -105,11 +108,12 @@ if __name__ == "__main__":
 						addedPerson = True
 					s.addPerformance(clean, matches.group(2))
 					s.addCharacter(matches.group(2), clean, matches.group(5).replace("[","").replace("]",""))
-					print clean + " AS " + matches.group(5)
+					#print clean + " AS " + matches.group(5)
+					nParticipations += 1
 			except:
 				continue
 	#		print actorName + " ::: " + matches.group(2) + " ::: " + matches.group(5)
-			nParticipations += 1
+			
 			
 	print "FINISHED PARSING ACTORS : " + str(nParticipations)
 	
@@ -136,11 +140,12 @@ if __name__ == "__main__":
 						addedPerson = True
 					s.addPerformance(clean, matches.group(2))
 					s.addCharacter(matches.group(2), clean, matches.group(5))
-					print clean + " AS " + matches.group(5)
+					#print clean + " AS " + matches.group(5)
+					nParticipations += 1
 			except:
 				continue
 	#		print actorName + " ::: " + matches.group(2) + " ::: " + matches.group(5)
-			nParticipations += 1
+			
 			
 	print "FINISHED PARSING ACTRESSES : " + str(nParticipations)
 	
@@ -169,10 +174,11 @@ if __name__ == "__main__":
 						s.addPerson(clean)
 						addedPerson = True
 					s.addWriter(clean, matches.group(2))
+					nWrites += 1
 			except:
 				continue
 	#		print writerName + " ::: " + matches.group(2)
-			nWrites += 1
+			
 	
 	print "FINISHED PARSING WRITERS : " + str(nWrites)
 	
@@ -220,7 +226,7 @@ if __name__ == "__main__":
 			try:
 				if(matches.group(1) in titles):
 					s.addGenre(matches.group(1), matches.group(4))
-					print matches.group(4) + " IS GENRE OF " + matches.group(1)
+					#print matches.group(4) + " IS GENRE OF " + matches.group(1)
 			except:
 				continue
 	#		print matches.group(1) + " ::: " + matches.group(4)
@@ -243,7 +249,7 @@ if __name__ == "__main__":
 			try:
 				if(matches.group(1) in titles):
 					s.addLocation(matches.group(1), matches.group(6))
-					print matches.group(1) + " SHOT IN " + matches.group(6)
+					#print matches.group(1) + " SHOT IN " + matches.group(6)
 			except:
 				continue
 	#		print matches.group(1) + " ::: " + matches.group(6)
@@ -268,9 +274,35 @@ if __name__ == "__main__":
 			try:
 				if(movie in titles):
 					s.addRating(movie, rating)
-					print movie + " ::: " + rating
+					#print movie + " ::: " + rating
 			except:
 				continue
 			movieFound = False
+			
+	#---------------------------------------------------------------------------------------
+	#DURANTIONS
+	
+	durationsFile = open( PATH + DURATION_FILE )
+
+	regex = re.compile(titleRegex + 
+						weirdShitRegex +
+						splitRegex +
+						'(.*?:)?(\d*)')
+
+	previous = ""
+
+	for line in durationsFile:
+		matches = regex.match(line)
+
+		if(matches and matches.group(1) and not matches.group(2) and not matches.group(3)):
+			try:
+				if(matches.group(1) in titles):
+					if(matches.group(1) == previous): 
+						continue			
+					previous = matches.group(1)
+					s.addDuration(matches.group(1), matches.group(5))
+					print matches.group(1) + ":::" + str(matches.group(4)) + ":::" + matches.group(5)
+			except:
+				continue
 		
 	s.exportData()
