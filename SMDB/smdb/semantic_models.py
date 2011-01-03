@@ -1,7 +1,8 @@
 from django_rdf.utils import LazySubject
 from django_rdf import graph
 from smdb import manager
-from smdb.browsing.filter_list import FilterList
+from smdb.browsing.filter_list import Filter
+from rdflib import Literal, URIRef
 
 class BaseModel(LazySubject):
 	
@@ -93,17 +94,19 @@ class Movie(BaseModel):
 	def getFilterList(model, year=None, director=None):
 		
 		# Years
-		years = graph.query("SELECT DISTINCT ?y WHERE { ?u rdf:type smdb:Movie . ?u smdb:releaseDate ?y . } ORDER BY ?y")
+		years = graph.query("SELECT DISTINCT ?y WHERE { ?u rdf:type smdb:Movie . ?u smdb:releaseDate ?y . %s } ORDER BY ?y" \
+				% ( ("<%s> smdb:directed ?u . " % URIRef(director)) if director else "" ), initBindings={'y':Literal(year)} if year else {} )
 		
 		# Directors
-		directors = graph.query("SELECT DISTINCT ?n ?d WHERE { ?d smdb:name ?n . ?d smdb:directed ?m . }")
+		directors = graph.query("SELECT DISTINCT ?n ?d WHERE { ?d smdb:name ?n . ?d smdb:directed ?m . %s }" \
+				% ( ("?m smdb:releaseDate \"%s\" . " % Literal(year)) if year else "" ), initBindings={'d':URIRef(director)} if director else {})
 		
 		
-		years = FilterList.normalize(years, year, 'year')
-		directors = FilterList.normalize(directors, director, 'director')
+		years = Filter(header='Year', label='year', obj_list=years, target_o=year)
+		directors = Filter(header='Director', label='director', obj_list=directors, target_o=director)
 		
-		return FilterList({'Year':years, 'Director':directors})
-		
+		return [directors, years]
+	
 	def get_absolute_url(self):
 		return self.uri
 		

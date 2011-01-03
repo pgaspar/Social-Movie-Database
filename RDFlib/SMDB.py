@@ -103,7 +103,7 @@ class SMDB():
 	def addGenre(self, movie, genre):
 		
 		uri = self.movie[slugify(movie) + '/']
-		uriGenre = self.smdb[slugify(genre) + '/']
+		uriGenre = self.smdb[slugify(genre)]
 		
 		self.graph.add((uri, self.smdb['isOfGenre'], uriGenre))
 		
@@ -112,7 +112,7 @@ class SMDB():
 	def addRating(self, movie, rating):
 		
 		uriMovie = self.movie[slugify(movie) + '/']
-		uriRating = self.smdb[slugify(rating) + '/']
+		uriRating = self.smdb[slugify(rating)]
 		
 		self.graph.add((uriMovie, self.smdb['hasRating'], uriRating))
 		

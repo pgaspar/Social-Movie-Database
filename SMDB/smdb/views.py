@@ -71,15 +71,16 @@ def browse_movies(request):
 				?a smdb:releaseDate ?y .
 				"""
 	
-	if year: query += """ FILTER( ?y = "%s" ) .""" % Literal(year)
+	# Directors
+	if director: query += '?d smdb:directed ?a .\n'
 	
-	if director:
-		query += '?d smdb:directed ?a .'
-		initBindings.update( {'d': URIRef(director)} )
+	# Filters	
+	if year: query += """FILTER(?y = "%s") .\n""" % Literal(year)
+	if director: query += """FILTER(?d = <%s>) .\n""" % URIRef(director)
 	
 	res = graph.query(query + "}", initBindings=initBindings)
 	
-	return render(request, 'browse.html', {'f':f, 'movie_list': res})
+	return render(request, 'browse.html', {'filter_list':f, 'movie_list': res})
 	
 def browse_people(request):
 	

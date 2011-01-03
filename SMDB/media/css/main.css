@@ -57,7 +57,7 @@ div#header {
 	float: left;
 	width: 100%;
 	height: 60px;
-	background: #008EC4 url('../images/header_back.png') no-repeat top left;
+	background: #008EC4;
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
@@ -433,12 +433,21 @@ h1#header-title a {
 
 /*** FILTER ***/
 
-#content .filter {
+#content .filter-list {
 	margin: auto;
 	font-size: 12px;
 	border-collapse: separate;
 	text-align: center;
-	empty-cells: hidden;
+}
+
+#content .filter-list td {
+	border: 0px;
+	vertical-align: top;
+}
+
+#content .filter {
+	margin: auto;
+	border-collapse: separate;
 }
 
 #content .filter td {
@@ -452,10 +461,4 @@ h1#header-title a {
 
 #content .filter td.selected {
 	background-color: #e1f0e7;
-}
-
-#content .filter td:empty {
-	background-color: white;
-	border: 1px white solid;
-	cursor: default;
 }

@@ -1,22 +1,20 @@
-from django.template import Library
+from django.template import Library, Node, resolve_variable, TemplateSyntaxError
 
 register = Library()
-
-@register.filter
-def getOccupations(person):
-	director, writer, actor = ['<a href="#director-section">Director</a>',
-							   '<a href="#writer-section">Writer</a>',
-							   '<a href="#actor-section">Actor</a>']
-	
-	html = []
-	
-	if person.directed: html.append(director)
-	if person.wrote: html.append(writer)
-	if person.performedIn: html.append(actor)
-	
-	return " - ".join(html)
 	
 @register.filter
 def lowerThan(value, target):
 	return value < target
 	
+@register.filter
+def higherThan(value, target):
+	return value > target
+	
+
+@register.filter
+def useinURL(req, el):
+	varname, value = el.label, el.id
+	params = req.GET.copy()
+	if value == 'All': del params[varname]
+	else: params[varname] = value
+	return '%s?%s' % (req.path, params.urlencode())
