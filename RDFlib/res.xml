@@ -3497,7 +3497,7 @@
     <rdf1:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
     <rdf1:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
     <rdfs1:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs1:domain rdf:nodeID="iJjgbfoE0"/>
+    <rdfs1:domain rdf:nodeID="iFuSWTqN0"/>
     <rdfs1:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">name</rdfs1:label>
   </rdf:Description>
   <rdf:Description rdf:about="/character/may-pole-dancer/">
@@ -4206,8 +4206,8 @@
     <inMovie rdf:resource="/movie/dr-strangelove-or-how-i-learned-to-stop-worrying-and-love-the-bomb-1964/"/>
     <inMovie rdf:resource="/movie/tucker-the-man-and-his-dream-1988/"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="iJjgbfoE0">
-    <owl:unionOf rdf:nodeID="iJjgbfoE1"/>
+  <rdf:Description rdf:nodeID="iFuSWTqN0">
+    <owl:unionOf rdf:nodeID="iFuSWTqN1"/>
     <rdf1:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
   <rdf:Description rdf:about="/person/william-zielenski/">
@@ -5001,9 +5001,9 @@
     <portrayedBy rdf:resource="/person/lawrence-bender/"/>
     <inMovie rdf:resource="/movie/four-rooms-1995/"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="iJjgbfoE1">
+  <rdf:Description rdf:nodeID="iFuSWTqN1">
     <rdf1:first rdf:resource="http://www.smdb.com/smdb.owl#Character"/>
-    <rdf1:rest rdf:nodeID="iJjgbfoE2"/>
+    <rdf1:rest rdf:nodeID="iFuSWTqN2"/>
   </rdf:Description>
   <rdf:Description rdf:about="/character/hatteress/">
     <name>Hatteress</name>
@@ -6054,7 +6054,7 @@
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Person"/>
     <performedIn rdf:resource="/movie/transformers-revenge-of-the-fallen-2009/"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="iJjgbfoE2">
+  <rdf:Description rdf:nodeID="iFuSWTqN2">
     <rdf1:first rdf:resource="http://www.smdb.com/smdb.owl#Person"/>
     <rdf1:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
   </rdf:Description>
@@ -17411,8 +17411,8 @@
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Person"/>
     <performedIn rdf:resource="/movie/peggy-sue-got-married-1986/"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="iJjgbfoE3">
-    <owl:oneOf rdf:nodeID="iJjgbfoE4"/>
+  <rdf:Description rdf:nodeID="iFuSWTqN3">
+    <owl:oneOf rdf:nodeID="iFuSWTqN4"/>
     <rdf1:type rdf:resource="http://www.w3.org/2002/07/owl#DataRange"/>
   </rdf:Description>
   <rdf:Description rdf:about="/character/mia-wallace/">
@@ -18103,9 +18103,9 @@
     <performedIn rdf:resource="/movie/kill-bill-vol-1-2003/"/>
     <performedIn rdf:resource="/movie/the-godfather-part-iii-1990/"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="iJjgbfoE4">
+  <rdf:Description rdf:nodeID="iFuSWTqN4">
     <rdf1:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NC-17</rdf1:first>
-    <rdf1:rest rdf:nodeID="iJjgbfoE5"/>
+    <rdf1:rest rdf:nodeID="iFuSWTqN5"/>
   </rdf:Description>
   <rdf:Description rdf:about="/person/celeste-weaver-i/">
     <name>Celeste Weaver (I)</name>
@@ -18773,9 +18773,9 @@
     <performedIn rdf:resource="/movie/the-lord-of-the-rings-the-return-of-the-king-2003/"/>
     <performedIn rdf:resource="/movie/the-lord-of-the-rings-the-two-towers-2002/"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="iJjgbfoE5">
+  <rdf:Description rdf:nodeID="iFuSWTqN5">
     <rdf1:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string">R</rdf1:first>
-    <rdf1:rest rdf:nodeID="iJjgbfoE6"/>
+    <rdf1:rest rdf:nodeID="iFuSWTqN6"/>
   </rdf:Description>
   <rdf:Description rdf:about="/person/john-august-i/">
     <name>John August (I)</name>
@@ -19507,9 +19507,9 @@
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Person"/>
     <performedIn rdf:resource="/movie/big-fish-2003/"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="iJjgbfoE6">
+  <rdf:Description rdf:nodeID="iFuSWTqN6">
     <rdf1:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PG-13</rdf1:first>
-    <rdf1:rest rdf:nodeID="iJjgbfoE7"/>
+    <rdf1:rest rdf:nodeID="iFuSWTqN7"/>
   </rdf:Description>
   <rdf:Description rdf:about="/person/arthur-schnitzler/">
     <name>Arthur Schnitzler</name>
@@ -19849,7 +19849,7 @@
     <portrayedBy rdf:resource="/person/max-brandt/"/>
     <inMovie rdf:resource="/movie/the-godfather-1972/"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="iJjgbfoE8">
+  <rdf:Description rdf:nodeID="iFuSWTqN8">
     <rdf1:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string">G</rdf1:first>
     <rdf1:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
   </rdf:Description>
@@ -19921,9 +19921,9 @@
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Person"/>
     <performedIn rdf:resource="/movie/tucker-the-man-and-his-dream-1988/"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="iJjgbfoE7">
+  <rdf:Description rdf:nodeID="iFuSWTqN7">
     <rdf1:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PG</rdf1:first>
-    <rdf1:rest rdf:nodeID="iJjgbfoE8"/>
+    <rdf1:rest rdf:nodeID="iFuSWTqN8"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.smdb.com/smdb.owl#Thriller">
     <rdf1:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
@@ -20030,6 +20030,7 @@
     <title>2001: A Space Odyssey</title>
     <releaseDate>1968</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>141</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#mystery"/>
@@ -20270,6 +20271,7 @@
     <title>A Clockwork Orange</title>
     <releaseDate>1971</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>136</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#sci-fi"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
@@ -20382,6 +20384,7 @@
     <title>Alice in Wonderland</title>
     <releaseDate>2010</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>108</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
@@ -20492,6 +20495,7 @@
     <title>Apocalypse Now</title>
     <releaseDate>1979</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>153</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -20608,6 +20612,7 @@
     <title>Bad Boys</title>
     <releaseDate>1995</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>118</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
@@ -20839,6 +20844,7 @@
     <title>Bad Boys II</title>
     <releaseDate>2003</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>147</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
@@ -20980,6 +20986,7 @@
     <title>Bad Taste</title>
     <releaseDate>1987</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>91</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#sci-fi"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#action"/>
@@ -21088,6 +21095,7 @@
     <title>Barry Lyndon</title>
     <releaseDate>1975</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>184</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#war"/>
@@ -21193,6 +21201,7 @@
     <title>Batman</title>
     <releaseDate>1989</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>126</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -21307,6 +21316,7 @@
     <title>Batman Returns</title>
     <releaseDate>1992</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>126</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
@@ -21415,6 +21425,7 @@
     <title>Beetle Juice</title>
     <releaseDate>1988</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>92</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#fantasy"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#comedy"/>
@@ -21519,6 +21530,7 @@
     <title>Big Fish</title>
     <releaseDate>2003</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>125</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
@@ -21592,6 +21604,7 @@
     <title>Braindead</title>
     <releaseDate>1992</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>104</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#comedy"/>
@@ -21666,6 +21679,7 @@
     <title>Captain EO</title>
     <releaseDate>1986</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>17</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#sci-fi"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#musical"/>
@@ -21771,6 +21785,7 @@
     <title>Charlie and the Chocolate Factory</title>
     <releaseDate>2005</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>115</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
@@ -22005,6 +22020,7 @@
     <title>Corpse Bride</title>
     <releaseDate>2005</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>77</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#fantasy"/>
@@ -22156,6 +22172,7 @@
     <title>Day of the Fight</title>
     <releaseDate>1951</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>16</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#short"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#documentary"/>
@@ -22264,6 +22281,7 @@
     <title>Death Proof</title>
     <releaseDate>2007</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>114</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#action"/>
@@ -22371,6 +22389,7 @@
     <title>Dementia 13</title>
     <releaseDate>1963</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>75</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#thriller"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#horror"/>
@@ -22552,6 +22571,7 @@
     <title>Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb</title>
     <releaseDate>1964</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>95</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -22657,6 +22677,7 @@
     <title>Dracula</title>
     <releaseDate>1992</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>128</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#horror"/>
@@ -22728,6 +22749,7 @@
     <title>Ed Wood</title>
     <releaseDate>1994</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>127</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#biography"/>
@@ -22831,6 +22853,7 @@
     <title>Edward Scissorhands</title>
     <releaseDate>1990</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>105</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#fantasy"/>
@@ -22944,6 +22967,7 @@
     <title>Eyes Wide Shut</title>
     <releaseDate>1999</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>159</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#mystery"/>
@@ -23113,6 +23137,7 @@
     <title>Fear and Desire</title>
     <releaseDate>1953</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>72</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#war"/>
@@ -23267,6 +23292,7 @@
     <title>Fede tider</title>
     <releaseDate>1996</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>55</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#comedy"/>
   </rdf:Description>
@@ -23372,6 +23398,7 @@
     <title>Finian's Rainbow</title>
     <releaseDate>1968</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>141</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#family"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#fantasy"/>
@@ -23444,6 +23471,7 @@
     <title>Flying Padre: An RKO-Pathe Screenliner</title>
     <releaseDate>1951</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>9</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#short"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#documentary"/>
@@ -23514,6 +23542,7 @@
     <title>Four Rooms</title>
     <releaseDate>1995</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>98</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#comedy"/>
@@ -23588,6 +23617,7 @@
     <title>Frankenweenie</title>
     <releaseDate>1984</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>29</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#sci-fi"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#family"/>
@@ -23740,6 +23770,7 @@
     <title>Full Metal Jacket</title>
     <releaseDate>1987</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>116</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#war"/>
@@ -23813,6 +23844,7 @@
     <title>Gardens of Stone</title>
     <releaseDate>1987</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>111</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#war"/>
@@ -23994,6 +24026,7 @@
     <title>Grindhouse</title>
     <releaseDate>2007</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>191</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#action"/>
@@ -24077,6 +24110,7 @@
     <title>Heavenly Creatures</title>
     <releaseDate>1994</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>99</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
@@ -24228,6 +24262,7 @@
     <title>Inglourious Basterds</title>
     <releaseDate>2009</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>153</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
@@ -24333,6 +24368,7 @@
     <title>Jack</title>
     <releaseDate>1996</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>113</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -24407,6 +24443,7 @@
     <title>Jackie Brown</title>
     <releaseDate>1997</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>154</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
@@ -24512,6 +24549,7 @@
     <title>Kill Bill: Vol. 1</title>
     <releaseDate>2003</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>111</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
@@ -24589,6 +24627,7 @@
     <title>Kill Bill: Vol. 2</title>
     <releaseDate>2004</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>136</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
@@ -24765,6 +24804,7 @@
     <title>Killer's Kiss</title>
     <releaseDate>1955</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>67</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -24868,6 +24908,7 @@
     <title>King Kong</title>
     <releaseDate>2005</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>201</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
@@ -24941,6 +24982,7 @@
     <title>Lolita</title>
     <releaseDate>1962</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>152</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#romance"/>
@@ -25327,6 +25369,7 @@
     <title>Mars Attacks!</title>
     <releaseDate>1996</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>106</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#sci-fi"/>
@@ -25400,6 +25443,7 @@
     <title>Meet the Feebles</title>
     <releaseDate>1990</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>94</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#comedy"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#musical"/>
@@ -25626,6 +25670,7 @@
     <title>Nebo zovyot</title>
     <releaseDate>1960</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>77</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#sci-fi"/>
   </rdf:Description>
@@ -25731,6 +25776,7 @@
     <title>New York Stories</title>
     <releaseDate>1989</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>124</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#comedy"/>
@@ -25805,6 +25851,7 @@
     <title>One from the Heart</title>
     <releaseDate>1982</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>107</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#romance"/>
@@ -25885,6 +25932,7 @@
     <title>Paths of Glory</title>
     <releaseDate>1957</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>87</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -25988,6 +26036,7 @@
     <title>Pearl Harbor</title>
     <releaseDate>2001</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>183</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -26102,6 +26151,7 @@
     <title>Pee-wee's Big Adventure</title>
     <releaseDate>1985</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>90</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#family"/>
@@ -26204,6 +26254,7 @@
     <title>Peggy Sue Got Married</title>
     <releaseDate>1986</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>103</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#fantasy"/>
@@ -26282,6 +26333,7 @@
     <title>Planet of the Apes</title>
     <releaseDate>2001</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>119</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
@@ -26356,6 +26408,7 @@
     <title>Pulp Fiction</title>
     <releaseDate>1994</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>154</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
@@ -26507,6 +26560,7 @@
     <title>Reservoir Dogs</title>
     <releaseDate>1992</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>99</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#mystery"/>
@@ -26581,6 +26635,7 @@
     <title>Rumble Fish</title>
     <releaseDate>1983</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>94</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
   </rdf:Description>
@@ -26680,6 +26735,7 @@
     <title>Sin City</title>
     <releaseDate>2005</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>124</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
@@ -26757,6 +26813,7 @@
     <title>Sleepy Hollow</title>
     <releaseDate>1999</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>105</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#mystery"/>
@@ -26832,6 +26889,7 @@
     <title>Spartacus</title>
     <releaseDate>1960</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>184</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#biography"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
@@ -26982,6 +27040,7 @@
     <title>Striber</title>
     <releaseDate>2003</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>5</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#short"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#documentary"/>
@@ -27064,6 +27123,7 @@
     <title>Surferne kommer</title>
     <releaseDate>1998</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>50</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
   </rdf:Description>
@@ -27164,6 +27224,7 @@
     <title>Sweeney Todd: The Demon Barber of Fleet Street</title>
     <releaseDate>2007</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>116</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -27315,6 +27376,7 @@
     <title>Tetro</title>
     <releaseDate>2009</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>127</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#mystery"/>
@@ -27456,6 +27518,7 @@
     <title>The Bellboy and the Playgirls</title>
     <releaseDate>1962</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>94</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#comedy"/>
   </rdf:Description>
@@ -27524,6 +27587,7 @@
     <title>The Conversation</title>
     <releaseDate>1974</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>113</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#mystery"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -27629,6 +27693,7 @@
     <title>The Cotton Club</title>
     <releaseDate>1984</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>127</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -27706,6 +27771,7 @@
     <title>The Frighteners</title>
     <releaseDate>1996</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>110</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#fantasy"/>
@@ -27781,6 +27847,7 @@
     <title>The Godfather</title>
     <releaseDate>1972</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>175</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -27884,6 +27951,7 @@
     <title>The Godfather: Part II</title>
     <releaseDate>1974</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>200</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -27959,6 +28027,7 @@
     <title>The Godfather: Part III</title>
     <releaseDate>1990</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>162</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#mystery"/>
@@ -28179,6 +28248,7 @@
     <title>The Island</title>
     <releaseDate>2005</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>136</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#sci-fi"/>
@@ -28326,6 +28396,7 @@
     <title>The Killing</title>
     <releaseDate>1956</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>85</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#thriller"/>
@@ -28431,6 +28502,7 @@
     <title>The Lord of the Rings: The Fellowship of the Ring</title>
     <releaseDate>2001</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>178</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
@@ -28503,6 +28575,7 @@
     <title>The Lord of the Rings: The Return of the King</title>
     <releaseDate>2003</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>201</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
@@ -28577,6 +28650,7 @@
     <title>The Lord of the Rings: The Two Towers</title>
     <releaseDate>2002</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>179</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
@@ -28679,6 +28753,7 @@
     <title>The Lovely Bones</title>
     <releaseDate>2009</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>136</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -28754,6 +28829,7 @@
     <title>The Outsiders</title>
     <releaseDate>1983</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>91</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
@@ -28827,6 +28903,7 @@
     <title>The Rain People</title>
     <releaseDate>1969</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>101</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
   </rdf:Description>
@@ -28926,6 +29003,7 @@
     <title>The Rainmaker</title>
     <releaseDate>1997</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>135</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#crime"/>
@@ -28968,6 +29046,7 @@
     <performedIn rdf:resource="/movie/my-best-friends-birthday-1987/"/>
   </rdf:Description>
   <rdf:Description rdf:about="/movie/my-best-friends-birthday-1987/">
+    <duration>69</duration>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#comedy"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#short"/>
   </rdf:Description>
@@ -29007,6 +29086,7 @@
     <title>The Rock</title>
     <releaseDate>1996</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>136</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
@@ -29078,6 +29158,7 @@
     <title>The Seafarers</title>
     <releaseDate>1953</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>30</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#short"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#documentary"/>
@@ -29154,6 +29235,7 @@
     <title>The Shining</title>
     <releaseDate>1980</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>142</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#mystery"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#thriller"/>
@@ -29259,6 +29341,7 @@
     <title>The Terror</title>
     <releaseDate>1963</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>81</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#mystery"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -29336,6 +29419,7 @@
     <title>The Valley</title>
     <releaseDate>1976</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>20</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#short"/>
   </rdf:Description>
@@ -29435,6 +29519,7 @@
     <title>The World of Stainboy</title>
     <releaseDate>2000</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>5</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#short"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#animation"/>
@@ -29536,6 +29621,7 @@
     <title>Tonight for Sure</title>
     <releaseDate>1962</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>69</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#comedy"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#western"/>
@@ -29607,6 +29693,7 @@
     <title>Transformers</title>
     <releaseDate>2007</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>144</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#sci-fi"/>
@@ -29754,6 +29841,7 @@
     <title>Transformers: Revenge of the Fallen</title>
     <releaseDate>2009</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>150</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#pg-13"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#adventure"/>
@@ -29829,6 +29917,7 @@
     <title>Tucker: The Man and His Dream</title>
     <releaseDate>1988</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>110</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#biography"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
@@ -29974,6 +30063,7 @@
     <title>Vincent</title>
     <releaseDate>1982</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>6</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#family"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#fantasy"/>
@@ -30050,6 +30140,7 @@
     <title>You're a Big Boy Now</title>
     <releaseDate>1966</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>96</duration>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#drama"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#comedy"/>
@@ -30153,6 +30244,7 @@
     <title>Youth Without Youth</title>
     <releaseDate>2007</releaseDate>
     <synopsis>Sample synopsis here</synopsis>
+    <duration>124</duration>
     <hasRating rdf:resource="http://www.smdb.com/smdb.owl#r"/>
     <rdf1:type rdf:resource="http://www.smdb.com/smdb.owl#Movie"/>
     <isOfGenre rdf:resource="http://www.smdb.com/smdb.owl#mystery"/>

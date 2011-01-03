@@ -17,15 +17,23 @@ durationsFile = open( PATH + DURATION_FILE )
 regex = re.compile(titleRegex + 
 					weirdShitRegex +
 					splitRegex +
-					'(.*?)')
+					'(.*?:)?(\d*)')
+
+previous = ""
 
 for line in durationsFile:
 	matches = regex.match(line)
 	
 	if(matches and matches.group(1) and not matches.group(2) and not matches.group(3)):
-	
-		print matches.group(4)
-		raw_input()
+		try:
+			if(matches.group(1) in titles):
+				if(matches.group(1) == previous): 
+					continue			
+				previous = matches.group(1)
+				s.addDuration(matches.group(1), matches.group(5))
+				print matches.group(1) + ":::" + str(matches.group(4)) + ":::" + matches.group(5)
+		except:
+			continue
 	
 	#if(matches and matches.group(1) and not matches.group(2) and not matches.group(3)):
 	#	try:

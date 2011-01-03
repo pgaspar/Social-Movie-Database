@@ -126,6 +126,14 @@ class SMDB():
 		self.graph.add((uriMovie, self.smdb['shotIn'], Literal(location)))
 		
 		self.graph.commit()
+		
+	def addDuration(self, movie, duration):
+		
+		uriMovie = self.movie[slugify(movie) + '/']
+		
+		self.graph.add((uriMovie, self.smdb['duration'], Literal(duration)))
+		
+		self.graph.commit()
 	
 	def addSMDBUser(self, username):
 		

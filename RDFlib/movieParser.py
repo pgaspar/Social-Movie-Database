@@ -14,6 +14,7 @@ GENRE_FILE = 'genres.list'
 LOCATION_FILE = 'locations.list'
 RATING_FILE = 'mpaa-ratings-reasons.list'
 PICKS_FILE = 'pickedTitles.dat'
+DURATION_FILE = 'running-times.list'
 
 
 def cleanName(name):
@@ -277,5 +278,31 @@ if __name__ == "__main__":
 			except:
 				continue
 			movieFound = False
+			
+	#---------------------------------------------------------------------------------------
+	#DURANTIONS
+	
+	durationsFile = open( PATH + DURATION_FILE )
+
+	regex = re.compile(titleRegex + 
+						weirdShitRegex +
+						splitRegex +
+						'(.*?:)?(\d*)')
+
+	previous = ""
+
+	for line in durationsFile:
+		matches = regex.match(line)
+
+		if(matches and matches.group(1) and not matches.group(2) and not matches.group(3)):
+			try:
+				if(matches.group(1) in titles):
+					if(matches.group(1) == previous): 
+						continue			
+					previous = matches.group(1)
+					s.addDuration(matches.group(1), matches.group(5))
+					print matches.group(1) + ":::" + str(matches.group(4)) + ":::" + matches.group(5)
+			except:
+				continue
 		
 	s.exportData()
