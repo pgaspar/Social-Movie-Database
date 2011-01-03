@@ -103,7 +103,7 @@ class SMDB():
 	def addGenre(self, movie, genre):
 		
 		uri = self.movie[slugify(movie) + '/']
-		uriGenre = self.smdb[slugify(genre)]
+		uriGenre = self.smdb[genre]
 		
 		self.graph.add((uri, self.smdb['isOfGenre'], uriGenre))
 		
