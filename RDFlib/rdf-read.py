@@ -77,9 +77,22 @@ rdfs=Namespace("http://www.w3.org/2000/01/rdf-schema#")
 # 
 # for a, b in s.graph.query(q, initNs=initNs):
 # 	print a, b
+# 
+# for a in s.graph.query("""SELECT ?g WHERE { ?g rdfs:subClassOf smdb:Genre . }""", initNs=initNs):
+# 	print a
 
-for a in s.graph.query("""SELECT ?g WHERE { ?g rdfs:subClassOf smdb:Genre . }""", initNs=initNs):
-	print a
+year, director, genre = None, None, 'Action'
+
+genres = "SELECT DISTINCT ?g ?u WHERE { ?u rdfs:subClassOf smdb:Genre . ?m smdb:isOfGenre ?u . ?u rdfs:label ?g . %s %s }" \
+				% ( 
+					"<%s> smdb:directed ?m . " % URIRef(director) if director else "",
+					"?m smdb:releaseDate \"%s\" . " % Literal(year) if year else ""
+				)
+
+print genres
+
+for a, u in s.graph.query(genres, initNs=initNs, initBindings={'g':Literal(genre, datatype=xsd.string)} if genre else {}).result:
+	print a, u
 
 # c = 0
 # print 'Directors:'
