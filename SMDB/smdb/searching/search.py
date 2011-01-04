@@ -36,13 +36,31 @@ class Search:
 	def semanticSearch(self, sentence):
 		pass
 		
+	
+	def personSearch(self, name, movie = None):
+		
+		keyword = name if name else movie
+		
+		query = """SELECT ?a ?b ?l ?n WHERE{
+					?a rdf:type smdb:Person .
+					?a smdb:name ?b .
+					"""
+		if movie:
+			query += """?a ?r ?m .
+						?r rdfs:subPropertyOf smdb:participatedInMovie .
+						?m smdb:title ?n ."""
+		
+		
+	def characterSearch(self, name, movie = None):
+		pass
+		
 		
 	def movieSearch(self, title, person = None):
 		
 		keyword = title if title else person
 		
 
-		query = """SELECT DISTINCT ?a ?b ?d ?n ?l WHERE{
+		query = """SELECT DISTINCT ?a ?b ?d ?l ?n WHERE{
 						?a rdf:type smdb:Movie .
 						?a smdb:title ?b .
 						?a smdb:releaseDate ?d .
@@ -50,7 +68,8 @@ class Search:
 		if person:
 			query += """?p ?r ?a .
 						?r rdfs:subPropertyOf smdb:participatedInMovie .
-						?r rdfs:label ?l .
+						?r owl:inverseOf ?r2 .
+						?r2 rdfs:label ?l .
 						?p rdf:type smdb:Person .
 						?p smdb:name ?n .
 						"""
@@ -62,25 +81,30 @@ class Search:
 		
 		movies = self.graph.query(query + '} ORDER BY ?a')
 		
+		
+		#Stupid hack to make everything look better =D
 		if person:
 			prev = [None]
 			distinctMovies = []
 			for movie in movies:
-			
+				#Go through the movies, looking for duplicates
 				if prev[0] == movie[0]:
 					prev[3].append(movie[3])
 					prev[4].append(movie[4])
 				else:
-					distinctMovies.append(prev)
+					if prev[0]:
+						distinctMovies.append(prev)
 					prev = list(movie)
 					prev[3] = [prev[3]]
 					prev[4] = [prev[4]]
-		
-			#DEBUG
-			for mov in distinctMovies:
-				print mov
+			#Another silliness to avoid the last one not being included
+			if prev not in distinctMovies and prev[0]:
+				distinctMovies.append(prev)
+			
+			print distinctMovies
 			
 			return distinctMovies
-		
-		return movies
+			
+		else:
+			return movies
 		

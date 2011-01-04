@@ -10,6 +10,7 @@ initNs = dict(
 			smdb=Namespace("http://www.smdb.com/smdb.owl#"),
 			xsd=Namespace("http://www.w3.org/2001/XMLSchema#"),
 			rdfs=Namespace("http://www.w3.org/2000/01/rdf-schema#"),
+			owl=Namespace("http://www.w3.org/2002/07/owl#"),
 			person=Namespace("/person/"),
 			movie=Namespace("/movie/"),
 			character=Namespace("/character/"),
@@ -19,6 +20,7 @@ initNs = dict(
 rdf=Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 xsd=Namespace("http://www.w3.org/2001/XMLSchema#")
 rdfs=Namespace("http://www.w3.org/2000/01/rdf-schema#")
+owl=Namespace("http://www.w3.org/2002/07/owl#")
 
 # for a, b, c in s.graph.query('SELECT ?a ?b ?c WHERE { ?a smdb:wrote ?c . }', initNs=initNs):
 # 	print a, "\n WROTE \n", c, '\n'
@@ -95,7 +97,7 @@ rdfs=Namespace("http://www.w3.org/2000/01/rdf-schema#")
 #	print a, u
 
 
-movies = "SELECT ?r ?l ?c WHERE { ?r rdfs:subPropertyOf smdb:participatedInMovie . ?r rdfs:label ?l}"
+movies = "SELECT ?a ?b WHERE { ?a rdfs:label ?b .}"
 
 res = s.graph.query(movies, initNs = initNs)
 
