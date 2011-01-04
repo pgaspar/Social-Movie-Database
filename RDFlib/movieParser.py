@@ -48,6 +48,7 @@ if __name__ == "__main__":
 	pickedFile = open(PATH + PICKS_FILE)
 	
 	titles = []
+	foundTitles = []
 	i = 0
 	
 	for line in pickedFile:
@@ -67,18 +68,22 @@ if __name__ == "__main__":
 	
 	for line in movieFile:
 		matches = regex.match(line)
+		
 		if(matches and matches.group(1) and not matches.group(2) and not matches.group(3)):
-			#print matches.group(1) + " ::: " + matches.group(4)
 			if(matches.group(1) in titles):
 				try:
 					s.addMovie(matches.group(1),matches.group(4))
 					nMovies += 1
+					foundTitles.append(matches.group(1))
 					#print matches.group(1)
-				except django.utils.encoding.DjangoUnicodeDecodeError:
+				except:
 					print matches.group(1) + " FAILED"
 					
 	print "FINISHED PARSING MOVIES : " + str(nMovies)
 
+
+	titles = foundTitles
+	
 	#-------------------------------------------------------------------------------------
 	#ACTORS
 	
