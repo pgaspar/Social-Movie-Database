@@ -8,6 +8,7 @@ from rdflib import Literal, URIRef
 from smdb.semantic_models import *
 from smdb import manager
 
+from smdb.searching.search import Search
 
 # Util Functions
 
@@ -108,6 +109,13 @@ def browse_people(request):
 def search(request):
 	
 	searchString = request.GET.get('find', None)
+	
+	searcher = Search(graph)
+	
+	movies = searcher.movieSearch(None, searchString)
+	people = None
+	
+	return render(request, 'search.html', {'movie_list': movies, 'person_list': people})
 	
 	query = """SELECT ?a ?b ?d WHERE{
 				?a rdf:type smdb:Movie .

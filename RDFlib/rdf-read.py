@@ -81,18 +81,27 @@ rdfs=Namespace("http://www.w3.org/2000/01/rdf-schema#")
 # for a in s.graph.query("""SELECT ?g WHERE { ?g rdfs:subClassOf smdb:Genre . }""", initNs=initNs):
 # 	print a
 
-year, director, genre = None, None, 'Action'
+#year, director, genre = None, None, 'Action'
 
-genres = "SELECT DISTINCT ?g ?u WHERE { ?u rdfs:subClassOf smdb:Genre . ?m smdb:isOfGenre ?u . ?u rdfs:label ?g . %s %s }" \
-				% ( 
-					"<%s> smdb:directed ?m . " % URIRef(director) if director else "",
-					"?m smdb:releaseDate \"%s\" . " % Literal(year) if year else ""
-				)
+#genres = "SELECT DISTINCT ?g ?u WHERE { ?u rdfs:subClassOf smdb:Genre . ?m smdb:isOfGenre ?u . ?u rdfs:label ?g . %s %s }" \
+#				% ( 
+#					"<%s> smdb:directed ?m . " % URIRef(director) if director else "",
+#					"?m smdb:releaseDate \"%s\" . " % Literal(year) if year else ""
+#				)
 
-print genres
+#print genres
 
-for a, u in s.graph.query(genres, initNs=initNs, initBindings={'g':Literal(genre, datatype=xsd.string)} if genre else {}).result:
-	print a, u
+#for a, u in s.graph.query(genres, initNs=initNs, initBindings={'g':Literal(genre, datatype=xsd.string)} if genre else {}).result:
+#	print a, u
+
+
+movies = "SELECT ?r ?l ?c WHERE { ?r rdfs:subPropertyOf smdb:participatedInMovie . ?r rdfs:label ?l}"
+
+res = s.graph.query(movies, initNs = initNs)
+
+for i in res:
+	print i
+
 
 # c = 0
 # print 'Directors:'
