@@ -8,6 +8,7 @@ from rdflib import Literal, URIRef
 from smdb.semantic_models import *
 from smdb import manager
 
+from smdb.searching.search import Search
 
 # Util Functions
 
@@ -61,13 +62,15 @@ def browse_movies(request):
 	director = request.GET.get('director', None)
 	genre = request.GET.get('genre', None)
 	location = request.GET.get('location', None)
+	rating = request.GET.get('rating', None)
 	
 	print 'Year:', year
 	print 'Director:', director
 	print 'Genre:', genre
 	print 'Location:', location
+	print 'Rating:', rating
 	
-	f = Movie.getFilterList(year, director, genre, location)
+	f = Movie.getFilterList(year, director, genre, location, rating)
 	
 	query = """SELECT ?a ?b ?y WHERE {
 				?a rdf:type smdb:Movie .
@@ -84,11 +87,15 @@ def browse_movies(request):
 	# Location
 	if location: query += '?a smdb:shotIn ?l .\n'
 	
+	# Rating
+	if rating: query += '?a smdb:hasRating ?r .\n'
+	
 	# Filters	
 	if year: query += """FILTER(?y = "%s") .\n""" % Literal(year)
 	if director: query += """FILTER(?d = <%s>) .\n""" % URIRef(director)
 	if genre: query += """FILTER(?g = <%s>) .\n""" % graph.ontologies['smdb'][genre]
 	if location: query += """FILTER(?l = "%s") .\n""" % Literal(location)
+	if rating: query += """FILTER(?r = <%s>) .\n""" % URIRef(rating)
 	
 	res = graph.query(query + "}", initBindings=initBindings)
 	
@@ -133,6 +140,13 @@ def browse_people(request):
 def search(request):
 	
 	searchString = request.GET.get('find', None)
+	
+	searcher = Search(graph)
+	
+	movies = searcher.movieSearch(None, searchString)
+	people = None
+	
+	return render(request, 'search.html', {'movie_list': movies, 'person_list': people})
 	
 	query = """SELECT ?a ?b ?d WHERE{
 				?a rdf:type smdb:Movie .
