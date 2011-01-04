@@ -172,6 +172,15 @@ class Person(BaseModel):
 		print '>> fetching [Person-playsCharacter]'
 		return [ Character(obj.uri) for obj in self.smdb__playsCharacter__m ]
 
+	@classmethod
+	def getFilterList(model, occupations=[]):
+		
+		occupation_list = [ (o, o.lower()) for o in ['Director', 'Writer', 'Actor'] ]
+		
+		occupation_list = Filter(header='Occupations', label='occupations', obj_list=occupation_list, target_o=occupations)
+		
+		return [occupation_list]
+		
 	def get_absolute_url(self):
 		return self.uri
 		
