@@ -93,50 +93,37 @@ class Movie(BaseModel):
 	@classmethod
 	def getFilterList(model, year=None, director=None, genre=None, location=None, rating=None):
 		
+		# Define the filtering rules so that we can filter the options themselves
+		f_rules = [
+					"?m smdb:releaseDate \"%s\" . " % Literal(year) if year else "",
+					"<%s> smdb:directed ?m . " % URIRef(director) if director else "",
+					"?m smdb:isOfGenre smdb:%s . " % URIRef(genre) if genre else "",
+					"?m smdb:shotIn \"%s\" . " % Literal(location) if location else "",
+					"?m smdb:hasRating <%s> . " % URIRef(rating) if rating else "",
+				]
+		
 		# Years
-		years = graph.query("SELECT DISTINCT ?y WHERE { ?m rdf:type smdb:Movie . ?m smdb:releaseDate ?y . %s} ORDER BY ?y" \
-				% ( 
-					"<%s> smdb:directed ?m . " % URIRef(director) if director else "" +
-					"?m smdb:isOfGenre smdb:%s . " % URIRef(genre) if genre else "" +
-					"?m smdb:shotIn \"%s\" . " % Literal(location) if location else "" +
-					"?m smdb:hasRating <%s> . " % URIRef(rating) if rating else ""
-				), initBindings={'y':Literal(year)} if year else {} )
+		years = graph.query("SELECT DISTINCT ?y WHERE { ?m smdb:releaseDate ?y . %s} ORDER BY ?y" \
+				% ( ''.join(f_rules) ), initBindings={'y':Literal(year)} if year else {})
 		
 		# Directors
 		directors = graph.query("SELECT DISTINCT ?n ?d WHERE { ?d smdb:name ?n . ?d smdb:directed ?m . %s}" \
-				% ( 
-					"?m smdb:releaseDate \"%s\" . " % Literal(year) if year else "" +
-					"?m smdb:isOfGenre smdb:%s . " % URIRef(genre) if genre else "" +
-					"?m smdb:shotIn \"%s\" . " % Literal(location) if location else "" +
-					"?m smdb:hasRating <%s> . " % URIRef(rating) if rating else ""
-				), initBindings={'d':URIRef(director)} if director else {})
+				% ( ''.join(f_rules) ), initBindings={'d':URIRef(director)} if director else {})
 		
 		# Genre
-		genres = graph.query("SELECT DISTINCT ?g WHERE { ?u rdfs:subClassOf smdb:Genre . ?m smdb:isOfGenre ?u . ?u rdfs:label ?g . %s}" \
-				% ( 
-					"<%s> smdb:directed ?m . " % URIRef(director) if director else "" +
-					"?m smdb:releaseDate \"%s\" . " % Literal(year) if year else "" +
-					"?m smdb:shotIn \"%s\" . " % Literal(location) if location else "" +
-					"?m smdb:hasRating <%s> . " % URIRef(rating) if rating else ""
-				), initBindings={'g':Literal(genre, datatype=graph.ontologies['xsd'].string)} if genre else {} )
+		genres = graph.query("""SELECT DISTINCT ?g WHERE {
+				?u rdfs:subClassOf smdb:Genre . ?m smdb:isOfGenre ?u . ?u rdfs:label ?g .%s }""" \
+				% ( ''.join(f_rules) ), initBindings={'g':Literal(genre, datatype=graph.ontologies['xsd'].string)} if genre else {})
+				
 		
 		# Location
 		locations = graph.query("SELECT DISTINCT ?l WHERE { ?m smdb:shotIn ?l . %s}" \
-				% ( 
-					"<%s> smdb:directed ?m . " % URIRef(director) if director else "" +
-					"?m smdb:releaseDate \"%s\" . " % Literal(year) if year else "" +
-					"?m smdb:isOfGenre smdb:%s . " % URIRef(genre) if genre else "" +
-					"?m smdb:hasRating <%s> . " % URIRef(rating) if rating else ""
-				), initBindings={'l':Literal(location)} if location else {} )
+				% ( ''.join(f_rules) ), initBindings={'l':Literal(location)} if location else {})
 		
-		# Genre
-		ratings = graph.query("SELECT DISTINCT ?r ?u WHERE { ?u rdfs:subClassOf smdb:MPAA_Rating . ?m smdb:hasRating ?u . ?u rdfs:label ?r . %s}" \
-				% ( 
-					"<%s> smdb:directed ?m . " % URIRef(director) if director else "" +
-					"?m smdb:releaseDate \"%s\" . " % Literal(year) if year else "" +
-					"?m smdb:shotIn \"%s\" . " % Literal(location) if location else "" +
-					"?m smdb:isOfGenre smdb:%s . " % URIRef(genre) if genre else ""
-				), initBindings={'u':URIRef(rating)} if rating else {} )
+		# Rating
+		ratings = graph.query("""SELECT DISTINCT ?r ?u WHERE {
+				?u rdfs:subClassOf smdb:MPAA_Rating . ?u rdfs:label ?r . ?m smdb:hasRating ?u . %s} ORDER BY ?r
+				"""% ( ''.join(f_rules) ), initBindings={'u':URIRef(rating)} if rating else {})
 		
 		ratings = [ (label.split(' ')[0], uri) for (label, uri) in ratings ]	# Make the label shorter
 		
@@ -194,9 +181,7 @@ class Person(BaseModel):
 		
 		occupation_list = [ (o, o.lower()) for o in ['Director', 'Writer', 'Actor'] ]
 		
-		occupation_list = Filter(header='Occupations', label='occupations', obj_list=occupation_list, target_o=occupations)
-		
-		return [occupation_list]
+		return [ Filter(header='Occupations', label='occupations', obj_list=occupation_list, target_o=occupations) ]
 		
 	def get_absolute_url(self):
 		return self.uri
