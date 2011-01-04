@@ -60,12 +60,14 @@ def browse_movies(request):
 	year = request.GET.get('year', None)
 	director = request.GET.get('director', None)
 	genre = request.GET.get('genre', None)
+	location = request.GET.get('location', None)
 	
 	print 'Year:', year
 	print 'Director:', director
 	print 'Genre:', genre
+	print 'Location:', location
 	
-	f = Movie.getFilterList(year, director, genre)
+	f = Movie.getFilterList(year, director, genre, location)
 	
 	query = """SELECT ?a ?b ?y WHERE {
 				?a rdf:type smdb:Movie .
@@ -79,10 +81,14 @@ def browse_movies(request):
 	# Genre
 	if genre: query += '?a smdb:isOfGenre ?g .\n'
 	
+	# Location
+	if location: query += '?a smdb:shotIn ?l .\n'
+	
 	# Filters	
 	if year: query += """FILTER(?y = "%s") .\n""" % Literal(year)
 	if director: query += """FILTER(?d = <%s>) .\n""" % URIRef(director)
 	if genre: query += """FILTER(?g = <%s>) .\n""" % graph.ontologies['smdb'][genre]
+	if location: query += """FILTER(?l = "%s") .\n""" % Literal(location)
 	
 	res = graph.query(query + "}", initBindings=initBindings)
 	
