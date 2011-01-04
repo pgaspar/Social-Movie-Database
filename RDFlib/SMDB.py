@@ -112,7 +112,7 @@ class SMDB():
 	def addRating(self, movie, rating):
 		
 		uriMovie = self.movie[slugify(movie) + '/']
-		uriRating = self.smdb[slugify(rating)]
+		uriRating = self.smdb[rating]
 		
 		self.graph.add((uriMovie, self.smdb['hasRating'], uriRating))
 		

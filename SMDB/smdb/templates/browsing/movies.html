@@ -37,7 +37,7 @@
 	</div>
 	
 	<div class="section">
-		<h3 class="context-header"><span>Movie Results</span></h3>
+		<h3 class="context-header"><span>Movie Results ({{ movie_list|length }})</span></h3>
 		
 		<table class="movie-list">
 			
@@ -48,23 +48,6 @@
 				</tr>
 			{% empty %}
 				<p>No Movie found.</p>
-			{% endfor %}
-			
-		</table>
-	</div>
-	
-	<div class="section">
-		<h3 class="context-header"><span>People Results</span></h3>
-		
-		<table class="movie-list">
-			
-			{% for uri, name in people_list %}
-				<tr>
-					<td><a href="{{ uri }}">{{ name }}</a></td>
-					<td>&nbsp;</td>
-				</tr>
-			{% empty %}
-				<p>No People found.</p>
 			{% endfor %}
 			
 		</table>

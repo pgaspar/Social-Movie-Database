@@ -62,13 +62,15 @@ def browse_movies(request):
 	director = request.GET.get('director', None)
 	genre = request.GET.get('genre', None)
 	location = request.GET.get('location', None)
+	rating = request.GET.get('rating', None)
 	
 	print 'Year:', year
 	print 'Director:', director
 	print 'Genre:', genre
 	print 'Location:', location
+	print 'Rating:', rating
 	
-	f = Movie.getFilterList(year, director, genre, location)
+	f = Movie.getFilterList(year, director, genre, location, rating)
 	
 	query = """SELECT ?a ?b ?y WHERE {
 				?a rdf:type smdb:Movie .
@@ -85,24 +87,53 @@ def browse_movies(request):
 	# Location
 	if location: query += '?a smdb:shotIn ?l .\n'
 	
+	# Rating
+	if rating: query += '?a smdb:hasRating ?r .\n'
+	
 	# Filters	
 	if year: query += """FILTER(?y = "%s") .\n""" % Literal(year)
 	if director: query += """FILTER(?d = <%s>) .\n""" % URIRef(director)
 	if genre: query += """FILTER(?g = <%s>) .\n""" % graph.ontologies['smdb'][genre]
 	if location: query += """FILTER(?l = "%s") .\n""" % Literal(location)
+	if rating: query += """FILTER(?r = <%s>) .\n""" % URIRef(rating)
 	
 	res = graph.query(query + "}", initBindings=initBindings)
 	
-	return render(request, 'browse.html', {'filter_list':f, 'movie_list': res})
+	return render(request, 'browsing/movies.html', {'filter_list':f, 'movie_list': res})
 	
 def browse_people(request):
 	
-	res = graph.query("""SELECT ?a ?b WHERE {
-					?a rdf:type smdb:Person .
-					?a smdb:name ?b .
-				}""")
+	initBindings = {}
 	
-	return render(request, 'browse.html', {'people_list': res})	
+	occupationToQuery = { 'writer': '?u smdb:wrote ?m1 .\n',
+						  'actor': '?u smdb:performedIn ?m2 .\n',
+						  'director': '?u smdb:directed ?m3 .\n',
+						}
+	
+	occupations = [ s.lower() for s in request.GET.getlist('occupations') ]
+	
+	print 'Occupations:', occupations
+	
+	f = Person.getFilterList(occupations)
+	
+	query = """SELECT DISTINCT ?u ?n WHERE {
+				?u rdf:type smdb:Person .
+				?u smdb:name ?n .
+				"""
+	
+	for o in occupations:
+		if o in occupationToQuery: query += occupationToQuery[o]
+	
+	# Filters	
+	#if year: query += """FILTER(?y = "%s") .\n""" % Literal(year)
+	#if director: query += """FILTER(?d = <%s>) .\n""" % URIRef(director)
+	#if genre: query += """FILTER(?g = <%s>) .\n""" % graph.ontologies['smdb'][genre]
+	#if location: query += """FILTER(?l = "%s") .\n""" % Literal(location)
+	
+	res = graph.query(query + "}", initBindings=initBindings)
+	
+	return render(request, 'browsing/people.html', {'filter_list':f, 'people_list': res})
+	
 
 # Searching
 

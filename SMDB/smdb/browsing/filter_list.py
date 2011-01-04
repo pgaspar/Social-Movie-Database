@@ -12,8 +12,8 @@ class Filter(object):
 		
 	def _normalize(self):
 		self.obj_list = [ FilterData(o, self.target_o, self.label) for o in self.obj_list]	# Add the "selected" field and some info
-		self.obj_list = [ FilterData('All', self.target_o, self.label) ] + self.obj_list				# Add the "All" option
-	
+		self.obj_list = [ FilterData('All', self.target_o, self.label) ] + self.obj_list	# Add the "All" option
+		
 	def __iter__(self, *args, **kwargs):
 		return self.obj_list.__iter__(*args, **kwargs)
 		
@@ -33,8 +33,8 @@ class FilterData(object):
 		else:
 			self.id = self.data = object_list
 		
-		if self.data == 'All': self.selected = (target_o == None)
-		else: self.selected = (str(self.id) == str(target_o))
+		if self.data == 'All': self.selected = (not target_o)
+		else: self.selected = (str(self.id) in str(target_o))
 		
 		self.label = label
 	
