@@ -2,6 +2,7 @@ import re
 from SMDB import SMDB
 import sys
 import django
+import os
 
 PATH = '../../Data/'
 MOVIE_FILE = 'movies.list'
@@ -36,6 +37,7 @@ def cleanName(name):
 if __name__ == "__main__":
 	
 
+	os.system("python titlePicker.py")
 	
 	titleRegex = '([^"].*?\(\d{4}\))?'
 	weirdShitRegex = '(\s\(T?VG?\))?(\s\{.*\})?'
