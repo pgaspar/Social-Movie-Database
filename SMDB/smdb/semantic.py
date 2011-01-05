@@ -7,6 +7,7 @@ ontologies = {
 	'rdfs': Namespace("http://www.w3.org/2000/01/rdf-schema#"),
 	'xsd': Namespace("http://www.w3.org/2001/XMLSchema#"),
 	'smdb': Namespace("http://www.smdb.com/smdb.owl#"),
+	'owl':Namespace("http://www.w3.org/2002/07/owl#"),
 	'person': Namespace("/person/"),
 	'movie': Namespace("/movie/"),
 	'character': Namespace("/character/"),
