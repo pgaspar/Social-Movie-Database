@@ -473,3 +473,11 @@ h1#header-title a {
 	cursor:default;
 	color:#aaa;
 }
+
+/*** PAGING ***/
+
+#content div#paging-nav {
+	margin-top: 20px;
+	text-align: center;
+	color: gray;
+}

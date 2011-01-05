@@ -8,20 +8,27 @@
 	</div>
 	
 	<div class="section">
-		<h3 class="context-header"><span>People Results ({{ people_list|length }})</span></h3>
+		<h3 class="context-header"><span>People Results ({{ res_count }})</span></h3>
 		
-		<table class="movie-list">
+		{% for page in result_list %}
+		<div id="page-{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
+			<table class="movie-list">
 			
-			{% for uri, name in people_list %}
+				{% for uri, name in page %}
 				<tr>
 					<td><a href="{{ uri }}">{{ name }}</a></td>
 					<td>&nbsp;</td>
 				</tr>
-			{% empty %}
-				<p>No People found.</p>
-			{% endfor %}
-			
-		</table>
+				{% endfor %}
+				
+			</table>
+		</div>
+		{% empty %}
+			<p>No People found.</p>
+		{% endfor %}
+		
+		
+		{% include 'widgets/paging-nav.html' %}
 	</div>
 	
 {% endblock %}
