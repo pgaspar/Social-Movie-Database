@@ -1,0 +1,30 @@
+{% block header_extras %}
+<script src="{{MEDIA_URL}}js/paging.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+
+{% if result_list %}
+	<script type="text/javascript" charset="utf-8">
+		var finalPage = {{ result_list|length }};
+		var currentPage = 1;
+	</script>
+
+	<div id="paging-nav">
+		<span id="nav-lower" style="display:none;">
+			<a href="javascript:goToFirst();"><<</a>&nbsp;
+			<a href="javascript:goToPage(currentPage - 1);"><</a>
+		</span>
+	
+		&nbsp;
+		<span id="nav-current">
+			<span id="nav-current-page">1</span>
+			of
+			<script type="text/javascript" charset="utf-8">document.write(finalPage);</script>
+		</span>
+		&nbsp;
+	
+		<span id="nav-higher" {% ifequal result_list|length 1 %}style="display:none"{% endifequal %}>
+			<a href="javascript:goToPage(currentPage + 1);">></a>&nbsp;
+			<a href="javascript:goToLast();">>></a>
+		</span>
+	</div>
+{% endif %}

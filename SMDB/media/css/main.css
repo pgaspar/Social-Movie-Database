@@ -431,6 +431,11 @@ h1#header-title a {
 	clear: both;
 }
 
+#content span.note {
+	font-size: 10px;
+	font-weight: normal;
+}
+
 /*** FILTER ***/
 
 #content .filter-list {
@@ -473,7 +478,11 @@ h1#header-title a {
 	cursor:default;
 	color:#aaa;
 }
-#content span.note {
-	font-size: 10px;
-	font-weight: normal;
+
+/*** PAGING ***/
+
+#content div#paging-nav {
+	margin-top: 20px;
+	text-align: center;
+	color: gray;
 }

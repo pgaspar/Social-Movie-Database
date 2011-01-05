@@ -10,6 +10,9 @@ from smdb import manager
 
 from smdb.searching.search import Search
 
+from smdb.utils import split_array
+from django.conf import settings
+
 # Util Functions
 
 def render(request,template,context={}):
@@ -64,11 +67,7 @@ def browse_movies(request):
 	location = request.GET.get('location', None)
 	rating = request.GET.get('rating', None)
 	
-	print 'Year:', year
-	print 'Director:', director
-	print 'Genre:', genre
-	print 'Location:', location
-	print 'Rating:', rating
+	print 'Year:', year; print 'Director:', director; print 'Genre:', genre; print 'Location:', location; print 'Rating:', rating
 	
 	f = Movie.getFilterList(year, director, genre, location, rating)
 	
@@ -78,16 +77,10 @@ def browse_movies(request):
 				?a smdb:releaseDate ?y .
 				"""
 	
-	# Director
+	# Query additions
 	if director: query += '?d smdb:directed ?a .\n'
-	
-	# Genre
 	if genre: query += '?a smdb:isOfGenre ?g .\n'
-	
-	# Location
 	if location: query += '?a smdb:shotIn ?l .\n'
-	
-	# Rating
 	if rating: query += '?a smdb:hasRating ?r .\n'
 	
 	# Filters	
@@ -97,9 +90,10 @@ def browse_movies(request):
 	if location: query += """FILTER(?l = "%s") .\n""" % Literal(location)
 	if rating: query += """FILTER(?r = <%s>) .\n""" % URIRef(rating)
 	
-	res = graph.query(query + "}", initBindings=initBindings)
+	res = graph.query(query + "} ORDER BY ?y", initBindings=initBindings)
+	count = len(res)
 	
-	return render(request, 'browsing/movies.html', {'filter_list':f, 'movie_list': res})
+	return render(request, 'browsing/movies.html', {'filter_list':f, 'result_list': split_array(res, settings.ITEMS_PER_PAGE), 'res_count': count})
 	
 def browse_people(request):
 	
@@ -124,15 +118,10 @@ def browse_people(request):
 	for o in occupations:
 		if o in occupationToQuery: query += occupationToQuery[o]
 	
-	# Filters	
-	#if year: query += """FILTER(?y = "%s") .\n""" % Literal(year)
-	#if director: query += """FILTER(?d = <%s>) .\n""" % URIRef(director)
-	#if genre: query += """FILTER(?g = <%s>) .\n""" % graph.ontologies['smdb'][genre]
-	#if location: query += """FILTER(?l = "%s") .\n""" % Literal(location)
-	
 	res = graph.query(query + "}", initBindings=initBindings)
+	count = len(res)
 	
-	return render(request, 'browsing/people.html', {'filter_list':f, 'people_list': res})
+	return render(request, 'browsing/people.html', {'filter_list':f, 'result_list': split_array(res, settings.ITEMS_PER_PAGE), 'res_count': count})
 	
 
 # Searching
