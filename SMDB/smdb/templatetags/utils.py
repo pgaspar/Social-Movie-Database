@@ -29,8 +29,12 @@ def higherThan(value, target):
 def useinURL(req, el):
 	varname, value = el.label, el.id
 	params = req.GET.copy()
-	if value == 'All': del params[varname]
-	else: params[varname] = value
+	
+	if value == 'All':
+		if varname in params: del params[varname]
+	else:
+		params[varname] = value
+	
 	return '%s?%s' % (req.path, params.urlencode())
 	
 @register.filter
@@ -45,7 +49,5 @@ def useinURL_m(req, el):
 			params.getlist(varname).remove(value)	# Has been selected before, deselects now.
 		else:
 			params.update({varname: value})
-	
-	print params
 	
 	return '%s?%s' % (req.path, params.urlencode())

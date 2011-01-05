@@ -181,7 +181,7 @@ class Person(BaseModel):
 		
 		occupation_list = [ (o, o.lower()) for o in ['Director', 'Writer', 'Actor'] ]
 		
-		return [ Filter(header='Occupations', label='occupations', obj_list=occupation_list, target_o=occupations) ]
+		return [ Filter(header='Occupations', label='occupations', obj_list=occupation_list, target_o=occupations, mult=True) ]
 		
 	def get_absolute_url(self):
 		return self.uri

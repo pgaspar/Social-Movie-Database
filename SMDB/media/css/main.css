@@ -461,4 +461,15 @@ h1#header-title a {
 
 #content .filter td.selected {
 	background-color: #e1f0e7;
+	cursor: default;
+}
+
+#content .filter td.clickable {
+	cursor: pointer;
+}
+
+#content .filter td.empty {
+	background-color: #EEE;
+	cursor:default;
+	color:#aaa;
 }
