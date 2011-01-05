@@ -1,0 +1,37 @@
+{% load utils %}
+
+<table class="filter-list">
+<tr>
+	
+	{% for filter in filter_list %}
+		<td>
+		<table class="filter">
+			<tr>
+				<th>{{ filter.header }}</th>
+			</tr>
+		
+			{% for el in filter %}
+			<tr {% if forloop.counter|higherThan:6 %}style="display:none;"{% endif %}>
+				<td {% if el.selected %}class="selected {% if el.mult %}clickable{% endif %}"{% endif %}
+					{% if not el.selected or el.mult %}onclick="window.location.href = '{% if el.mult %}{{ request|useinURL_m:el }}{% else %}{{ request|useinURL:el }}{% endif %}';"{% endif %}>
+					{{ el.data }}
+				</td>
+			</tr>
+			{% endfor %}
+			
+			{% if filter|length|higherThan:6 %}
+			<tr>
+				<td onclick="displayCells(this)"><a href="#">more...</a></td>
+			</tr>
+			{% endif %}
+			
+			{% ifequal filter|length 1 %}
+			<tr>
+				<td class="empty">No Results</td>
+			</tr>
+			{% endifequal %}
+		</table>
+		</td>
+	{% endfor %}
+</tr>
+</table>

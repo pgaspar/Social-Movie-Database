@@ -29,8 +29,12 @@ def higherThan(value, target):
 def useinURL(req, el):
 	varname, value = el.label, el.id
 	params = req.GET.copy()
-	if value == 'All': del params[varname]
-	else: params[varname] = value
+	
+	if value == 'All':
+		if varname in params: del params[varname]
+	else:
+		params[varname] = value
+	
 	return '%s?%s' % (req.path, params.urlencode())
 	
 @register.filter
@@ -46,6 +50,7 @@ def useinURL_m(req, el):
 		else:
 			params.update({varname: value})
 	
+<<<<<<< HEAD
 	print params
 	
 	return '%s?%s' % (req.path, params.urlencode())
@@ -56,3 +61,6 @@ def zip(label, name):
 	
 	return zip(label,name)
 	
+=======
+	return '%s?%s' % (req.path, params.urlencode())
+>>>>>>> 2ae94d78142b76b74078d64ab29c52d9cb976da4
