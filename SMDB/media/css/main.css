@@ -431,6 +431,11 @@ h1#header-title a {
 	clear: both;
 }
 
+#content span.note {
+	font-size: 10px;
+	font-weight: normal;
+}
+
 /*** FILTER ***/
 
 #content .filter-list {

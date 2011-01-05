@@ -10,7 +10,7 @@ initNs = dict(
 			smdb=Namespace("http://www.smdb.com/smdb.owl#"),
 			xsd=Namespace("http://www.w3.org/2001/XMLSchema#"),
 			rdfs=Namespace("http://www.w3.org/2000/01/rdf-schema#"),
-			owl=Namespace("http://www.w3.org/2002/07/owl#"),
+			owls=Namespace("http://www.w3.org/2002/07/owl#"),
 			person=Namespace("/person/"),
 			movie=Namespace("/movie/"),
 			character=Namespace("/character/"),
@@ -20,7 +20,7 @@ initNs = dict(
 rdf=Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 xsd=Namespace("http://www.w3.org/2001/XMLSchema#")
 rdfs=Namespace("http://www.w3.org/2000/01/rdf-schema#")
-owl=Namespace("http://www.w3.org/2002/07/owl#")
+owls=Namespace("http://www.w3.org/2002/07/owl#")
 
 # for a, b, c in s.graph.query('SELECT ?a ?b ?c WHERE { ?a smdb:wrote ?c . }', initNs=initNs):
 # 	print a, "\n WROTE \n", c, '\n'
@@ -103,16 +103,14 @@ owl=Namespace("http://www.w3.org/2002/07/owl#")
 # for a, u in s.graph.query(genres, initNs=initNs, initBindings={'g':Literal(genre, datatype=xsd.string)} if genre else {}).result:
 # 	print a, u
 
-<<<<<<< HEAD
-movies = "SELECT ?a ?b WHERE { ?a rdfs:label ?b .}"
-=======
-rating = None
->>>>>>> a64581994e7c4da179910e24b147c8d42a412d4f
 
-ratings = "SELECT DISTINCT ?u ?m WHERE { ?u rdfs:subClassOf smdb:MPAA_Rating . ?m smdb:hasRating ?u .}"
+movies = "SELECT ?b WHERE {?b owls:inverseOf smdb:directedBy .}"
 
-for r,m in s.graph.query(ratings, initNs=initNs, initBindings={'r':Literal(rating, datatype=xsd.string)} if rating else {}).result:
-	print r, m
+res = s.graph.query(movies, initNs = initNs)
+
+
+for i in res:
+	print i
 
 
 # c = 0

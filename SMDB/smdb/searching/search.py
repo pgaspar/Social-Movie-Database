@@ -48,7 +48,49 @@ class Search:
 		if movie:
 			query += """?a ?r ?m .
 						?r rdfs:subPropertyOf smdb:participatedInMovie .
+						?r rdfs:label ?l .
 						?m smdb:title ?n ."""
+		
+		var = '?b' if name else '?n'	
+		query += 'FILTER( regex(str('+ var +'), "%s", "i") ) .' % keyword
+		
+		print query
+		
+		people = self.graph.query(query + '} ORDER BY ?a')
+		
+		
+		#Stupid hack to make everything look better =D
+		if movie:
+			prev = [None]
+			distinctPeople = []
+			for person in people:
+				#Go through the movies, looking for duplicates
+				if prev[0] == person[0]:
+					prev[2].append(person[2])
+					prev[3].append(person[3])
+				else:
+					if prev[0]:
+						prev[2] = zip(prev[2],prev[3])
+						prev.pop(3)
+						distinctPeople.append(prev)
+						print prev[2]
+					prev = list(person)
+					prev[2] = [prev[2]]
+					prev[3] = [prev[3]]
+					
+			#Another silliness to avoid the last one not being included
+			if prev not in distinctPeople and prev[0]:
+				prev[2] = zip(prev[2],prev[3])
+				prev.pop(3)
+				distinctPeople.append(prev)
+				print prev[2]
+			
+			#print distinctMovies
+			
+			return distinctPeople
+			
+		else:
+			return people
 		
 		
 	def characterSearch(self, name, movie = None):
@@ -68,9 +110,8 @@ class Search:
 		if person:
 			query += """?p ?r ?a .
 						?r rdfs:subPropertyOf smdb:participatedInMovie .
-						?r owl:inverseOf ?r2 .
+						?r owls:inverseOf ?r2 .
 						?r2 rdfs:label ?l .
-						?p rdf:type smdb:Person .
 						?p smdb:name ?n .
 						"""
 		
@@ -93,15 +134,21 @@ class Search:
 					prev[4].append(movie[4])
 				else:
 					if prev[0]:
+						prev[3] = zip(prev[3],prev[4])
+						prev.pop(4)
 						distinctMovies.append(prev)
+						print prev[3]
 					prev = list(movie)
 					prev[3] = [prev[3]]
 					prev[4] = [prev[4]]
 			#Another silliness to avoid the last one not being included
 			if prev not in distinctMovies and prev[0]:
+				prev[3] = zip(prev[3],prev[4])
+				prev.pop(4)
 				distinctMovies.append(prev)
+				print prev[3]
 			
-			print distinctMovies
+			#print distinctMovies
 			
 			return distinctMovies
 			

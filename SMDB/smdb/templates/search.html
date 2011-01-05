@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load utils %}
+
 {% block content %}
 	<h2>Search</h2>
 	
@@ -15,9 +17,18 @@
 		
 		<h4>Movies</h4>
 		<table class="movie-list">
-			{% for uri, title, year in movie_list %}
+			{% for uri, title, year, pairs in movie_list %}
 				<tr>
-					<td><a href="{{ uri }}">{{ title }}</a></td>
+					<td>
+					<a href="{{ uri }}">{{ title }}</a>
+					</td>
+					{% if pairs %}
+					<td>
+						<span class="note">
+							({% for label, name in pairs %}{{ label }} {{ name }}{% if not forloop.last %}, {% endif %}{% endfor %})
+						</span>
+					</td>
+					{% endif %}
 					<td>{{ year }}</td>
 				</tr>
 			{% empty %}
@@ -30,9 +41,16 @@
 		
 		<h4>People</h4>
 		<table class="movie-list">
-			{% for uri, name in person_list %}
+			{% for uri, name, pairs in person_list %}
 				<tr>
 					<td><a href="{{ uri }}">{{ name }}</a></td>
+					{% if pairs %}
+					<td>
+						<span class="note">
+							({% for label, name in pairs %}{{ label }} {{ name }}{% if not forloop.last %}, {% endif %}{% endfor %})
+						</span>
+					</td>
+					{% endif %}
 					<td></td>
 				</tr>
 			{% empty %}
