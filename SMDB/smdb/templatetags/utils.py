@@ -51,3 +51,10 @@ def useinURL_m(req, el):
 			params.update({varname: value})
 	
 	return '%s?%s' % (req.path, params.urlencode())
+	
+	
+@register.filter
+def zip(label, name):
+	
+	return zip(label,name)
+
