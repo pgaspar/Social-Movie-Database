@@ -462,3 +462,8 @@ h1#header-title a {
 #content .filter td.selected {
 	background-color: #e1f0e7;
 }
+
+#content span.note {
+	font-size: 10px;
+	font-weight: normal;
+}

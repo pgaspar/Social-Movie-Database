@@ -143,8 +143,8 @@ def search(request):
 	
 	searcher = Search(graph)
 	
-	movies = searcher.movieSearch(None, searchString)
-	people = None
+	movies = None #searcher.movieSearch(None, searchString)
+	people = searcher.personSearch(None, searchString)
 	
 	return render(request, 'search.html', {'movie_list': movies, 'person_list': people})
 	
