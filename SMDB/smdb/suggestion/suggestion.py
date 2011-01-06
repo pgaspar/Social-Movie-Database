@@ -1,11 +1,7 @@
 from django_rdf import graph
-<<<<<<< HEAD
-from rdflib import URIRef
-=======
 from smdb.utils import sort_by_count
 from rdflib import Literal, URIRef
 from pprint import pprint
->>>>>>> 5e1f63d403a1ae77a03c24339cb831e774d889a6
 
 def movies_of_the_year():
 	pass
