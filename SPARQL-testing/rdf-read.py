@@ -112,17 +112,34 @@ owls=Namespace("http://www.w3.org/2002/07/owl#")
 # for i in res:
 # 	print i
 	
+notSeen = """SELECT DISTINCT ?m ?f ?u WHERE {
+					?m rdf:type smdb:Movie .
+					OPTIONAL{ ?f smdb:hasSeen ?m .
+							  ?f smdb:isFriendsWith <%s> .
+							  } .
+					OPTIONAL{ ?u smdb:hasSeen ?m .
+							  FILTER( ?u = <%s>) . 
+							  } .
+					}""" % (URIRef("/user/mtavares/"), URIRef("/user/mtavares/"))
+					
+res = s.graph.query(notSeen, initNs = initNs)
 
-movies = """SELECT DISTINCT ?u ?un ?fn WHERE {
-				?u rdf:type smdb:SMDBUser .
-				?u smdb:username ?un .
-				OPTIONAL { ?u smdb:fullName ?fn . }
-			}"""
-
-res = s.graph.query(movies, initNs = initNs)
 
 for i in res:
-	print i
+	print i[0] + ":::" + str(i[1]) + ":::" + str(i[2])
+
+
+
+# movies = """SELECT DISTINCT ?u ?un ?fn WHERE {
+# 				?u rdf:type smdb:SMDBUser .
+# 				?u smdb:username ?un .
+# 				OPTIONAL { ?u smdb:fullName ?fn . }
+# 			}"""
+
+#res = s.graph.query(movies, initNs = initNs)
+
+#for i in res:
+#	print i
 
 # c = 0
 # print 'Directors:'
