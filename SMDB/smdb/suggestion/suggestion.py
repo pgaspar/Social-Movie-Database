@@ -17,10 +17,12 @@ def popular_movies():
 	#pprint(res)
 	
 	sorted_res = sort_by_count(res, [0,1], 2)
+	sorted_res = sorted_res[:5]
+	sorted_res = [ el[0] + (el[1],) for el in sorted_res ]	# Flatten the results so that it's (uri, title, score)
 	
-	pprint(sorted_res[:5])
-				
-	return sorted_res[:5]
+	#pprint(sorted_res)
+	
+	return sorted_res
 	
 def seen_by_friends(request):
 	pass

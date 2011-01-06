@@ -30,14 +30,14 @@
 	
 		<table class="movie-gallery">
 			<tr>
-				{% for data, score in popular_movies %}
-					<td><a href="{{ data.0 }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
+				{% for uri, title, score in popular_movies %}
+					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
 				{% endfor %}
 			</tr>
 		
 			<tr>
-				{% for data, score in popular_movies %}
-					<td><a href="{{ data.0 }}" alt="Score: {{score}}" title="Score: {{score}}">{{ data.1 }}</a></td>
+				{% for uri, title, score in popular_movies %}
+					<td><a href="{{ uri }}" alt="Score: {{score}}" title="Score: {{score}}">{{ title }}</a></td>
 				{% endfor %}
 			</tr>
 		
