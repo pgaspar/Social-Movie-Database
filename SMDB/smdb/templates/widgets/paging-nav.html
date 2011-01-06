@@ -3,28 +3,28 @@
 {% endblock %}
 
 {% if result_list %}
-	<script type="text/javascript" charset="utf-8">
-		var finalPage = {{ result_list|length }};
-		var currentPage = 1;
-	</script>
+		<script type="text/javascript" charset="utf-8">
+			var final{{type|default:"Page"}} = {{ result_list|length }};
+			var current{{type|default:"Page"}} = 1;
+		</script>
 
-	<div id="paging-nav">
-		<span id="nav-lower" style="display:none;">
-			<a href="javascript:goToFirst();"><<</a>&nbsp;
-			<a href="javascript:goToPage(currentPage - 1);"><</a>
-		</span>
+		<div id="paging-nav">
+			<span id="nav-lower-{{type|default:"page"}}" style="display:none;">
+				<a href='javascript:goToFirst{{type|default:"Page"}}();'><<</a>&nbsp;
+				<a href="javascript:goTo{{type|default:"Page"}}(current{{type|default:"Page"}} - 1);"><</a>
+			</span>
 	
-		&nbsp;
-		<span id="nav-current">
-			<span id="nav-current-page">1</span>
-			of
-			<script type="text/javascript" charset="utf-8">document.write(finalPage);</script>
-		</span>
-		&nbsp;
+			&nbsp;
+			<span id="nav-current">
+				<span id="nav-current-{{type|default:"page"}}">1</span>
+				of
+				<script type="text/javascript" charset="utf-8">document.write(final{{type|default:"Page"}});</script>
+			</span>
+			&nbsp;
 	
-		<span id="nav-higher" {% ifequal result_list|length 1 %}style="display:none"{% endifequal %}>
-			<a href="javascript:goToPage(currentPage + 1);">></a>&nbsp;
-			<a href="javascript:goToLast();">>></a>
-		</span>
-	</div>
+			<span id="nav-higher-{{type|default:"page"}}" {% ifequal result_list|length 1 %}style="display:none"{% endifequal %}>
+				<a href="javascript:goTo{{type|default:"Page"}}(current{{type|default:"Page"}} + 1);">></a>&nbsp;
+				<a href="javascript:goToLast{{type|default:"Page"}}();">>></a>
+			</span>
+		</div>
 {% endif %}

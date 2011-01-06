@@ -19,15 +19,28 @@ class Search:
 
 	def keywordSearch(self, keyword):
 		
+		print '[Searching Movies]'
 		movieList = self.movieSearch(keyword)
-		personList = self.personSearch(keyword)
-		charList = self.characterList(keyword)
+		print '[Found %d movies]'%len(movieList)
 		
-		if(movieList and not personList and not charList):
+		print '[Searching People]'
+		personList = self.personSearch(keyword)
+		print '[Found %d people]'%len(personList)
+		
+		print '[Searching Characters]'
+		charList = self.characterSearch(keyword)
+		print '[Found %d characters]'%len(charList)
+		
+		if(movieList and not personList):
+			print '[No people found, searching based on movies]'
 			personList = self.personSearch(None, keyword)
-			charList = self.characterSearch(None, keyword)
-			
+		
+		if(movieList and not charList):
+			print '[No characters found, searching based on movies]'
+			charList = self.characterSearch(None, keyword)	
+		
 		if(not movieList and (personList or charList)):
+			print '[No movies found, searching based on people]'
 			movieList = self.movieSearch(None, keyword)
 		
 		return (movieList, personList, charList)
@@ -54,7 +67,7 @@ class Search:
 		var = '?b' if name else '?n'	
 		query += 'FILTER( regex(str('+ var +'), "%s", "i") ) .' % keyword
 		
-		print query
+		#print query
 		
 		people = self.graph.query(query + '} ORDER BY ?a')
 		
@@ -73,7 +86,7 @@ class Search:
 						prev[2] = zip(prev[2],prev[3])
 						prev.pop(3)
 						distinctPeople.append(prev)
-						print prev[2]
+	
 					prev = list(person)
 					prev[2] = [prev[2]]
 					prev[3] = [prev[3]]
@@ -83,7 +96,7 @@ class Search:
 				prev[2] = zip(prev[2],prev[3])
 				prev.pop(3)
 				distinctPeople.append(prev)
-				print prev[2]
+				
 			
 			#print distinctMovies
 			
@@ -94,7 +107,57 @@ class Search:
 		
 		
 	def characterSearch(self, name, movie = None):
-		pass
+		keyword = name if name else movie
+		
+		query = """SELECT ?a ?b ?l ?n WHERE{
+					?a rdf:type smdb:Character .
+					?a smdb:name ?b .
+					"""
+		if movie:
+			query += """?a smdb:inMovie ?m.
+						smdb:inMovie rdfs:label ?l .
+						?m smdb:title ?n ."""
+		
+		var = '?b' if name else '?n'	
+		query += 'FILTER( regex(str('+ var +'), "%s", "i") ) .' % keyword
+		
+		#print query
+		
+		chars = self.graph.query(query + '} ORDER BY ?a')
+		
+		
+		#Stupid hack to make everything look better =D
+		if movie:
+			prev = [None]
+			distinctChars = []
+			for char in chars:
+				#Go through the movies, looking for duplicates
+				if prev[0] == char[0]:
+					prev[2].append(char[2])
+					prev[3].append(char[3])
+				else:
+					if prev[0]:
+						prev[2] = zip(prev[2],prev[3])
+						prev.pop(3)
+						distinctChars.append(prev)
+						
+					prev = list(char)
+					prev[2] = [prev[2]]
+					prev[3] = [prev[3]]
+					
+			#Another silliness to avoid the last one not being included
+			if prev not in distinctChars and prev[0]:
+				prev[2] = zip(prev[2],prev[3])
+				prev.pop(3)
+				distinctChars.append(prev)
+				
+			
+			#print distinctMovies
+			
+			return distinctChars
+			
+		else:
+			return chars
 		
 		
 	def movieSearch(self, title, person = None):
@@ -118,7 +181,7 @@ class Search:
 		var = '?b' if title else '?n'	
 		query += 'FILTER( regex(str('+ var +'), "%s", "i") ) .' % keyword
 		
-		print query
+		#print query
 		
 		movies = self.graph.query(query + '} ORDER BY ?a')
 		
@@ -137,7 +200,7 @@ class Search:
 						prev[3] = zip(prev[3],prev[4])
 						prev.pop(4)
 						distinctMovies.append(prev)
-						print prev[3]
+						
 					prev = list(movie)
 					prev[3] = [prev[3]]
 					prev[4] = [prev[4]]
@@ -146,7 +209,7 @@ class Search:
 				prev[3] = zip(prev[3],prev[4])
 				prev.pop(4)
 				distinctMovies.append(prev)
-				print prev[3]
+				
 			
 			#print distinctMovies
 			
