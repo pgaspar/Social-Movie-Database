@@ -10,8 +10,10 @@ from smdb import manager
 
 from smdb.searching.search import Search
 
-from smdb.utils import split_array
+from smdb.utils import split_array, merge_results
 from django.conf import settings
+
+from pprint import pprint
 
 # Util Functions
 
@@ -140,7 +142,7 @@ def browse_users(request):
 	
 	f = SMDBUser.getFilterList(filters)
 	
-	query = """SELECT DISTINCT ?u ?un ?fn WHERE {
+	query = """SELECT DISTINCT ?u ?un ?fn ?m1 ?u1 WHERE {
 				?u rdf:type smdb:SMDBUser .
 				?u smdb:username ?un . 
 			"""
@@ -150,7 +152,9 @@ def browse_users(request):
 	
 	if 'similar' in filters or 'foaf' in filters: query += """FILTER(?un != "%s") .\n""" % Literal(un)
 	
-	res = graph.query(query + "OPTIONAL { ?u smdb:fullName ?fn . } }", initBindings=initBindings)
+	res = graph.query(query + "OPTIONAL { ?u smdb:fullName ?fn . }}", initBindings=initBindings)
+	res = merge_results(res)
+	
 	count = len(res)
 	
 	return render(request, 'browsing/users.html', {'filter_list':f, 'result_list': split_array(res, settings.ITEMS_PER_PAGE), 'res_count': count})

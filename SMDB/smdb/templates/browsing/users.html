@@ -14,10 +14,13 @@
 		<div id="page-{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
 			<table class="movie-list">
 			
-				{% for uri, username, fullname in page %}
+				{% for uri, username, fullname, common_movies, common_friends in page %}
 				<tr>
 					<td><a href="{{ uri }}">{% firstof fullname username %}</a></td>
-					<td>&nbsp;</td>
+					<td>
+						{% if common_movies %}{{ common_movies|length }} movie{{ common_movies|length|pluralize }} in common.{% endif %}
+						{% if common_friends %}{{ common_friends|length }} friend{{ common_friends|length|pluralize }} in common.{% endif %}
+					</td>
 				</tr>
 				{% endfor %}
 				
