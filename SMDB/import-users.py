@@ -18,6 +18,7 @@ s.addMovieSeen('mtavares', 'Pulp Fiction (1994)')
 s.addMovieSeen('pgaspar', 'Corpse Bride (2005)')
 s.addMovieSeen('pgaspar', 'Pulp Fiction (1994)')
 s.addMovieSeen('user_test_all', 'Corpse Bride (2005)')
+s.addMovieSeen('myfriend_1', 'Corpse Bride (2005)')
 s.addMovieSeen('mtavares', 'The Cotton Club (1984)')
 s.addMovieSeen('pgaspar', 'Sin City (2005)')
 
