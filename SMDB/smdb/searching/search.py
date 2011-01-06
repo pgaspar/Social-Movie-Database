@@ -21,10 +21,15 @@ class Search:
 		
 		print '[Searching Movies]'
 		movieList = self.movieSearch(keyword)
+		print '[Found %d movies]'%len(movieList)
+		
 		print '[Searching People]'
 		personList = self.personSearch(keyword)
+		print '[Found %d people]'%len(personList)
+		
 		print '[Searching Characters]'
 		charList = self.characterSearch(keyword)
+		print '[Found %d characters]'%len(charList)
 		
 		if(movieList and not personList):
 			print '[No people found, searching based on movies]'

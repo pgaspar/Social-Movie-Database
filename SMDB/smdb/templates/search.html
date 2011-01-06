@@ -16,68 +16,100 @@
 		<h3 class="context-header"><span>Results</span></h3>
 		
 		<h4>Movies</h4>
-		<table class="movie-list">
-			{% for uri, title, year, pairs in movie_list %}
-				<tr>
-					<td>
-					<a href="{{ uri }}">{{ title }}</a>
-					</td>
-					{% if pairs %}
-					<td>
-						<span class="note">
-							({% for label, name in pairs %}{{ label }} {{ name }}{% if not forloop.last %}, {% endif %}{% endfor %})
-						</span>
-					</td>
-					{% endif %}
-					<td>{{ year }}</td>
-				</tr>
+		{% with movie_list as result_list %}
+		{% with "Movie" as type %}
+			{% for page in result_list %}
+			<div id="movie-{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
+				<table class="movie-list">
+					{% for uri, title, year, pairs in page %}
+						<tr>
+							<td>
+							<a href="{{ uri }}">{{ title }}</a>
+							</td>
+							{% if pairs %}
+							<td>
+								<span class="note">
+									({% for label, name in pairs %}{{ label }} {{ name }}{% if not forloop.last %}, {% endif %}{% endfor %})
+								</span>
+							</td>
+							{% endif %}
+							<td>{{ year }}</td>
+						</tr>
+					{% endfor %}
+				</table>
+				<div class="clear-both"></div>
+			</div>
 			{% empty %}
-				<p>No movies found.</p>
+				<p>No Movies found.</p>
+				<div class="clear-both"></div>
 			{% endfor %}
-		</table>
-		<div class="clear-both"></div>
+			
+			{% include 'widgets/paging-nav.html' %}
+		{% endwith %}
+		{% endwith %}
 		
 		<br /><br />
 		
 		<h4>People</h4>
-		<table class="movie-list">
-			{% for uri, name, pairs in person_list %}
-				<tr>
-					<td><a href="{{ uri }}">{{ name }}</a></td>
-					{% if pairs %}
-					<td>
-						<span class="note">
-							({% for label, name in pairs %}{{ label }} {{ name }}{% if not forloop.last %}, {% endif %}{% endfor %})
-						</span>
-					</td>
-					{% endif %}
-					<td></td>
-				</tr>
+		{% with person_list as result_list %}
+		{% with "Person" as type %}
+			{% for page in result_list %}
+			<div id="person-{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
+				<table class="movie-list">
+					{% for uri, name, pairs in page %}
+						<tr>
+							<td><a href="{{ uri }}">{{ name }}</a></td>
+							{% if pairs %}
+							<td>
+								<span class="note">
+									({% for label, name in pairs %}{{ label }} {{ name }}{% if not forloop.last %}, {% endif %}{% endfor %})
+								</span>
+							</td>
+							{% endif %}
+							<td></td>
+						</tr>
+						{% endfor %}
+				</table>
+				<div class="clear-both"></div>
+			</div>
 			{% empty %}
-				<p>No people found.</p>
+				<p>No People found.</p>
+				<div class="clear-both"></div>
 			{% endfor %}
-		</table>
-		<div class="clear-both"></div>
+
+			{% include 'widgets/paging-nav.html' %}
+		{% endwith %}
+		{% endwith %}
 		
 		<h4>Characters</h4>
-		<table class="movie-list">
-			{% for uri, name, pairs in char_list %}
-				<tr>
-					<td><a href="{{ uri }}">{{ name }}</a></td>
-					{% if pairs %}
-					<td>
-						<span class="note">
-							({% for label, name in pairs %}{{ label }} {{ name }}{% if not forloop.last %}, {% endif %}{% endfor %})
-						</span>
-					</td>
-					{% endif %}
-					<td></td>
-				</tr>
+		{% with char_list as result_list %}
+		{% with "Char" as type %}
+			{% for page in result_list %}
+			<div id="char-{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
+				<table class="movie-list">
+					{% for uri, name, pairs in page %}
+						<tr>
+							<td><a href="{{ uri }}">{{ name }}</a></td>
+							{% if pairs %}
+							<td>
+								<span class="note">
+									({% for label, name in pairs %}{{ label }} {{ name }}{% if not forloop.last %}, {% endif %}{% endfor %})
+								</span>
+							</td>
+							{% endif %}
+							<td></td>
+						</tr>
+						{% endfor %}
+				</table>
+				<div class="clear-both"></div>
+			</div>
 			{% empty %}
-				<p>No people found.</p>
+				<p>No Characters found.</p>
+				<div class="clear-both"></div>
 			{% endfor %}
-		</table>
-		<div class="clear-both"></div>
-	</div>
+
+			{% include 'widgets/paging-nav.html' %}
+		{% endwith %}
+		{% endwith %}
 	
 {% endblock %}

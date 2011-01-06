@@ -215,7 +215,7 @@ class Character(BaseModel):
 	
 	def get_movie_actors(self):
 		for uriMovie, uriActor in graph.query("""SELECT ?m ?a WHERE {
-										?a smdb:performedIn ?u.
+										?a smdb:performedIn ?m.
 										?c smdb:inMovie ?m .
 										?c smdb:portrayedBy ?a .
 										}""", initBindings={'c': self.uri}):

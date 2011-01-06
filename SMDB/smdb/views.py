@@ -171,4 +171,4 @@ def search(request):
 	
 	(movies, people, chars)  = searcher.keywordSearch(searchString)
 	
-	return render(request, 'search.html', {'movie_list': movies, 'person_list': people, 'char_list': chars})
+	return render(request, 'search.html', {'movie_list': split_array(movies, settings.ITEMS_PER_PAGE), 'person_list': split_array(people, settings.ITEMS_PER_PAGE), 'char_list': split_array(chars, settings.ITEMS_PER_PAGE)})
