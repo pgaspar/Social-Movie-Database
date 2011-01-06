@@ -25,7 +25,7 @@ urlpatterns = patterns('',
 	
 	# SMDB
 	
-	(r'^$', direct_to_template, {'template': 'index.html'}),
+	(r'^$', 'smdb.views.index'),
 	#(r'^movie/$', direct_to_template, {'template': 'movie.html'}),
 	#(r'^person/$', direct_to_template, {'template': 'person.html'}),
 	#(r'^character/$', direct_to_template, {'template': 'character.html'}),

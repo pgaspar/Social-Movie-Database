@@ -16,6 +16,7 @@ from smdb.utils import split_array, merge_results
 from django.conf import settings
 
 from django.contrib.auth.decorators import login_required
+from smdb.suggestion import suggestion
 
 # Util Functions
 
@@ -32,6 +33,26 @@ def get_object_or_404(Model, uri):
 def redirect_to_profile(request):
 	return HttpResponseRedirect('/user/' + request.user.username)
 
+# Index Page
+
+def index(request):
+	context = {}
+	
+	# Fetch the Movies of the Year section
+	context['movies_of_the_year'] = suggestion.movies_of_the_year()
+	
+	# Fetch the Popular Movies section
+	context['popular_movies'] = suggestion.popular_movies()
+	
+	if request.user.is_authenticated():
+		
+		# Fetch the Seen by Friends section
+		context['seen_by_friends'] = suggestion.seen_by_friends(request)
+		
+		# Fetch the Recommended Movies section
+		context['recommended_movies'] = suggestion.recommended_movies(request)
+	
+	return render(request, 'index.html', context)
 
 # Detail Pages
 
