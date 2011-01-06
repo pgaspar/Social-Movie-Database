@@ -104,14 +104,25 @@ owls=Namespace("http://www.w3.org/2002/07/owl#")
 # 	print a, u
 
 
-movies = "SELECT ?b WHERE {?b owls:inverseOf smdb:directedBy .}"
+# movies = "SELECT ?b WHERE {?b owls:inverseOf smdb:directedBy .}"
+# 
+# res = s.graph.query(movies, initNs = initNs)
+# 
+# 
+# for i in res:
+# 	print i
+	
+
+movies = """SELECT DISTINCT ?u ?un ?fn WHERE {
+				?u rdf:type smdb:SMDBUser .
+				?u smdb:username ?un .
+				OPTIONAL { ?u smdb:fullName ?fn . }
+			}"""
 
 res = s.graph.query(movies, initNs = initNs)
 
-
 for i in res:
 	print i
-
 
 # c = 0
 # print 'Directors:'

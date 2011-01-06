@@ -256,6 +256,13 @@ class SMDBUser(BaseModel):
 		print '>> fetching [SMDBUser-hasSeen]'
 		return [ Movie(obj.uri) for obj in self.smdb__hasSeen__m ]
 	
+	@classmethod
+	def getFilterList(model, filters=[]):
+		
+		filter_list = [ ('Similar Tastes', 'similar'), ('Friend of a Friend', 'foaf'), ('Reviewers', 'reviewer') ]
+		
+		return [ Filter(header='Filter By', label='filters', obj_list=filter_list, target_o=filters, mult=True) ]
+	
 	def get_absolute_url(self):
 		return self.uri
 	
