@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+	{% if request.user.is_authenticated %}
 	<div class="section">
 		<h3 class="context-header"><span>Recommended Movies</span></h3>
-	
+		
 		<table class="movie-gallery">
 			<tr>
 				<td><a href="/movie/pulp-fiction-1994"><img src="http://ia.media-imdb.com/images/M/MV5BMjE0ODk2NjczOV5BMl5BanBnXkFtZTYwNDQ0NDg4._V1._SY314_CR3,0,214,314_.jpg" /></a></td>
@@ -22,9 +23,10 @@
 			</tr>
 		</table>
 	</div>
+	{% endif %}
 	
 	<div class="section">
-		<h3 class="indented">Recent Additions</h3>
+		<h3 class="context-header"><span>Films of the Year</span></h3>
 	
 		<table class="movie-gallery">
 			<tr>
@@ -46,6 +48,7 @@
 		</table>
 	</div>
 	
+	{% if request.user.is_authenticated %}
 	<div class="section">
 		<h3 class="context-header"><span>Seen by Friends</span></h3>
 	
@@ -64,4 +67,6 @@
 		
 		</table>
 	</div>
+	{% endif %}
+	
 {% endblock %}

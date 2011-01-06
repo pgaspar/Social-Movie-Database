@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<h2>Login</h2>
+	
+	<div class="section">
+		<fieldset>
+			<form method="post" action=".">
+				<table>
+					{{ form.as_table }}
+					
+					<tr>
+						<td><input type="submit" value="Login" /></td>
+						<td>&nbsp;</td>
+					</tr>
+				</table>
+				<input type="hidden" name="next" value="{{ next }}" />
+			</form>
+		</fieldset>
+	</div>
+
+{% endblock %}

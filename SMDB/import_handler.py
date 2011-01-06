@@ -3,8 +3,20 @@ from rdflib.store.Sleepycat import Sleepycat
 from rdflib import Graph
 from rdflib.namespace import Namespace, RDF
 from rdflib import URIRef, Literal, BNode
+from sqlite3 import IntegrityError
 
 from django.template.defaultfilters import slugify
+
+# Loding the environment
+
+from django.core.management import setup_environ
+import settings
+
+print "Setting up environment"
+setup_environ(settings)
+
+print "Importing models"
+from smdb.models import *
 
 
 class SMDB():
@@ -13,7 +25,7 @@ class SMDB():
 		
 		self.store = Sleepycat()
 		#self.store.open('rdf-db')
-		self.store.open('../SMDB/database/rdf', create = False)
+		self.store.open('database/rdf', create = False)
 		
 		self.graph = Graph(self.store, identifier = URIRef(identifier))
 		
@@ -142,6 +154,23 @@ class SMDB():
 		self.graph.add((uri, RDF.type, self.smdb['SMDBUser']))
 		self.graph.add((uri, self.smdb['username'], Literal(username)))
 		if fullname: self.graph.add((uri, self.smdb['fullName'], Literal(fullname)))
+		
+		# Add the django model.
+		try:
+			user = User.objects.create_user(username, '', username) # Use username as password
+		
+			if fullname:
+				user.first_name = fullname.split(' ', 1)[0]
+				if ' ' in fullname: user.last_name = fullname.split(' ',1)[1]
+		
+			user.save()
+		
+			profile = UserProfile(uri=uri)
+			profile.user = user
+			profile.save()
+		
+		except IntegrityError:
+			print 'The user', username, 'was already created in the Django database.'
 		
 		self.graph.commit()
 		

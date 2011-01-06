@@ -18,16 +18,21 @@ urlpatterns = patterns('',
     # (r'^admin/(.*)', admin.site.root),
 	(r'^media/(.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 	
+	# Login/Logout
+	
+	(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'accounts/login.html'}),
+	(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
+	
 	# SMDB
 	
 	(r'^$', direct_to_template, {'template': 'index.html'}),
-	(r'^movie/$', direct_to_template, {'template': 'movie.html'}),
-	(r'^person/$', direct_to_template, {'template': 'person.html'}),
-	(r'^character/$', direct_to_template, {'template': 'character.html'}),
-	(r'^profile/$', direct_to_template, {'template': 'user.html'}),
+	#(r'^movie/$', direct_to_template, {'template': 'movie.html'}),
+	#(r'^person/$', direct_to_template, {'template': 'person.html'}),
+	#(r'^character/$', direct_to_template, {'template': 'character.html'}),
+	#(r'^profile/$', direct_to_template, {'template': 'user.html'}),
 	
 	#(r'^search/$', direct_to_template, {'template': 'search.html'}),
-	(r'^suggestion/$', direct_to_template, {'template': 'suggestion.html'}),
+	#(r'^suggestion/$', direct_to_template, {'template': 'suggestion.html'}),
 	
 	#url(r'^browse/$', direct_to_template, {'template': 'browse.html'}, name='browse-all'),
 	url(r'^browse/movies/$', 'smdb.views.browse_movies', name='browse-movies'),
@@ -39,6 +44,8 @@ urlpatterns = patterns('',
 	(r'^user/(?P<username>[-_\w]+)/$', 'smdb.views.user_detail'),
 	(r'^person/(?P<slug>[-\w]+)/$', 'smdb.views.person_detail'),
 	(r'^character/(?P<slug>[-\w]+)/$', 'smdb.views.character_detail'),
+	
+	(r'^profile/$', 'smdb.views.redirect_to_profile'),
 	
 	(r'^search/.*$', 'smdb.views.search'),
 )

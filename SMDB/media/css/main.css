@@ -486,3 +486,14 @@ h1#header-title a {
 	text-align: center;
 	color: gray;
 }
+
+/*** LOGIN ***/
+
+fieldset {
+	margin: 0px 60px;
+	font-size: 14px;
+	
+	border: 1px solid #CCC;
+	padding: 10px;
+	width: 50%;
+}

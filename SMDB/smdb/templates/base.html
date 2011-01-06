@@ -18,9 +18,13 @@
 	<div id="menu">
 		<ul>
 			<li><a href="/"><img src="{{MEDIA_URL}}images/house.png"/>Home</a></li>
-			<li><a href="/suggestion/"><img src="{{MEDIA_URL}}images/box.png"/>Recommended Movies</a></li>
-			<li><a href="/profile/"><img src="{{MEDIA_URL}}images/user.png"/>Profile</a></li>
-			<li><a href="/account/"><img src="{{MEDIA_URL}}images/cog.png"/>Settings</a></li>
+			<!--<li><a href="/suggestion/"><img src="{{MEDIA_URL}}images/box.png"/>Recommended Movies</a></li>-->
+			{% if request.user.is_authenticated %}
+				<li><a href="/profile/"><img src="{{MEDIA_URL}}images/user.png"/>Profile</a></li>
+				<li><a href="/logout/"><img src="{{MEDIA_URL}}images/logout.png"/>Logout</a></li>
+			{% else %}
+				<li><a href="/login/"><img src="{{MEDIA_URL}}images/login.png"/>Login</a></li>
+			{% endif %}
 		</ul>
 	</div>
 	

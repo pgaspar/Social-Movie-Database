@@ -257,9 +257,11 @@ class SMDBUser(BaseModel):
 		return [ Movie(obj.uri) for obj in self.smdb__hasSeen__m ]
 	
 	@classmethod
-	def getFilterList(model, filters=[]):
+	def getFilterList(model, is_auth, filters=[]):
 		
 		filter_list = [ ('Similar Tastes', 'similar'), ('Friend of a Friend', 'foaf'), ('Reviewers', 'reviewer') ]
+		
+		if not is_auth: filter_list = filter_list[2:]
 		
 		return [ Filter(header='Filter By', label='filters', obj_list=filter_list, target_o=filters, mult=True) ]
 	

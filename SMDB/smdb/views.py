@@ -1,6 +1,8 @@
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import get_object_or_404 as django_get_object_or_404
+from django.contrib.auth.models import User
 
 from django_rdf import graph
 from rdflib import Literal, URIRef
@@ -13,7 +15,7 @@ from smdb.searching.search import Search
 from smdb.utils import split_array, merge_results
 from django.conf import settings
 
-from pprint import pprint
+from django.contrib.auth.decorators import login_required
 
 # Util Functions
 
@@ -24,6 +26,12 @@ def get_object_or_404(Model, uri):
 	try: return Model(uri)
 	except TypeError: raise Http404
 	
+# User related
+
+@login_required
+def redirect_to_profile(request):
+	return HttpResponseRedirect('/user/' + request.user.username)
+
 
 # Detail Pages
 
@@ -39,8 +47,9 @@ def user_detail(request, username):
 	
 	uri = request.path
 	user = get_object_or_404(SMDBUser, uri)
+	django_user = django_get_object_or_404(User, username=username)
 	
-	return render(request, 'user.html', {'user': user})
+	return render(request, 'user.html', {'user': user, 'd_user': django_user})
 	
 def person_detail(request, slug):
 	
@@ -129,10 +138,8 @@ def browse_users(request):
 	
 	initBindings = {}
 	
-	un = 'pgaspar'
-	
-	filterToQuery = { 'similar': '?me smdb:username "%s" .\n ?me smdb:hasSeen ?m1 .\n ?u smdb:hasSeen ?m1 .\n' % Literal(un),
-					  'foaf': '?me smdb:username "%s" .\n ?me smdb:isFriendsWith ?u1 .\n ?u smdb:isFriendsWith ?u1 .\n' % Literal(un),
+	filterToQuery = { 'similar': '?me smdb:username "%s" .\n ?me smdb:hasSeen ?m1 .\n ?u smdb:hasSeen ?m1 .\n' % Literal(request.user.username),
+					  'foaf': '?me smdb:username "%s" .\n ?me smdb:isFriendsWith ?u1 .\n ?u smdb:isFriendsWith ?u1 .\n' % Literal(request.user.username),
 					  'reviewer': '?r1 smdb:writtenByUser ?u .\n',
 					}
 	
@@ -140,7 +147,7 @@ def browse_users(request):
 	
 	print 'Filters:', filters
 	
-	f = SMDBUser.getFilterList(filters)
+	f = SMDBUser.getFilterList(request.user.is_authenticated(), filters)
 	
 	query = """SELECT DISTINCT ?u ?un ?fn ?m1 ?u1 WHERE {
 				?u rdf:type smdb:SMDBUser .
@@ -150,7 +157,7 @@ def browse_users(request):
 	for o in filters:
 		if o in filterToQuery: query += filterToQuery[o]
 	
-	if 'similar' in filters or 'foaf' in filters: query += """FILTER(?un != "%s") .\n""" % Literal(un)
+	if 'similar' in filters or 'foaf' in filters: query += """FILTER(?un != "%s") .\n""" % Literal(request.user.username)
 	
 	res = graph.query(query + "OPTIONAL { ?u smdb:fullName ?fn . }}", initBindings=initBindings)
 	res = merge_results(res)

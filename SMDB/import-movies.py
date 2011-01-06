@@ -1,5 +1,5 @@
 import re
-from SMDB import SMDB
+from import_handler import SMDB
 import sys
 import django
 import os
@@ -37,7 +37,7 @@ def cleanName(name):
 if __name__ == "__main__":
 	
 
-	os.system("python titlePicker.py")
+	os.system("python import-titles.py")
 	
 	titleRegex = '([^"].*?\(\d{4}\))?'
 	weirdShitRegex = '(\s\(T?VG?\))?(\s\{.*\})?'
