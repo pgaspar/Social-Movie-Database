@@ -123,6 +123,39 @@ def browse_people(request):
 	
 	return render(request, 'browsing/people.html', {'filter_list':f, 'result_list': split_array(res, settings.ITEMS_PER_PAGE), 'res_count': count})
 	
+def browse_users(request):
+	
+	initBindings = {}
+	
+	un = 'pgaspar'
+	
+	filterToQuery = { 'similar': '?me smdb:username "%s" .\n ?me smdb:hasSeen ?m1 .\n ?u smdb:hasSeen ?m1 .\n' % Literal(un),
+					  'foaf': '?me smdb:username "%s" .\n ?me smdb:isFriendsWith ?u1 .\n ?u smdb:isFriendsWith ?u1 .\n' % Literal(un),
+					  'reviewer': '?r1 smdb:writtenByUser ?u .\n',
+					}
+	
+	filters = [ s.lower() for s in request.GET.getlist('filters') ]
+	
+	print 'Filters:', filters
+	
+	f = SMDBUser.getFilterList(filters)
+	
+	query = """SELECT DISTINCT ?u ?un ?fn WHERE {
+				?u rdf:type smdb:SMDBUser .
+				?u smdb:username ?un . 
+			"""
+	
+	for o in filters:
+		if o in filterToQuery: query += filterToQuery[o]
+	
+	if 'similar' in filters or 'foaf' in filters: query += """FILTER(?un != "%s") .\n""" % Literal(un)
+	
+	res = graph.query(query + "OPTIONAL { ?u smdb:fullName ?fn . } }", initBindings=initBindings)
+	count = len(res)
+	
+	return render(request, 'browsing/users.html', {'filter_list':f, 'result_list': split_array(res, settings.ITEMS_PER_PAGE), 'res_count': count})
+
+
 
 # Searching
 

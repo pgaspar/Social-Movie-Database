@@ -135,12 +135,13 @@ class SMDB():
 		
 		self.graph.commit()
 	
-	def addSMDBUser(self, username):
+	def addSMDBUser(self, username, fullname=''):
 		
 		uri = self.user[slugify(username) + '/']
 		
 		self.graph.add((uri, RDF.type, self.smdb['SMDBUser']))
 		self.graph.add((uri, self.smdb['username'], Literal(username)))
+		if fullname: self.graph.add((uri, self.smdb['fullName'], Literal(fullname)))
 		
 		self.graph.commit()
 		
