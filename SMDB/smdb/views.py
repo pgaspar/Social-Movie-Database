@@ -132,55 +132,6 @@ def search(request):
 	
 	searcher = Search(graph)
 	
-	movies = None #searcher.movieSearch(None, searchString)
-	people = searcher.personSearch(None, searchString)
+	(movies, people, chars)  = searcher.keywordSearch(searchString)
 	
-	return render(request, 'search.html', {'movie_list': movies, 'person_list': people})
-	
-	query = """SELECT ?a ?b ?d WHERE{
-				?a rdf:type smdb:Movie .
-				?a smdb:title ?b .
-				?a smdb:releaseDate ?d .
-				"""
-				
-	if searchString: query += 'FILTER( regex(str(?b), "%s", "i") ) .' %searchString
-	
-	movies = graph.query(query + '}')
-	
-	query = """SELECT ?a ?b WHERE{
-				?a rdf:type smdb:Person .
-				?a smdb:name ?b .
-				"""
-				
-	if searchString: query += 'FILTER( regex(str(?b), "%s", "i") ) .' %searchString
-	
-	people = graph.query(query + '}')
-	
-	if movies and not people:
-		
-		query = """SELECT DISTINCT ?a ?b WHERE{
-				?a rdf:type smdb:Person .
-				?a smdb:name ?b .
-				?a smdb:performedIn ?m .
-				"""
-		if searchString: query += 'FILTER( regex(str(?m), "%s", "i") ) .' %searchString	
-	
-		people = graph.query(query + '}')
-				
-	elif people and not movies:
-		print "Searching directed by"
-		print people
-		query = """SELECT DISTINCT ?a ?b ?d WHERE{
-				?a rdf:type smdb:Movie .
-				?a smdb:title ?b .
-				?a smdb:releaseDate ?d .
-				?p smdb:directed ?a .
-				?p rdf:type smdb:Person .
-				?p smdb:name ?n .
-				"""
-				
-		if searchString: query += 'FILTER( regex(str(?n), "%s", "i") ) .' %searchString	
-	
-		movies = graph.query(query + '}')
-	
-	return render(request, 'search.html', {'movie_list': movies, 'person_list': people})
+	return render(request, 'search.html', {'movie_list': movies, 'person_list': people, 'char_list': chars})

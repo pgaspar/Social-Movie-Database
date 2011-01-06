@@ -58,6 +58,26 @@
 			{% endfor %}
 		</table>
 		<div class="clear-both"></div>
+		
+		<h4>Characters</h4>
+		<table class="movie-list">
+			{% for uri, name, pairs in char_list %}
+				<tr>
+					<td><a href="{{ uri }}">{{ name }}</a></td>
+					{% if pairs %}
+					<td>
+						<span class="note">
+							({% for label, name in pairs %}{{ label }} {{ name }}{% if not forloop.last %}, {% endif %}{% endfor %})
+						</span>
+					</td>
+					{% endif %}
+					<td></td>
+				</tr>
+			{% empty %}
+				<p>No people found.</p>
+			{% endfor %}
+		</table>
+		<div class="clear-both"></div>
 	</div>
 	
 {% endblock %}
