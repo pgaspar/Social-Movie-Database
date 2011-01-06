@@ -28,3 +28,24 @@ def merge_results(res):
 	res_final.sort(key=lambda o: o[1])
 	
 	return res_final
+	
+def sort_by_count(matrix, indexes, cnt_index):
+	"""
+	The second argument are the indexes of the unique fields in each line.
+	The third argument is the index where we'll compare to None to distinguish between optional fields.
+	"""
+	
+	res_dict = {}
+	
+	# Count the number of times each line appears in the matrix
+	for line in matrix:
+		key = tuple([ line[i] for i in indexes ])
+		optional_cell = line[cnt_index]
+		
+		if key not in res_dict: res_dict[key] = 0 if optional_cell == None else 1
+		else: res_dict[key] += 1
+	
+	# Sorted the response so that the high count elements appear first
+	sorted_res = sorted(res_dict.items(), key=lambda o: o[1], reverse=True)
+	
+	return sorted_res
