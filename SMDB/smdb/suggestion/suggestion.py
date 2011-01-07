@@ -1,11 +1,7 @@
 from django_rdf import graph
-<<<<<<< HEAD
-from rdflib import URIRef
-=======
 from smdb.utils import sort_by_count
 from rdflib import Literal, URIRef
 from pprint import pprint
->>>>>>> 5e1f63d403a1ae77a03c24339cb831e774d889a6
 
 def movies_of_the_year():
 	pass
@@ -35,15 +31,24 @@ def recommended_movies(request):
 	
 	userURI = request.user.get_profile().uri
 	related = dict()
+	titles = dict()
 	
-	#favGenres = get_favorite_genres(userURI)
-	#favDirectors = get_favorite_directors(userURI)
-	#favWriters = get_favorite_writers(userURI)
-	print userURI
-	#userURI = URIRef("/user/pgaspar/")
+	favGenres = get_favorite_genres(userURI)
+	favDirectors = get_favorite_directors(userURI)
+	favWriters = get_favorite_writers(userURI)
 	
-	query = """SELECT DISTINCT ?m ?f ?u WHERE {
+	for director in zip(favDirectors.keys(), favDirectors.values()):
+		print director
+		
+	for writer in zip(favWriters.keys(), favWriters.values()):
+		print writer
+			
+	for genre in zip(favGenres.keys(), favGenres.values()):
+		print genre
+	
+	query = """SELECT DISTINCT ?m ?f ?u ?t WHERE {
 						?m rdf:type smdb:Movie .
+						?m smdb:title ?t .
 						OPTIONAL{ ?f smdb:hasSeen ?m .
 								  ?f smdb:isFriendsWith <%s> .
 								  } .
@@ -61,13 +66,14 @@ def recommended_movies(request):
 			if movie[0] in related.keys():
 				related[movie[0]] += 1
 			else:
+				titles[movie[0]] = movie[3]
 				if movie[1]:
 					related[movie[0]] = 1
 				else:
 					related[movie[0]] = 0
 	
-	for movie in zip(related.keys(), related.values()):
-		print movie
+	#for movie in zip(related.keys(), related.values()):
+	#	print movie
 	
 	genreQuery = """SELECT DISTINCT ?m ?g WHERE {
 					?m rdf:type smdb:Movie . 
@@ -92,13 +98,12 @@ def recommended_movies(request):
 	
 	allDirectors = graph.query(writerQuery)
 	
-	return None
 	
 	for movie in allGenres:
 		if movie[1] in favGenres.keys() and movie[0] in related.keys():
 			related[movie[0]] += favGenres[movie[1]]
 	
-	for movie in allDirectos:
+	for movie in allDirectors:
 		if movie[1] in favDirectors.keys() and movie[0] in related.keys():
 			related[movie[0]] += favDirectors[movie[1]]
 
@@ -108,9 +113,70 @@ def recommended_movies(request):
 	
 	
 	
-	related = zip(related.keys(), related.values())
+	results = [ [uri, titles[uri], related[uri]] for uri in related.keys() ]
 	
-	sortedResults = sorted(related, key = lambda pair : pair[1] )
+	sortedResults = sorted(results, key = lambda pair : pair[2], reverse = True )
 	
 	for result in sortedResults:
 		print result
+		
+	return sortedResults[:5]
+
+
+def get_favorite_genres(user):
+	res = dict()
+	
+	query = """SELECT DISTINCT ?m ?g WHERE{
+				?m rdf:type smdb:Movie .
+				<%s> smdb:hasSeen ?m .
+				?m smdb:isOfGenre ?g .
+				}""" % user
+				
+	genres = graph.query(query)
+	
+	for genre in genres:
+		if genre[1] in res.keys():
+			res[genre[1]] += 1
+		else:
+			res[genre[1]] = 1
+	
+	return res
+
+
+def get_favorite_directors(user):
+	res = dict()
+
+	query = """SELECT DISTINCT ?m ?p WHERE{
+				?m rdf:type smdb:Movie .
+				<%s> smdb:hasSeen ?m .
+				?p smdb:directed ?m .
+				}""" % user
+
+	directors = graph.query(query)
+
+	for director in directors:
+		if director[1] in res.keys():
+			res[director[1]] += 1
+		else:
+			res[director[1]] = 1
+
+	return res
+
+def get_favorite_writers(user):
+	res = dict()
+
+	query = """SELECT DISTINCT ?m ?p WHERE{
+				?m rdf:type smdb:Movie .
+				<%s> smdb:hasSeen ?m .
+				?p smdb:wrote ?m .
+				}""" % user
+
+	writers = graph.query(query)
+
+	for writer in writers:
+		if writer[1] in res.keys():
+			res[writer[1]] += 1
+		else:
+			res[writer[1]] = 1
+
+	return res
