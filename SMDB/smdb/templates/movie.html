@@ -80,15 +80,15 @@
 	
 		<table class="movie-gallery">
 			<tr>
-				<td><a href="/movie/"><img src="http://ia.media-imdb.com/images/M/MV5BMTQ2OTE1Mjk0N15BMl5BanBnXkFtZTcwODE3MDAwNA@@._V1._SX214_CR0,0,214,314_.jpg" /></a></td>
-				<td><a href="/person/"><img src="http://ia.media-imdb.com/images/M/MV5BMjIwOTY5NDgzNV5BMl5BanBnXkFtZTcwNjE3NjQxMw@@._V1._SY314_CR5,0,214,314_.jpg" /></a></td>
-				<td><a href="/person/"><img src="http://ia.media-imdb.com/images/M/MV5BNzk3NTUyOTMyNl5BMl5BanBnXkFtZTcwMjQzNDcwMg@@._V1._SY314_CR2,0,214,314_.jpg" /></a></td>
+				{% for uri, title, score in suggestions %}
+					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
+				{% endfor %}
 			</tr>
 		
 			<tr>
-				<td><a href="/movie/">Harry Potter e os Talismãs da Morte: Parte 1</a></td>
-				<td><a href="/person/">Quentin Tarantino</a></td>
-				<td><a href="/person/">Uma Thurman</a></td>
+				{% for uri, title, score in suggestions %}
+					<td><a href="{{ uri }}" alt="Score: {{score}}" title="Score: {{score}}">{{ title }}</a></td>
+				{% endfor %}
 			</tr>
 		
 		</table>

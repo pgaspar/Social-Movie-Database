@@ -62,7 +62,9 @@ def movie_detail(request, slug):
 	
 	movie = get_object_or_404(Movie, uri)
 	
-	return render(request, 'movie.html', {'movie': movie})
+	suggested = suggestion.movie_suggestions(uri)
+	
+	return render(request, 'movie.html', {'movie': movie, 'suggestions': suggested})
 	
 def user_detail(request, username):
 	

@@ -3,6 +3,61 @@ from smdb.utils import sort_by_count
 from rdflib import Literal, URIRef
 from pprint import pprint
 
+
+def movie_suggestions(uri):
+	
+	related = dict()
+	titles = dict()
+	
+	query = """SELECT DISTINCT ?m ?t ?g WHERE{
+				<%s> smdb:isOfGenre ?g .
+				?m smdb:isOfGenre ?g .
+				?m smdb:title ?t .
+				FILTER( ?m != <%s> ).
+				}
+			""" % (uri,uri)
+
+
+	sameGenre = graph.query(query)
+	
+	for movie in sameGenre:
+		if movie[0] in related.keys():
+			related[movie[0]] += 1
+		else:
+			related[movie[0]] = 1
+			titles[movie[0]] = movie[1]
+	
+	query = """SELECT DISTINCT ?m ?p ?t WHERE{
+				?p ?r1 <%s> .
+				?p ?r ?m .
+				?m smdb:title ?t .
+				?r rdfs:subPropertyOf smdb:participatedInMovie .
+				?r1 rdfs:subPropertyOf smdb:participatedInMovie .
+				FILTER( ?m != <%s> ) .
+				}
+			""" % (uri, uri)
+	
+			
+	samePeople = graph.query(query)
+	
+	
+	for movie in samePeople:
+		if movie[0] in related.keys():
+			related[movie[0]] += 1
+		else:
+			related[movie[0]] = 1
+			titles[movie[0]] = movie[2]
+	
+	
+	results = [ [uri, titles[uri], related[uri]] for uri in related.keys() ]
+	
+	sortedResults = sorted(results, key = lambda pair : pair[2], reverse = True )
+	
+	for result in sortedResults:
+		print result
+		
+	return sortedResults[:5]
+
 def movies_of_the_year():
 	pass
 	
@@ -57,7 +112,7 @@ def recommended_movies(request):
 								  } .
 						}""" % (userURI, userURI)
 	
-	print query
+	#print query
 	
 	notSeen = graph.query(query)
 	
