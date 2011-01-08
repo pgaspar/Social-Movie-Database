@@ -2,7 +2,7 @@ from django_rdf import graph
 from smdb.utils import sort_by_count
 from rdflib import Literal, URIRef
 from pprint import pprint
-
+import datetime
 
 def movie_suggestions(uri):
 	
@@ -59,7 +59,26 @@ def movie_suggestions(uri):
 	return sortedResults[:5]
 
 def movies_of_the_year():
-	pass
+	# This is popular_movies filtered by the current year
+	
+	year = datetime.datetime.now().year
+	
+	res = graph.query("""SELECT ?m ?t ?u WHERE {
+				?m rdf:type smdb:Movie .
+				?m smdb:title ?t .
+				?m smdb:releaseDate "%s" .
+				OPTIONAL{ ?u smdb:hasSeen ?m . }
+				}""" % Literal(year), initBindings={})
+	
+	#pprint(res)
+	
+	sorted_res = sort_by_count(res, [0,1], 2)
+	sorted_res = sorted_res[:5]
+	sorted_res = [ el[0] + (el[1],) for el in sorted_res ]	# Flatten the results so that it's (uri, title, score)
+	
+	#pprint(sorted_res)
+	
+	return sorted_res
 	
 def popular_movies():
 				
@@ -94,7 +113,7 @@ def seen_by_friends(request):
 	sorted_res = sorted_res[:5]
 	sorted_res = [ el[0] + (el[1],) for el in sorted_res ]	# Flatten the results so that it's (uri, title, friend, score)
 	
-	pprint(sorted_res)
+	#pprint(sorted_res)
 	
 	return sorted_res
 	

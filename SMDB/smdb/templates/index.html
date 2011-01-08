@@ -46,19 +46,15 @@
 	
 		<table class="movie-gallery">
 			<tr>
-				<td><a href="/movie/"><img src="http://ia.media-imdb.com/images/M/MV5BMTQ2OTE1Mjk0N15BMl5BanBnXkFtZTcwODE3MDAwNA@@._V1._SX214_CR0,0,214,314_.jpg" /></a></td>
-				<td><a href="/movie/"><img src="http://ia.media-imdb.com/images/M/MV5BMjA5NzMwMjA0OV5BMl5BanBnXkFtZTcwNDMzMzc5Mw@@._V1._SX214_CR0,0,214,314_.jpg" /></a></td>
-				<td><a href="/movie/"><img src="http://ia.media-imdb.com/images/M/MV5BMTM2ODk0NDAwMF5BMl5BanBnXkFtZTcwNTM1MDc2Mw@@._V1._SX214_CR0,0,214,314_.jpg" /></a></td>
-				<td><a href="/movie/"><img src="http://ia.media-imdb.com/images/M/MV5BMTgxOTk4MDIyOF5BMl5BanBnXkFtZTcwMzI3Nzc3Mw@@._V1._SX214_CR0,0,214,314_.jpg" /></a></td>
-				<td><a href="/movie/"><img src="http://ia.media-imdb.com/images/M/MV5BMTUwNzIwMDY0OF5BMl5BanBnXkFtZTcwMzM3Njg2Mw@@._V1._SX214_CR0,0,214,314_.jpg" /></a></td>
+				{% for uri, title, score in movies_of_the_year %}
+					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
+				{% endfor %}
 			</tr>
 		
 			<tr>
-				<td><a href="/movie/">Harry Potter e os Talismãs da Morte: Parte 1</a></td>
-				<td><a href="/movie/">Tangled</a></td>
-				<td><a href="/movie/">The Social Network</a></td>
-				<td><a href="/movie/">Stone</a></td>
-				<td><a href="/movie/">Machete</a></td>
+				{% for uri, title, score in movies_of_the_year %}
+					<td><a href="{{ uri }}" alt="Score: {{score}}" title="Score: {{score}}">{{ title }}</a></td>
+				{% endfor %}
 			</tr>
 		
 		</table>
