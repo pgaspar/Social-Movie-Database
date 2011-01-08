@@ -90,6 +90,13 @@ class Movie(BaseModel):
 										}""", initBindings={'u': self.uri}):
 			yield Person(uriActor), Character(uriCharacter)
 	
+	def friends_who_watched(self, user):
+		for uri in graph.query("""SELECT ?u WHERE {
+										?u smdb:hasSeen ?m .
+										?u smdb:isFriendsWith ?me .
+										}""", initBindings={'m': self.uri, 'me': URIRef(user)}):
+			yield SMDBUser(uri) 
+	
 	@classmethod
 	def getFilterList(model, year=None, director=None, genre=None, location=None, rating=None):
 		
@@ -231,10 +238,11 @@ class SMDBUser(BaseModel):
 	def __init__(self, uri):
 		if super(SMDBUser, self).__init__(uri): return		# Call super and exit if this is a created instance
 		
-		self.username = graph.query_single(
-			"""SELECT ?un WHERE {
+		self.username, self.fullName = graph.query_single(
+			"""SELECT ?un ?fn WHERE {
 						?u rdf:type smdb:SMDBUser .
 						?u smdb:username ?un .
+						OPTIONAL { ?u smdb:fullName ?fn . }
 					}""", initBindings={'u': self.uri})
 		
 		self.dynamic = {

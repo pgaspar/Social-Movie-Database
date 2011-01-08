@@ -1,0 +1,6 @@
+<table class="user-item">
+	<tr onclick="window.location.href = '{{ user.get_absolute_url }}';">
+		<td><img src="{{ MEDIA_URL }}images/user-default.png" /></td>
+		<td><a href="{{ user.get_absolute_url }}">{% firstof user.fullName user.username %}</a></td>
+	</tr>
+</table>
