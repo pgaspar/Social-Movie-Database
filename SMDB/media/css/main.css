@@ -268,7 +268,8 @@ h1#header-title a {
 	float: right;
 	border: 1px #CCC solid;
 	padding: 2px;
-	margin-right: 50px
+	margin-right: 50px;
+	width: 80px;
 }
 
 /*** SIDEBAR ***/
