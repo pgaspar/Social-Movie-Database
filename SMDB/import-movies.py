@@ -36,9 +36,6 @@ def cleanName(name):
 
 if __name__ == "__main__":
 	
-
-	os.system("python import-titles.py")
-	
 	titleRegex = '([^"].*?\(\d{4}\))?'
 	weirdShitRegex = '(\s\(T?VG?\))?(\s\{.*\})?'
 	nameRegex = '(.*?)'

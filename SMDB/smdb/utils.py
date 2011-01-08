@@ -29,7 +29,7 @@ def merge_results(res):
 	
 	return res_final
 	
-def sort_by_count(matrix, indexes, cnt_index):
+def sort_by_count(matrix, indexes, cnt_index=None):
 	"""
 	The second argument are the indexes of the unique fields in each line.
 	The third argument is the index where we'll compare to None to distinguish between optional fields.
@@ -40,7 +40,8 @@ def sort_by_count(matrix, indexes, cnt_index):
 	# Count the number of times each line appears in the matrix
 	for line in matrix:
 		key = tuple([ line[i] for i in indexes ])
-		optional_cell = line[cnt_index]
+		if cnt_index != None: optional_cell = line[cnt_index]
+		else: optional_cell = None
 		
 		if key not in res_dict: res_dict[key] = 0 if optional_cell == None else 1
 		else: res_dict[key] += 1

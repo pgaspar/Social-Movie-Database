@@ -80,7 +80,23 @@ def popular_movies():
 	return sorted_res
 	
 def seen_by_friends(request):
-	pass
+	
+	res = graph.query("""SELECT ?m ?t ?f WHERE {
+				?m rdf:type smdb:Movie .
+				?m smdb:title ?t .
+				?f smdb:hasSeen ?m .
+				?f smdb:isFriendsWith ?me .
+				}""", initBindings={'me': URIRef( request.user.get_profile().uri )})
+	
+	#pprint(res)
+	
+	sorted_res = sort_by_count(res, [0,1], 2)
+	sorted_res = sorted_res[:5]
+	sorted_res = [ el[0] + (el[1],) for el in sorted_res ]	# Flatten the results so that it's (uri, title, friend, score)
+	
+	pprint(sorted_res)
+	
+	return sorted_res
 	
 def recommended_movies(request):
 	
@@ -92,14 +108,11 @@ def recommended_movies(request):
 	favDirectors = get_favorite_directors(userURI)
 	favWriters = get_favorite_writers(userURI)
 	
-	for director in zip(favDirectors.keys(), favDirectors.values()):
-		print director
+	#for director in zip(favDirectors.keys(), favDirectors.values()): print director
 		
-	for writer in zip(favWriters.keys(), favWriters.values()):
-		print writer
+	#for writer in zip(favWriters.keys(), favWriters.values()): print writer
 			
-	for genre in zip(favGenres.keys(), favGenres.values()):
-		print genre
+	#for genre in zip(favGenres.keys(), favGenres.values()): print genre
 	
 	query = """SELECT DISTINCT ?m ?f ?u ?t WHERE {
 						?m rdf:type smdb:Movie .
@@ -172,8 +185,7 @@ def recommended_movies(request):
 	
 	sortedResults = sorted(results, key = lambda pair : pair[2], reverse = True )
 	
-	for result in sortedResults:
-		print result
+	#for result in sortedResults: print result
 		
 	return sortedResults[:5]
 

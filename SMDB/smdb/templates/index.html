@@ -70,15 +70,15 @@
 	
 		<table class="movie-gallery">
 			<tr>
-				<td><a href="/movie/"><img src="http://ia.media-imdb.com/images/M/MV5BMjIzMDI4MTUzOV5BMl5BanBnXkFtZTcwNDY3NjA3Mg@@._V1._SX214_CR0,0,214,314_.jpg" /></a></td>
-				<td><a href="/movie/"><img src="http://ia.media-imdb.com/images/M/MV5BMjE0ODk2NjczOV5BMl5BanBnXkFtZTYwNDQ0NDg4._V1._SY314_CR3,0,214,314_.jpg" /></a></td>
-				<td><a href="/movie/"><img src="http://ia.media-imdb.com/images/M/MV5BMTQ2OTE1Mjk0N15BMl5BanBnXkFtZTcwODE3MDAwNA@@._V1._SX214_CR0,0,214,314_.jpg" /></a></td>
+				{% for uri, title, score in seen_by_friends %}
+					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
+				{% endfor %}
 			</tr>
 		
 			<tr>
-				<td><a href="/movie/">Inglorious Bastards</a></td>
-				<td><a href="/movie/">Pulp Fiction</a></td>
-				<td><a href="/movie/">Harry Potter e os Talismãs da Morte: Parte 1</a></td>
+				{% for uri, title, score in seen_by_friends %}
+					<td><a href="{{ uri }}" alt="Score: {{score}}" title="Score: {{score}}">{{ title }}</a></td>
+				{% endfor %}
 			</tr>
 		
 		</table>
