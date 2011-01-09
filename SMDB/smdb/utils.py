@@ -1,4 +1,5 @@
 import math
+from smdb.semantic_models import SMDBUser
 
 # Usage: split_array(array, size of the blocks)
 split_array = lambda v, l: [v[i*l:(i+1)*l] for i in range(int(math.ceil(len(v)/float(l))))]
@@ -17,12 +18,12 @@ def merge_results(res):
 		res_dict[key] = [ el[0] if len(el) == 1 else el for el in res_dict[key] ]
 		
 		# Make sure the last elements are lists.
-		for i in [2,3]:
+		for i in [0,1]:
 			el = res_dict[key][i]
-			if el is not list: res_dict[key][i] = [el] if el else list()
+			if not isinstance(el, list): res_dict[key][i] = [el] if el else list()
 	
-	# Make this a list again
-	res_final = [ [key] + value for key, value in res_dict.items() ]
+	# Make this a list again and replace the URI with an instance of SMDBUser
+	res_final = [ [SMDBUser(key)] + value for key, value in res_dict.items() ]
 	
 	# Since we're here, we might as well sort the list (by username)
 	res_final.sort(key=lambda o: o[1])

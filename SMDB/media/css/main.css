@@ -320,6 +320,17 @@ h1#header-title a {
 	width: 120px;
 }
 
+#content .movie-gallery td {
+	line-height: 16px;
+	cursor: pointer;
+}
+
+#content .movie-gallery p {
+	font-size: 10px;
+	color: gray;
+	margin: 0px;
+}
+
 /*** USER-LIST ***/
 
 #content .user-list {
@@ -371,6 +382,18 @@ h1#header-title a {
 
 #content .user-item tr {
 	border: 1px solid #CCC;
+}
+
+#content .user-item a {
+	display: block;
+	margin-top: 2px;
+}
+
+#content .user-item p {
+	font-size: 10px;
+	color: gray;
+	margin-left: 0px;
+	margin-bottom: 0px;
 }
 
 
