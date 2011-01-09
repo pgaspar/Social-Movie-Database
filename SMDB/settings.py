@@ -95,7 +95,7 @@ INSTALLED_APPS = (
 DEFAULT_GRAPH_URI = 'http://www.smdb.com/smdb.owl'
 RDF_DATABASE_NAME = relative('database/rdf')
 
-ITEMS_PER_PAGE = 10
+ITEMS_PER_PAGE = 10		# Please use even numbers (works best for User browsing)
 
 AUTH_PROFILE_MODULE = 'smdb.UserProfile'
 LOGIN_REDIRECT_URL = '/'

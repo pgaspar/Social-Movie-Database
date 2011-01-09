@@ -12,16 +12,10 @@
 		
 		{% for page in result_list %}
 		<div id="page-{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
-			<table class="movie-list">
+			<table class="user-list" style="margin: auto">
 			
-				{% for uri, username, fullname, common_movies, common_friends in page %}
-				<tr>
-					<td><a href="{{ uri }}">{% firstof fullname username %}</a></td>
-					<td>
-						{% if common_movies %}{{ common_movies|length }} movie{{ common_movies|length|pluralize }} in common.{% endif %}
-						{% if common_friends %}{{ common_friends|length }} friend{{ common_friends|length|pluralize }} in common.{% endif %}
-					</td>
-				</tr>
+				{% for user, common_movies, common_friends in page %}
+					{% include 'widgets/user-list.html' %}
 				{% endfor %}
 				
 			</table>

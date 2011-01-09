@@ -1,6 +1,11 @@
 <table class="user-item">
 	<tr onclick="window.location.href = '{{ user.get_absolute_url }}';">
 		<td><img src="{{ MEDIA_URL }}images/user-default.png" /></td>
-		<td><a href="{{ user.get_absolute_url }}">{% firstof user.fullName user.username %}</a></td>
+		<td>
+			<a href="{{ user.get_absolute_url }}">{% firstof user.fullName user.username %}</a>
+			{% if common_movies %}<p>{{ common_movies|length }} movie{{ common_movies|length|pluralize }} in common.</p>{% endif %}
+			{% if common_friends %}<p>{{ common_friends|length }} friend{{ common_friends|length|pluralize }} in common.</p>{% endif %}
+			{% ifnotequal score None %}<p>Suggestion Score: {{ score }}</p>{% endifnotequal %}
+		</td>
 	</tr>
 </table>

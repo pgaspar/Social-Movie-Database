@@ -2,6 +2,7 @@ from SMDB import SMDB
 from rdflib.namespace import Namespace
 from rdflib import URIRef
 from rdflib.term import Variable, Literal
+import time
 
 s = SMDB()
 
@@ -112,22 +113,76 @@ owls=Namespace("http://www.w3.org/2002/07/owl#")
 # for i in res:
 # 	print i
 	
-notSeen = """SELECT DISTINCT ?m ?f ?u WHERE {
-					?m rdf:type smdb:Movie .
-					OPTIONAL{ ?f smdb:hasSeen ?m .
-							  ?f smdb:isFriendsWith <%s> .
-							  } .
-					OPTIONAL{ ?u smdb:hasSeen ?m .
-							  FILTER( ?u = <%s>) . 
-							  } .
-					}""" % (URIRef("/user/mtavares/"), URIRef("/user/mtavares/"))
-					
-res = s.graph.query(notSeen, initNs = initNs)
+# notSeen = """SELECT DISTINCT ?m ?f ?u WHERE {
+# 					?m rdf:type smdb:Movie .
+# 					OPTIONAL{ ?f smdb:hasSeen ?m .
+# 							  ?f smdb:isFriendsWith <%s> .
+# 							  } .
+# 					OPTIONAL{ ?u smdb:hasSeen ?m .
+# 							  FILTER( ?u = <%s>) . 
+# 							  } .
+# 					}""" % (URIRef("/user/mtavares/"), URIRef("/user/mtavares/"))
+# 					
+# res = s.graph.query(notSeen, initNs = initNs)
+# 
+# 
+# for i in res:
+# 	print i[0] + ":::" + str(i[1]) + ":::" + str(i[2])
+
+n_iter = 1000
+time_sum = 0
+for i in range(n_iter):
+	a = time.time()
+
+	res = s.graph.query("""SELECT ?un ?f WHERE {
+					?u rdf:type smdb:SMDBUser .
+					?u smdb:username ?un .
+					?u smdb:hasSeen ?m .
+					?me smdb:hasSeen ?m .
+					OPTIONAL{ ?me smdb:isFriendsWith ?f . ?u smdb:isFriendsWith ?f } .
+					OPTIONAL{ ?u smdb:isFriendsWith ?me . ?u2 rdf:type smdb:SMDBUser . }
+					FILTER( !bound(?u2) && ?u != ?me) .
+					}""", initBindings={'me': URIRef("/user/pgaspar/")}, initNs=initNs).result
+
+	res = [ (u, f) for (u, f) in res if u]
+
+	#for u, f in res: print u, f
+
+	b = time.time()
+	time_sum += (b - a)
+
+print "--- Big Query Method: %f ---" % (time_sum/n_iter)
 
 
-for i in res:
-	print i[0] + ":::" + str(i[1]) + ":::" + str(i[2])
-
+# n_iter = 1000
+# time_sum = 0
+# for i in range(n_iter):
+# 	a = time.time()
+# 
+# 	friends = s.graph.query("""SELECT ?un WHERE {
+# 					?u rdf:type smdb:SMDBUser .
+# 					?u smdb:username ?un .
+# 					?u smdb:isFriendsWith ?me .
+# 					}""", initBindings={'me': URIRef("/user/pgaspar/")}, initNs=initNs).result
+# 
+# 	res = s.graph.query("""SELECT ?un ?f WHERE {
+# 					?u rdf:type smdb:SMDBUser .
+# 					?u smdb:username ?un .
+# 					?u smdb:hasSeen ?m .
+# 					?me smdb:hasSeen ?m .
+# 					OPTIONAL{ ?me smdb:isFriendsWith ?f . ?u smdb:isFriendsWith ?f } .
+# 					FILTER( ?u != ?me) .
+# 					}""", initBindings={'me': URIRef("/user/pgaspar/")}, initNs=initNs).result
+# 
+# 
+# 	res = [ (u, f) for (u, f) in res if u and u not in friends]
+# 
+# 	#for u, f in res: print u, f
+# 
+# 	b = time.time()
+# 	time_sum += (b - a)
+# 
+# print "--- 2-query Method: %f ---" % (time_sum/n_iter)
 
 
 # movies = """SELECT DISTINCT ?u ?un ?fn WHERE {

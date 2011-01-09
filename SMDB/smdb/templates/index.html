@@ -5,77 +5,49 @@
 	<div class="section">
 		<h3 class="context-header"><span>Recommended Movies</span></h3>
 		
-		<table class="movie-gallery">
-			<tr>
-				{% for uri, title, score in recommended_movies %}
-					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
-				{% endfor %}
-			</tr>
-		
-			<tr>
-				{% for uri, title, score in recommended_movies %}
-					<td><a href="{{ uri }}" alt="Score: {{score}}" title="Score: {{score}}">{{ title }}</a></td>
-				{% endfor %}
-			</tr>
-		
-		</table>
+		{% with recommended_movies as movie_list %}
+			{% include 'widgets/movie-gallery.html' %}
+		{% endwith %}
 	</div>
 	{% endif %}
 	
 	<div class="section">
 		<h3 class="context-header"><span>Popular Movies</span></h3>
 	
-		<table class="movie-gallery">
-			<tr>
-				{% for uri, title, score in popular_movies %}
-					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
-				{% endfor %}
-			</tr>
-		
-			<tr>
-				{% for uri, title, score in popular_movies %}
-					<td><a href="{{ uri }}" alt="Score: {{score}}" title="Score: {{score}}">{{ title }}</a></td>
-				{% endfor %}
-			</tr>
-		
-		</table>
+		{% with popular_movies as movie_list %}
+			{% include 'widgets/movie-gallery.html' %}
+		{% endwith %}
 	</div>
 	
 	<div class="section">
 		<h3 class="context-header"><span>Movies of the Year</span></h3>
 	
-		<table class="movie-gallery">
-			<tr>
-				{% for uri, title, score in movies_of_the_year %}
-					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
-				{% endfor %}
-			</tr>
-		
-			<tr>
-				{% for uri, title, score in movies_of_the_year %}
-					<td><a href="{{ uri }}" alt="Score: {{score}}" title="Score: {{score}}">{{ title }}</a></td>
-				{% endfor %}
-			</tr>
-		
-		</table>
+		{% with movies_of_the_year as movie_list %}
+			{% include 'widgets/movie-gallery.html' %}
+		{% endwith %}
 	</div>
 	
-	{% if request.user.is_authenticated %}
+	{% if request.user.is_authenticated and seen_by_friends %}
 	<div class="section">
 		<h3 class="context-header"><span>Seen by Friends</span></h3>
 	
-		<table class="movie-gallery">
-			<tr>
-				{% for uri, title, score in seen_by_friends %}
-					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
-				{% endfor %}
-			</tr>
+		{% with seen_by_friends as movie_list %}
+			{% include 'widgets/movie-gallery.html' %}
+		{% endwith %}
+	</div>
+	{% endif %}
+	
+	{% if request.user.is_authenticated %}
+	<div class="section">
+		<h3 class="context-header"><span>Suggested Users</span></h3>
 		
-			<tr>
-				{% for uri, title, score in seen_by_friends %}
-					<td><a href="{{ uri }}" alt="Score: {{score}}" title="Score: {{score}}">{{ title }}</a></td>
-				{% endfor %}
-			</tr>
+		<table class="user-list" style="margin-left: 120px">
+			
+			{% for user, score in recommended_users %}
+				{% include 'widgets/user-list.html' %}
+			{% empty %}
+				<p>There are no users matching your profile.</p>
+			{% endfor %}
 		
 		</table>
 	</div>

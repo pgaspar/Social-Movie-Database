@@ -1,0 +1,21 @@
+{% if movie_list %}
+	<table class="movie-gallery">
+		<tr>
+			{% for uri, title, score in movie_list %}
+				<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
+			{% endfor %}
+		</tr>
+
+		<tr>
+			{% for uri, title, score in movie_list %}
+				<td onclick="window.location.href = '{{ uri }}';">
+					<a href="{{ uri }}">{{ title }}</a>
+					<p>Suggestion Score: {{ score }}</p>
+				</td>
+			{% endfor %}
+		</tr>
+
+	</table>
+{% else %}
+	<p>Sorry, we have no movies to suggest.</p>
+{% endif %}

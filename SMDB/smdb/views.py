@@ -55,7 +55,10 @@ def index(request):
 		
 		# Fetch the Recommended Movies section
 		context['recommended_movies'] = suggestion.recommended_movies(request)
-	
+		
+		# Fetch the Recommended Users section
+		context['recommended_users'] = suggestion.recommended_users(request)
+		
 	return render(request, 'index.html', context)
 
 # Detail Pages
@@ -166,9 +169,10 @@ def browse_people(request):
 def browse_users(request):
 	
 	initBindings = {}
+	userUri = URIRef(request.user.get_profile().uri)
 	
-	filterToQuery = { 'similar': '?me smdb:username "%s" .\n ?me smdb:hasSeen ?m1 .\n ?u smdb:hasSeen ?m1 .\n' % Literal(request.user.username),
-					  'foaf': '?me smdb:username "%s" .\n ?me smdb:isFriendsWith ?u1 .\n ?u smdb:isFriendsWith ?u1 .\n' % Literal(request.user.username),
+	filterToQuery = { 'similar': '<%s> smdb:hasSeen ?m1 .\n ?u smdb:hasSeen ?m1 .\n' % userUri,
+					  'foaf': '<%s> smdb:isFriendsWith ?u1 .\n ?u smdb:isFriendsWith ?u1 .\n' % userUri,
 					  'reviewer': '?r1 smdb:writtenByUser ?u .\n',
 					}
 	
@@ -178,7 +182,7 @@ def browse_users(request):
 	
 	f = SMDBUser.getFilterList(request.user.is_authenticated(), filters)
 	
-	query = """SELECT DISTINCT ?u ?un ?fn ?m1 ?u1 WHERE {
+	query = """SELECT DISTINCT ?u ?m1 ?u1 WHERE {
 				?u rdf:type smdb:SMDBUser .
 				?u smdb:username ?un . 
 			"""
@@ -186,7 +190,7 @@ def browse_users(request):
 	for o in filters:
 		if o in filterToQuery: query += filterToQuery[o]
 	
-	if 'similar' in filters or 'foaf' in filters: query += """FILTER(?un != "%s") .\n""" % Literal(request.user.username)
+	if 'similar' in filters or 'foaf' in filters: query += """FILTER(?u != <%s>) .\n""" % userUri
 	
 	res = graph.query(query + "OPTIONAL { ?u smdb:fullName ?fn . }}", initBindings=initBindings)
 	res = merge_results(res)
