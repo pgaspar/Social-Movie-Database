@@ -79,6 +79,20 @@
 		
 		</table>
 	</div>
+	
+	<div class="section">
+		<h3 class="context-header"><span>Suggested Users</span></h3>
+		
+		<table class="user-list" style="margin-left: 120px">
+			
+			{% for user, score in recommended_users %}
+				{% include 'widgets/user-list.html' %}
+			{% empty %}
+				<p>There are no users matching your profile.</p>
+			{% endfor %}
+		
+		</table>
+	</div>
 	{% endif %}
 	
 {% endblock %}

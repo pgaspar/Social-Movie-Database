@@ -51,7 +51,10 @@ def index(request):
 		
 		# Fetch the Recommended Movies section
 		context['recommended_movies'] = suggestion.recommended_movies(request)
-	
+		
+		# Fetch the Recommended Users section
+		context['recommended_users'] = suggestion.recommended_users(request)
+		
 	return render(request, 'index.html', context)
 
 # Detail Pages

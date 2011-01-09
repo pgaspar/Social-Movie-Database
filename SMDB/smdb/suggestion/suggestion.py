@@ -1,6 +1,9 @@
 from django_rdf import graph
 from smdb.utils import sort_by_count
 from rdflib import Literal, URIRef
+
+from smdb.semantic_models import SMDBUser
+
 from pprint import pprint
 import datetime
 
@@ -208,6 +211,35 @@ def recommended_movies(request):
 		
 	return sortedResults[:5]
 
+
+def recommended_users(request):
+	userUri = URIRef(request.user.get_profile().uri)
+	
+	friends = graph.query("""SELECT ?u WHERE {
+					?u smdb:isFriendsWith ?me .
+					}""", initBindings={'me': userUri})
+
+	res = graph.query("""SELECT ?u ?f WHERE {
+					?u rdf:type smdb:SMDBUser .
+					?u smdb:hasSeen ?m .
+					?me smdb:hasSeen ?m .
+					OPTIONAL{ ?me smdb:isFriendsWith ?f . ?u smdb:isFriendsWith ?f } .
+					FILTER( ?u != ?me) .
+					}""", initBindings={'me': userUri})
+					
+
+	res = [ (SMDBUser(u), f) for (u, f) in res if u and u not in friends]
+	
+	sorted_res = sort_by_count(res, [0], 1)
+	sorted_res = sorted_res[:4]
+	sorted_res = [ el[0] + (el[1],) for el in sorted_res ]	# Flatten the results so that it's (uri, title, friend, score)
+	
+	#for r in sorted_res: print r
+	
+	return sorted_res
+	
+	
+# Helper methods
 
 def get_favorite_genres(user):
 	res = dict()
