@@ -103,14 +103,22 @@ def popular_movies():
 	
 def seen_by_friends(request):
 	
+	userUri = URIRef( request.user.get_profile().uri )
+	
+	seen_by_me = graph.query("""SELECT ?m WHERE {
+				?me smdb:hasSeen ?m .
+				}""", initBindings={'me': userUri})
+	
 	res = graph.query("""SELECT ?m ?t ?f WHERE {
 				?m rdf:type smdb:Movie .
 				?m smdb:title ?t .
 				?f smdb:hasSeen ?m .
 				?f smdb:isFriendsWith ?me .
-				}""", initBindings={'me': URIRef( request.user.get_profile().uri )})
+				}""", initBindings={'me': userUri})
 	
 	#pprint(res)
+	
+	res = [ (m, t, f) for (m, t, f) in res if m not in seen_by_me]
 	
 	sorted_res = sort_by_count(res, [0,1], 2)
 	sorted_res = sorted_res[:5]
