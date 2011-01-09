@@ -55,4 +55,23 @@
 	</div>
 	{% endif %}
 	
+	<div class="section">
+		<h3 class="context-header"><span>Related People</span></h3>
+	
+		<table class="movie-gallery">
+			<tr>
+				{% for uri, name, score in suggestions %}
+					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
+				{% endfor %}
+			</tr>
+		
+			<tr>
+				{% for uri, name, score in suggestions %}
+					<td><a href="{{ uri }}" alt="Score: {{score}}" title="Score: {{score}}">{{ name }}</a></td>
+				{% endfor %}
+			</tr>
+		
+		</table>
+	</div>
+	
 {% endblock %}

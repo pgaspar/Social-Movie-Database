@@ -58,6 +58,43 @@ def movie_suggestions(uri):
 		
 	return sortedResults[:5]
 
+
+def person_suggestions(uri):
+	
+	score = dict()
+	name = dict()
+	
+	query = """SELECT DISTINCT ?p ?n ?m WHERE {
+				?m rdf:type smdb:Movie .
+				<%s> ?r ?m .
+				?r rdfs:subPropertyOf smdb:participatedInMovie .
+				?p ?r1 ?m .
+				?r1 rdfs:subPropertyOf smdb:participatedInMovie .
+				?p smdb:name ?n .
+				FILTER( ?p != <%s> ) .
+			}
+			""" % (uri,uri)
+	
+	relatedPeople = graph.query(query)
+	
+	for person in relatedPeople:
+		if person[0] in score.keys():
+			score[person[0]] += 1
+		else:
+			score[person[0]] = 1
+			name[person[0]] = person[1]
+		
+	
+	results = [ [uri, name[uri], score[uri]] for uri in score.keys() ]
+	
+	sortedResults = sorted(results, key = lambda pair : pair[2], reverse = True )
+	
+	for result in sortedResults[:5]:
+		print results
+	
+	return sortedResults[:5]
+
+
 def movies_of_the_year():
 	# This is popular_movies filtered by the current year
 	

@@ -9,7 +9,8 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 
 import sys
 import os
-
+from nltk import stem, pos_tag, word_tokenize
+from copy import deepcopy
 
 class Search:
 	
@@ -23,8 +24,13 @@ class Search:
 		movieList = self.movieSearch(keyword)
 		print '[Found %d movies]'%len(movieList)
 		
+		filtered = keyword
+		stopwords = ['who', 'is', 'what', 'it', 'be']
+		for word in stopwords:
+			filtered = filtered.replace(word, "")
+		
 		print '[Searching People]'
-		personList = self.personSearch(keyword)
+		personList = self.personSearch(filtered)
 		print '[Found %d people]'%len(personList)
 		
 		print '[Searching Characters]'
@@ -44,11 +50,7 @@ class Search:
 			movieList = self.movieSearch(None, keyword)
 		
 		return (movieList, personList, charList)
-		
-	
-	def semanticSearch(self, sentence):
-		pass
-		
+				
 	
 	def personSearch(self, name, movie = None):
 		
@@ -217,4 +219,60 @@ class Search:
 			
 		else:
 			return movies
+			
+	
+	def semanticSearch(self, sentence):
 		
+		stopwords = ['the','in', 'on', 'by', 'is', 'of']
+		
+		sentence = sentence.lower()
+		
+		stemmer = stem.porter.PorterStemmer()
+		
+		#Split the sentence up in words
+		words = word_tokenize(sentence)
+		words = [word for word in words if word not in stopwords]
+		
+		if len(words <= 1):
+			return None
+		
+		#Tag to identify triples
+		tagged = pos_tag(words)
+		tagged2 = deepcopy(tagged)
+		
+		subject = ""
+		verb = ""
+		obj = ""
+		
+		#One of the options, based on the tags, second option follows
+		while not tagged[0][1].startswith('V'):
+			subject += stemmer.stem(tagged.pop(0)[0]) + " "
+		subject = subject.strip()
+		
+		while tagged[0][1].startswith('V'):
+			verb += stemmer.stem(tagged.pop(0)[0]) + " "
+		verb = verb.strip()
+		
+		if verb != "":
+			for tag in tagged:
+				obj += tag[0] + " "
+			obj = obj.strip()
+		else:
+			subject = stemmer.stem(words[0])
+			obj = " ".join(words[1:])
+		
+		print subject + ":::" + verb + ":::" + obj
+		
+		query = """
+				"""
+		
+		if not results:
+			#Second option, taking only 
+			subject = stemmer.stem(tagged2.pop(0)[0])
+			verb = stemmer.stem(tagged2.pop(0)[0])
+			rest = [tag[0] for tag in tagged2]
+			obj = " ".join(rest)
+		
+			print subject + ":::" + verb + ":::" + obj
+		
+		return results

@@ -38,6 +38,10 @@ def redirect_to_profile(request):
 def index(request):
 	context = {}
 	
+	#TEMP - remove after
+	searcher = Search(graph)
+	searcher.semanticSearch("movies directed by Quentin Tarantino")
+	
 	# Fetch the Movies of the Year section
 	context['movies_of_the_year'] = suggestion.movies_of_the_year()
 	
@@ -79,7 +83,9 @@ def person_detail(request, slug):
 	uri = request.path
 	person = get_object_or_404(Person, uri)
 	
-	return render(request, 'person.html', {'person': person})
+	suggested = suggestion.person_suggestions(uri)
+	
+	return render(request, 'person.html', {'person': person, 'suggestions': suggested})
 	
 def character_detail(request, slug):
 	
