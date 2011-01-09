@@ -233,7 +233,7 @@ class Search:
 		words = word_tokenize(sentence)
 		words = [word for word in words if word not in stopwords]
 		
-		if len(words <= 1):
+		if len(words) <= 1:
 			return None
 		
 		#Tag to identify triples
@@ -265,6 +265,8 @@ class Search:
 		
 		query = """
 				"""
+		
+		results = []
 		
 		if not results:
 			#Second option, taking only 
