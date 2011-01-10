@@ -4,19 +4,20 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404 as django_get_object_or_404
 from django.contrib.auth.models import User
 
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+
 from django_rdf import graph
 from rdflib import Literal, URIRef
 
 from smdb.semantic_models import *
 from smdb import manager
 
+from smdb.browsing import browsing
 from smdb.searching.search import Search
-
-from smdb.utils import split_array, merge_results
-from django.conf import settings
-
-from django.contrib.auth.decorators import login_required
 from smdb.suggestion import suggestion
+
+from smdb.utils import split_array
 
 # Util Functions
 
@@ -102,8 +103,6 @@ def character_detail(request, slug):
 
 def browse_movies(request):
 	
-	initBindings = {}
-	
 	year = request.GET.get('year', None)
 	director = request.GET.get('director', None)
 	genre = request.GET.get('genre', None)
@@ -112,89 +111,29 @@ def browse_movies(request):
 	
 	print 'Year:', year; print 'Director:', director; print 'Genre:', genre; print 'Location:', location; print 'Rating:', rating
 	
-	f = Movie.getFilterList(year, director, genre, location, rating)
-	
-	query = """SELECT ?a ?b ?y WHERE {
-				?a rdf:type smdb:Movie .
-				?a smdb:title ?b .
-				?a smdb:releaseDate ?y .
-				"""
-	
-	# Query additions
-	if director: query += '?d smdb:directed ?a .\n'
-	if genre: query += '?a smdb:isOfGenre ?g .\n'
-	if location: query += '?a smdb:shotIn ?l .\n'
-	if rating: query += '?a smdb:hasRating ?r .\n'
-	
-	# Filters	
-	if year: query += """FILTER(?y = "%s") .\n""" % Literal(year)
-	if director: query += """FILTER(?d = <%s>) .\n""" % URIRef(director)
-	if genre: query += """FILTER(?g = <%s>) .\n""" % graph.ontologies['smdb'][genre]
-	if location: query += """FILTER(?l = "%s") .\n""" % Literal(location)
-	if rating: query += """FILTER(?r = <%s>) .\n""" % URIRef(rating)
-	
-	res = graph.query(query + "} ORDER BY ?y", initBindings=initBindings)
+	f, res = browsing.browse_movies(year, director, genre, location, rating)
 	count = len(res)
 	
 	return render(request, 'browsing/movies.html', {'filter_list':f, 'result_list': split_array(res, settings.ITEMS_PER_PAGE), 'res_count': count})
 	
 def browse_people(request):
 	
-	initBindings = {}
-	
-	occupationToQuery = { 'writer': '?u smdb:wrote ?m1 .\n',
-						  'actor': '?u smdb:performedIn ?m2 .\n',
-						  'director': '?u smdb:directed ?m3 .\n',
-						}
-	
 	occupations = [ s.lower() for s in request.GET.getlist('occupations') ]
 	
 	print 'Occupations:', occupations
 	
-	f = Person.getFilterList(occupations)
-	
-	query = """SELECT DISTINCT ?u ?n WHERE {
-				?u rdf:type smdb:Person .
-				?u smdb:name ?n .
-				"""
-	
-	for o in occupations:
-		if o in occupationToQuery: query += occupationToQuery[o]
-	
-	res = graph.query(query + "}", initBindings=initBindings)
+	f, res = browsing.browse_people(occupations)
 	count = len(res)
 	
 	return render(request, 'browsing/people.html', {'filter_list':f, 'result_list': split_array(res, settings.ITEMS_PER_PAGE), 'res_count': count})
 	
 def browse_users(request):
 	
-	initBindings = {}
-	userUri = URIRef(request.user.get_profile().uri)
-	
-	filterToQuery = { 'similar': '<%s> smdb:hasSeen ?m1 .\n ?u smdb:hasSeen ?m1 .\n' % userUri,
-					  'foaf': '<%s> smdb:isFriendsWith ?u1 .\n ?u smdb:isFriendsWith ?u1 .\n' % userUri,
-					  'reviewer': '?r1 smdb:writtenByUser ?u .\n',
-					}
-	
 	filters = [ s.lower() for s in request.GET.getlist('filters') ]
 	
 	print 'Filters:', filters
 	
-	f = SMDBUser.getFilterList(request.user.is_authenticated(), filters)
-	
-	query = """SELECT DISTINCT ?u ?m1 ?u1 WHERE {
-				?u rdf:type smdb:SMDBUser .
-				?u smdb:username ?un . 
-			"""
-	
-	for o in filters:
-		if o in filterToQuery: query += filterToQuery[o]
-	
-	if 'similar' in filters or 'foaf' in filters: query += """FILTER(?u != <%s>) .\n""" % userUri
-	
-	res = graph.query(query + "OPTIONAL { ?u smdb:fullName ?fn . }}", initBindings=initBindings)
-	res = merge_results(res)
-	
+	f, res = browsing.browse_users(filters, request.user)
 	count = len(res)
 	
 	return render(request, 'browsing/users.html', {'filter_list':f, 'result_list': split_array(res, settings.ITEMS_PER_PAGE), 'res_count': count})
