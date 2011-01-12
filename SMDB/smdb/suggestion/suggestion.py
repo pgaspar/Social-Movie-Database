@@ -56,8 +56,8 @@ def movie_suggestions(uri):
 	
 	sortedResults = sorted(results, key = lambda pair : pair[2], reverse = True )
 	
-	for result in sortedResults:
-		print result
+	#for result in sortedResults:
+	#	print result
 		
 	return sortedResults[:5]
 

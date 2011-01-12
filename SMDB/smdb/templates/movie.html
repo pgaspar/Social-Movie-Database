@@ -17,15 +17,15 @@
 			<div class="text-box">{{ movie.smdb__synopsis }}</div>
 		</p>
 		
-		<p><b class="label">Director:</b> <a href="{{ movie.directedBy.get_absolute_url }}">{{ movie.directedBy.name }}</a></p>
-		<p><b class="label">Writers:</b> {% for obj in movie.writtenBy %}<a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a> {% if not forloop.last %}, {% endif %}{% endfor %}</p>
+		<p><b class="label">Director:</b> {% for obj in movie.directedBy %}<a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+		<p><b class="label">Writers:</b> {% for obj in movie.writtenBy %}<a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 		
-		<p><b class="label">Genres:</b> {% for obj in movie.isOfGenre %}<a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a> {% if not forloop.last %}, {% endif %}{% empty %}&nbsp;{% endfor %}</p>
+		<p><b class="label">Genres:</b> {% for obj in movie.isOfGenre %}<a href="{{ obj.get_absolute_url }}">{{ obj }}</a>{% if not forloop.last %}, {% endif %}{% empty %}&nbsp;{% endfor %}</p>
+		{% if movie.hasRating %}<p><b class="label">MPAA Rating:</b> <a href="{{ movie.hasRating.get_absolute_url }}">{{ movie.hasRating }}</a></p>{% endif %}
 		<p><b class="label">Duration:</b> {{ movie.duration|default:"0" }} min</p>
-		<p><b class="label">Release Date:</b> {{ movie.releaseDate }}</p>
+		<p><b class="label">Release Year:</b> {{ movie.releaseDate }}</p>
 		
-		<p><b class="label">Filmed In:</b> &nbsp;</p>
-		<p><b class="label">Takes Place In:</b> &nbsp;</p>
+		{% if movie.shotIn %}<p><b class="label">Shot In:</b> {% for obj in movie.shotIn %}<a href="{{ obj.get_absolute_url }}">{{ obj }}</a>{% if not forloop.last %}, {% endif %}{% empty %}&nbsp;{% endfor %}</p>{% endif %}
 		
 	</div>
 	
