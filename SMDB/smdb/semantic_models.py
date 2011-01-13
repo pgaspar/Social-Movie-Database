@@ -47,11 +47,13 @@ class Movie(BaseModel):
 	def __init__(self, uri):
 		if super(Movie, self).__init__(uri): return		# Call super and exit if this is a created instance
 		
-		self.title, self.releaseDate = graph.query_single(
-			"""SELECT ?t ?d WHERE {
+		self.title, self.releaseDate, self.duration, self.synopsis = graph.query_single(
+			"""SELECT ?t ?y ?d ?s WHERE {
 						?u rdf:type smdb:Movie .
 						?u smdb:title ?t .
-						?u smdb:releaseDate ?d .
+						?u smdb:releaseDate ?y .
+						?u smdb:duration ?d .
+						?u smdb:synopsis ?s .
 					}""", initBindings={'u': self.uri})
 		
 		self.dynamic = {

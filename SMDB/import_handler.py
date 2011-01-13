@@ -44,7 +44,7 @@ class SMDB():
 		print "Triples in graph: ", len(self.graph)
 
 	
-	def addPerson(self, name, bio="LOREM IPSUM"):
+	def addPerson(self, name, bio="Sample Biography."):
 
 		uri = self.person[slugify(name) + '/']
 
@@ -99,7 +99,7 @@ class SMDB():
 		self.graph.commit()
 	
 	
-	def addMovie(self, title, releaseDate, synopsis="Sample synopsis here"):
+	def addMovie(self, title, releaseDate, synopsis="Sample synopsis."):
 
 		uri = self.movie[slugify(title) + '/']
 		
