@@ -164,6 +164,27 @@ class Movie(BaseModel):
 		graph.add((userUri, graph.ontologies['smdb']['hasSeen'], self.uri))
 		graph.commit()
 	
+	def nextReviewID(self):
+		revID = 1
+		
+		for review in self.hasReview:
+			if review.id >= revID: revID = int(review.id) + 1
+		
+		print 'nextReviewID:', revID
+		return revID
+		
+	def addReview(self, user, revID, text):
+		userUri = user.get_profile().uri
+		revUri = URIRef(self.uri + '#review-' + str(revID))
+		
+		graph.add((revUri, graph.ontologies['rdf'].type, graph.ontologies['smdb']['MovieReview']))
+		graph.add((revUri, graph.ontologies['smdb']['id'], Literal(revID)))
+		graph.add((revUri, graph.ontologies['smdb']['refersTo'], self.uri))
+		graph.add((revUri, graph.ontologies['smdb']['writtenByUser'], userUri))
+		graph.add((revUri, graph.ontologies['smdb']['reviewText'], Literal(text)))
+		
+		graph.commit()
+	
 	def get_absolute_url(self):
 		return self.uri
 		

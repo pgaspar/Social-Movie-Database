@@ -26,6 +26,6 @@ s.addMovieSeen('lonelyguy_08', 'Sin City (2005)')
 s.addMovieSeen('lonelyguy_08', 'Corpse Bride (2005)')
 
 s.addMovieReview(1, 'This movie is awesome[*****]', 'Pulp Fiction (1994)', 'mtavares')
-s.addMovieReview(2, 'It was ok.', 'Corpse Bride (2005)', 'user_test_all')
+s.addMovieReview(1, 'It was ok.', 'Corpse Bride (2005)', 'user_test_all')
 
 s.printTripleCount()

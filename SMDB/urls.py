@@ -43,5 +43,5 @@ urlpatterns = patterns('',
 	url(r'^(?P<movieURI>movie/[-/\w]+)mark-seen/$', 'smdb.views.mark_seen', name='mark-seen'),
 	url(r'^(?P<userURI>user/[-/\w]+)add-friend/$', 'smdb.views.add_friend', name='add-friend'),
 	url(r'^(?P<userURI>user/[-/\w]+)remove-friend/$', 'smdb.views.remove_friend', name='remove-friend'),
-	
+	url(r'^(?P<movieURI>movie/[-/\w]+)add-review/$', 'smdb.views.add_review', name='add-review'),
 )

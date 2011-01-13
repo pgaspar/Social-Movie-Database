@@ -72,7 +72,20 @@
 	{% endif %}
 	
 	<div class="section">
-		<h3 class="context-header"><span>Reviews - <a href="#" style="font-size: 16px; font-weight: normal">Write a Review</a></span></h3>
+		<h3 class="context-header"><span>Reviews <span class="new-review">- <a href="javascript:showReviewForm();" style="font-size: 16px; font-weight: normal">Write a Review</a></span></span></h3>
+		
+		<fieldset id="review-form">
+			<form method="post" action="add-review/">
+				<table>
+					<tr>
+						<th><label for="id_text">Review:</label></th>
+						<td><textarea id="id_text" rows="3" cols="40" name="text"></textarea></td>
+						<td><input type="submit" value="Post" /></td>
+					</tr>
+				</table>
+				<input type="hidden" name="rev_ID" value="{{ movie.nextReviewID }}" />
+			</form>
+		</fieldset>
 		
 		<table class="review-list">
 		
@@ -81,7 +94,7 @@
 			{% include 'widgets/review-list.html' %}
 		
 		{% empty %}
-			<p>No reviews. <a href="#">Write one?</a></p>
+			<p class="new-review">No reviews. <a href="javascript:showReviewForm();">Write one?</a></p>
 		{% endfor %}
 		
 		</table>

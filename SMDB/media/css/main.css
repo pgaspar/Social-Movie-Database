@@ -211,6 +211,11 @@ h1#header-title a {
 	padding: 0px 6px;
 }
 
+.context-header span.new-review {
+	margin-left: 0px; 
+	padding: 0px;
+}
+
 /*** MOVIE ***/
 
 .description {
@@ -449,7 +454,7 @@ h1#header-title a {
 
 #content .review-list td:first-child {
 	border-right: 1px solid #EEE;
-	width: 20%;
+	width: 25%;
 }
 
 #content .review-list td:last-child p {
@@ -461,6 +466,29 @@ h1#header-title a {
 	background-color: white;
 }
 
+/*** REVIEW-FORM ***/
+
+#content #review-form table {
+	border-collapse: separate;
+	border-spacing: 10px 0px;
+	margin: 0px 20px;
+}
+
+#content #review-form table td {
+	border-bottom: none;
+}
+
+#content #review-form table td input[type="submit"] {
+	width: 80px;
+}
+
+#content #review-form {
+	padding: 5px;
+	width: 30%;
+	display: none;
+	margin: auto;
+	margin-bottom: 10px;
+}
 
 /*** SEARCH-RESULTS ***/
 

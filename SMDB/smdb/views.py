@@ -61,6 +61,23 @@ def remove_friend(request, userURI):
 	
 	return HttpResponseRedirect(userURI)
 
+@login_required
+def add_review(request, movieURI):
+	movieURI = '/' + movieURI
+	
+	if request.method != 'POST': raise Http404
+	
+	text = request.POST.get('text')
+	revID = int(request.POST.get('rev_ID'))
+	
+	if not text or not revID: raise Http404
+	
+	movie = get_object_or_404(Movie, movieURI)
+	movie.addReview(request.user, revID, text)
+	
+	return HttpResponseRedirect(movieURI + '#review-' + str(revID))
+
+
 # Index Page
 
 def index(request):
