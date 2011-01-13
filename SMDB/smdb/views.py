@@ -43,6 +43,24 @@ def mark_seen(request, movieURI):
 	
 	return HttpResponseRedirect(movieURI)
 
+@login_required
+def add_friend(request, userURI):
+	userURI = '/' + userURI
+	
+	user = get_object_or_404(SMDBUser, userURI)
+	user.addFriend(request.user)
+	
+	return HttpResponseRedirect(userURI)
+
+@login_required
+def remove_friend(request, userURI):
+	userURI = '/' + userURI
+	
+	user = get_object_or_404(SMDBUser, userURI)
+	user.removeFriend(request.user)
+	
+	return HttpResponseRedirect(userURI)
+
 # Index Page
 
 def index(request):

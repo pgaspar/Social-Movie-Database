@@ -293,6 +293,22 @@ class SMDBUser(BaseModel):
 		
 		return [ Filter(header='Filter By', label='filters', obj_list=filter_list, target_o=filters, mult=True) ]
 	
+	def addFriend(self, user):
+		userUri = user.get_profile().uri
+		
+		graph.add((userUri, graph.ontologies['smdb']['isFriendsWith'], self.uri))
+		graph.add((self.uri, graph.ontologies['smdb']['isFriendsWith'], userUri))
+		
+		graph.commit()
+	
+	def removeFriend(self, user):
+		userUri = user.get_profile().uri
+		
+		graph.remove((userUri, graph.ontologies['smdb']['isFriendsWith'], self.uri))
+		graph.remove((self.uri, graph.ontologies['smdb']['isFriendsWith'], userUri))
+		
+		graph.commit()
+	
 	def get_absolute_url(self):
 		return self.uri
 	
