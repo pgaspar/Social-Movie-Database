@@ -78,6 +78,6 @@ def browse_users(filters, user):
 	if 'similar' in filters or 'foaf' in filters: query += """FILTER(?u != <%s>) .\n""" % userUri
 	
 	res = graph.query(query + "OPTIONAL { ?u smdb:fullName ?fn . }}", initBindings=initBindings)
-	res = merge_results(res)
+	res = merge_results(res, filters)
 	
 	return [f, res]

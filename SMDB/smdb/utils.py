@@ -4,7 +4,7 @@ from smdb.semantic_models import SMDBUser
 # Usage: split_array(array, size of the blocks)
 split_array = lambda v, l: [v[i*l:(i+1)*l] for i in range(int(math.ceil(len(v)/float(l))))]
 
-def merge_results(res):
+def merge_results(res, filters):
 	res_dict = {}
 	
 	# Aggregate by key (the URI, in this case)
@@ -25,8 +25,8 @@ def merge_results(res):
 	# Make this a list again and replace the URI with an instance of SMDBUser
 	res_final = [ [SMDBUser(key)] + value for key, value in res_dict.items() ]
 	
-	# Since we're here, we might as well sort the list (by username)
-	res_final.sort(key=lambda o: o[1])
+	# Since we're here, we might as well sort the list (by number of common elements or username)
+	res_final.sort(key=lambda o: (len(o[1]) + len(o[2])) if len(o[1]) or len(o[2]) else o[0].username, reverse=('similar' in filters or 'foaf' in filters))
 	
 	return res_final
 	
