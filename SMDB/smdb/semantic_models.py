@@ -12,7 +12,7 @@ class BaseModel(LazySubject):
 	def __new__(self, uri):
 		obj = object.__new__(self)
 		
-		return manager.getOrUse(uri, obj)
+		return manager.getOrUse(URIRef(uri), obj)
 	
 	def __init__(self, uri):
 		
@@ -157,7 +157,12 @@ class Movie(BaseModel):
 			Filter(header='Rating', label='rating', obj_list=ratings, target_o=rating),
 		]
 		
+	
+	def markSeen(self, user):
+		userUri = user.get_profile().uri
 		
+		graph.add((userUri, graph.ontologies['smdb']['hasSeen'], self.uri))
+		graph.commit()
 	
 	def get_absolute_url(self):
 		return self.uri

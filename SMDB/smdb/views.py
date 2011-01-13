@@ -34,6 +34,15 @@ def get_object_or_404(Model, uri):
 def redirect_to_profile(request):
 	return HttpResponseRedirect('/user/' + request.user.username)
 
+@login_required
+def mark_seen(request, movieURI):
+	movieURI = '/' + movieURI
+	
+	movie = get_object_or_404(Movie, movieURI)
+	movie.markSeen(request.user)
+	
+	return HttpResponseRedirect(movieURI)
+
 # Index Page
 
 def index(request):

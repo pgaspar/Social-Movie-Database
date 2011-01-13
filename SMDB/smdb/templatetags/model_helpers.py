@@ -21,3 +21,7 @@ def getOccupations(person):
 @register.filter
 def friends_who_watched(movie, request):
 	return movie.friends_who_watched(request.user.get_profile().uri)
+
+@register.filter
+def hasSeen(user, movie):	
+	return movie in user.get_profile().semantic_user.hasSeen

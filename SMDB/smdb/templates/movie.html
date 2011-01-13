@@ -5,7 +5,14 @@
 {% block content %}
 	<h2>
 		{{ movie.title }} <span>({{ movie.releaseDate }})</span>
-		{% if request.user.is_authenticated %}<a href="#"><span class="button done">Mark as Seen</span></a>{% endif %}
+		
+		{% if request.user.is_authenticated %}
+			{% if request.user|hasSeen:movie %}
+				<span class="button seen">You've seen this Movie!</span>
+			{% else %}
+				<a href="mark-seen/"><span class="button unseen">Mark as Seen</span></a>
+			{% endif %}
+		{% endif %}
 	</h2>
 	
 	<img class="description-photo" src="{{ MEDIA_URL }}/images/movie-default.png" style="width: 80px"/>

@@ -242,10 +242,14 @@ h1#header-title a {
 	font-size: 14px;
 }
 
-.edit {
-	background: #FC9803;
+.seen {
+	background: #DDD;
+	color: #888;
 }
-.done {
+
+.seen:hover { cursor: default; }
+
+.unseen {
 	background: #56BB61;
 }
 

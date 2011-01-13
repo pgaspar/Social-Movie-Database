@@ -99,3 +99,5 @@ ITEMS_PER_PAGE = 10		# Please use even numbers (works best for User browsing)
 
 AUTH_PROFILE_MODULE = 'smdb.UserProfile'
 LOGIN_REDIRECT_URL = '/'
+
+LOGIN_URL = '/login/'

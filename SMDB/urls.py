@@ -26,26 +26,20 @@ urlpatterns = patterns('',
 	# SMDB
 	
 	(r'^$', 'smdb.views.index'),
-	#(r'^movie/$', direct_to_template, {'template': 'movie.html'}),
-	#(r'^person/$', direct_to_template, {'template': 'person.html'}),
-	#(r'^character/$', direct_to_template, {'template': 'character.html'}),
-	#(r'^profile/$', direct_to_template, {'template': 'user.html'}),
-	
-	#(r'^search/$', direct_to_template, {'template': 'search.html'}),
-	#(r'^suggestion/$', direct_to_template, {'template': 'suggestion.html'}),
-	
-	#url(r'^browse/$', direct_to_template, {'template': 'browse.html'}, name='browse-all'),
-	url(r'^browse/movies/$', 'smdb.views.browse_movies', name='browse-movies'),
-	url(r'^browse/people/$', 'smdb.views.browse_people', name='browse-people'),
-	url(r'^browse/users/$', 'smdb.views.browse_users', name='browse-users'),
-	#(r'^browse/.*/$', direct_to_template, {'template': 'browse.html'}),
-	
+
 	(r'^movie/(?P<slug>[-\w]+)/$', 'smdb.views.movie_detail'),
 	(r'^user/(?P<username>[-_\w]+)/$', 'smdb.views.user_detail'),
 	(r'^person/(?P<slug>[-\w]+)/$', 'smdb.views.person_detail'),
 	(r'^character/(?P<slug>[-\w]+)/$', 'smdb.views.character_detail'),
+
+	url(r'^browse/movies/$', 'smdb.views.browse_movies', name='browse-movies'),
+	url(r'^browse/people/$', 'smdb.views.browse_people', name='browse-people'),
+	url(r'^browse/users/$', 'smdb.views.browse_users', name='browse-users'),
+	
+	(r'^search/.*$', 'smdb.views.search'),
 	
 	(r'^profile/$', 'smdb.views.redirect_to_profile'),
 	
-	(r'^search/.*$', 'smdb.views.search'),
+	url(r'^(?P<movieURI>movie/[-/\w]+)mark-seen/$', 'smdb.views.mark_seen', name='mark-seen'),
+	
 )
