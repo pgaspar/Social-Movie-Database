@@ -242,14 +242,18 @@ h1#header-title a {
 	font-size: 14px;
 }
 
-.seen {
+.button.seen {
 	background: #DDD;
 	color: #888;
 }
 
-.seen:hover { cursor: default; }
+.button.seen:hover { cursor: default; }
 
-.unseen {
+.button.undo {
+	background: #FC9803;
+}
+
+.button.unseen {
 	background: #56BB61;
 }
 
