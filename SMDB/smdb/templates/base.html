@@ -1,7 +1,16 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html	xmlns:person="/person/"
+		xmlns:movie="/movie/"
+		xmlns:character="/character/"
+		xmlns:user="/user/"
+		xmlns:smdb="http://www.smdb.com/smdb.owl#"
+		xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+		xmlns:owls="http://www.w3.org/2002/07/owl#"
+		xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+		
 <head>
-	<meta charset="utf-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
 	<title>Social Movie Database</title>
 	
 	<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/main.css" />
@@ -18,20 +27,20 @@
 	
 	<div id="menu">
 		<ul>
-			<li><a href="/"><img src="{{MEDIA_URL}}images/house.png"/>Home</a></li>
+			<li><a href="/"><img src="{{MEDIA_URL}}images/house.png" alt="Home"/>Home</a></li>
 			<!--<li><a href="/suggestion/"><img src="{{MEDIA_URL}}images/box.png"/>Recommended Movies</a></li>-->
 			{% if request.user.is_authenticated %}
-				<li><a href="/profile/"><img src="{{MEDIA_URL}}images/user.png"/>Profile</a></li>
-				<li><a href="/logout/"><img src="{{MEDIA_URL}}images/logout.png"/>Logout</a></li>
+				<li><a href="/profile/"><img src="{{MEDIA_URL}}images/user.png" alt="Profile"/>Profile</a></li>
+				<li><a href="/logout/"><img src="{{MEDIA_URL}}images/logout.png" alt="Logout"/>Logout</a></li>
 			{% else %}
-				<li><a href="/login/"><img src="{{MEDIA_URL}}images/login.png"/>Login</a></li>
+				<li><a href="/login/"><img src="{{MEDIA_URL}}images/login.png" alt="Login"/>Login</a></li>
 			{% endif %}
 		</ul>
 	</div>
 	
 	<div id="search">
 		<form method="get" action="/search/">
-			<input type="text" value="Search" onclick="this.value='';" name="find"/>
+			<div><input type="text" value="Search" onclick="this.value='';" name="find"/></div>
 		</form>
 	</div>
 	
