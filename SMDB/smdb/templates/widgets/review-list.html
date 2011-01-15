@@ -1,8 +1,8 @@
-<tr id="review-{{ review.id }}" onclick="window.location.href = '{{ review.get_absolute_url }}';">
-	<td>
-		<b>Author:</b> <a href="{{ review.writtenByUser.get_absolute_url }}">{{ review.writtenByUser.username }}</a><br />
-		<b>About:</b> <a href="{{ review.refersTo.get_absolute_url }}">{{ review.refersTo.title }}</a><br />
+<tr id="review-{{ review.id }}" onclick="window.location.href = '{{ review.get_absolute_url }}';" {% if movie %}rel="smdb:hasReview"{% endif %}{% if d_user %}rel="smdb:wrote"{% endif %} resource="{{ review.uri }}">
+	<td about="{{ review.uri }}">
+		<b>Author:</b> <a rel="smdb:writtenByUser" href="{{ review.writtenByUser.get_absolute_url }}">{{ review.writtenByUser.username }}</a><br />
+		<b>About:</b> <a rel="smdb:refersTo" href="{{ review.refersTo.get_absolute_url }}">{{ review.refersTo.title }}</a><br />
 		
 	</td>
-	<td><p>{{ review.reviewText }}</p></td>
+	<td><p property="smdb:reviewText">{{ review.reviewText }}</p></td>
 </tr>

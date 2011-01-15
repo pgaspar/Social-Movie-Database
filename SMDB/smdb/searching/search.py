@@ -271,6 +271,7 @@ class Search:
 					OPTIONAL {?uri rdfs:title ?o } .
 				"""
 		
+<<<<<<< HEAD
 		if subject:
 			query += """FILTER( regex(str(?n), "%s", "i") ) .
 					"""%(subject)
@@ -290,6 +291,12 @@ class Search:
 		
 		if not results and (len(words) >=3) :
 			#Second option, taking only first arg as subject, second arg as verb
+=======
+		results = []
+		
+		if not results:
+			#Second option, taking only 
+>>>>>>> 6aa3404675cc8110a64f158c86f88e3397add9cd
 			subject = stemmer.stem(tagged2.pop(0)[0])
 			verb = stemmer.stem(tagged2.pop(0)[0])
 			rest = [tag[0] for tag in tagged2]

@@ -4,12 +4,15 @@ from smdb import manager
 from smdb.browsing.filter_list import Filter
 from rdflib import Literal, URIRef
 
+from django.core.urlresolvers import reverse
+import urllib
+
 class BaseModel(LazySubject):
 	
 	def __new__(self, uri):
 		obj = object.__new__(self)
 		
-		return manager.getOrUse(uri, obj)
+		return manager.getOrUse(URIRef(uri), obj)
 	
 	def __init__(self, uri):
 		
@@ -44,11 +47,13 @@ class Movie(BaseModel):
 	def __init__(self, uri):
 		if super(Movie, self).__init__(uri): return		# Call super and exit if this is a created instance
 		
-		self.title, self.releaseDate = graph.query_single(
-			"""SELECT ?t ?d WHERE {
+		self.title, self.releaseDate, self.duration, self.synopsis = graph.query_single(
+			"""SELECT ?t ?y ?d ?s WHERE {
 						?u rdf:type smdb:Movie .
 						?u smdb:title ?t .
-						?u smdb:releaseDate ?d .
+						?u smdb:releaseDate ?y .
+						?u smdb:duration ?d .
+						?u smdb:synopsis ?s .
 					}""", initBindings={'u': self.uri})
 		
 		self.dynamic = {
@@ -57,14 +62,14 @@ class Movie(BaseModel):
 			'featured': None,
 			'isOfGenre': None,
 			'hasReview': None,
+			'shotIn': None,
+			'hasRating': None,
 		}
 		
 			
 	def get_directedBy(self):
 		print '>> fetching [Movie-directedBy]'
-		# Return a single result.
-		for person in [ Person(obj.uri) for obj in self.smdb__directedBy__m ]:
-			return person
+		return [ Person(obj.uri) for obj in self.smdb__directedBy__m ]
 	
 	def get_writtenBy(self):
 		print '>> fetching [Movie-writtenBy]'
@@ -76,11 +81,21 @@ class Movie(BaseModel):
 	
 	def get_isOfGenre(self):
 		print '>> fetching [Movie-isOfGenre]'
-		return [] #[ Genre(obj.uri) for obj in self.smdb__isOfGenre__m ]
+		return [ Genre(obj.uri) for obj in self.smdb__isOfGenre__m ]
 	
 	def get_hasReview(self):
 		print '>> fetching [Movie-hasReview]'
 		return [ MovieReview(obj.uri) for obj in self.smdb__hasReview__m ]
+		
+	def get_shotIn(self):
+		print '>> fetching [Movie-shotIn]'
+		return [ Location(obj) for obj in self.smdb__shotIn__m ]
+		
+	def get_hasRating(self):
+		print '>> fetching [Movie-hasRating]'
+		# Return a single result.
+		for rating in [ MPAA_Rating(obj.uri) for obj in self.smdb__hasRating__m ]:
+			return rating
 		
 	def get_actor_character(self):
 		for uriActor, uriCharacter in graph.query("""SELECT ?a ?c WHERE {
@@ -138,11 +153,37 @@ class Movie(BaseModel):
 			Filter(header='Genre', label='genre', obj_list=genres, target_o=genre),
 			Filter(header='Director', label='director', obj_list=directors, target_o=director),
 			Filter(header='Year', label='year', obj_list=years, target_o=year),
-			Filter(header='Location', label='location', obj_list=locations, target_o=location),
+			Filter(header='Shot In', label='location', obj_list=locations, target_o=location),
 			Filter(header='Rating', label='rating', obj_list=ratings, target_o=rating),
 		]
 		
+	
+	def markSeen(self, user):
+		userUri = user.get_profile().uri
 		
+		graph.add((userUri, graph.ontologies['smdb']['hasSeen'], self.uri))
+		graph.commit()
+	
+	def nextReviewID(self):
+		revID = 1
+		
+		for review in self.hasReview:
+			if review.id >= revID: revID = int(review.id) + 1
+		
+		print 'nextReviewID:', revID
+		return revID
+		
+	def addReview(self, user, revID, text):
+		userUri = user.get_profile().uri
+		revUri = URIRef(self.uri + '#review-' + str(revID))
+		
+		graph.add((revUri, graph.ontologies['rdf'].type, graph.ontologies['smdb']['MovieReview']))
+		graph.add((revUri, graph.ontologies['smdb']['id'], Literal(revID)))
+		graph.add((revUri, graph.ontologies['smdb']['refersTo'], self.uri))
+		graph.add((revUri, graph.ontologies['smdb']['writtenByUser'], userUri))
+		graph.add((revUri, graph.ontologies['smdb']['reviewText'], Literal(text)))
+		
+		graph.commit()
 	
 	def get_absolute_url(self):
 		return self.uri
@@ -273,6 +314,22 @@ class SMDBUser(BaseModel):
 		
 		return [ Filter(header='Filter By', label='filters', obj_list=filter_list, target_o=filters, mult=True) ]
 	
+	def addFriend(self, user):
+		userUri = user.get_profile().uri
+		
+		graph.add((userUri, graph.ontologies['smdb']['isFriendsWith'], self.uri))
+		graph.add((self.uri, graph.ontologies['smdb']['isFriendsWith'], userUri))
+		
+		graph.commit()
+	
+	def removeFriend(self, user):
+		userUri = user.get_profile().uri
+		
+		graph.remove((userUri, graph.ontologies['smdb']['isFriendsWith'], self.uri))
+		graph.remove((self.uri, graph.ontologies['smdb']['isFriendsWith'], userUri))
+		
+		graph.commit()
+	
 	def get_absolute_url(self):
 		return self.uri
 	
@@ -310,3 +367,55 @@ class MovieReview(BaseModel):
 	
 	def get_absolute_url(self):
 		return u'%s#review-%s' %(self.refersTo.get_absolute_url(), self.id)
+		
+		
+
+
+# Helper Models - These are not semantic models per se. They're used by semantic models, though...
+
+class Location():
+	
+	def __init__(self, name):
+		self.name = name
+		
+	def __unicode__(self):
+		return u'%s' % self.name
+	
+	def get_absolute_url(self):
+		return u'%s?location=%s' % (reverse('browse-movies'), self.name)
+	
+class MPAA_Rating():
+	
+	def __init__(self, uri):
+		self.uri = URIRef(uri)
+		
+		self.label = graph.query_single (
+			"""SELECT ?l WHERE {
+						?u rdfs:subClassOf smdb:MPAA_Rating .
+						?u rdfs:label ?l .
+					}""", initBindings={'u': self.uri})
+	
+	def __unicode__(self):
+		return u'%s' % self.label
+	
+	def get_absolute_url(self):
+		return u'%s?rating=%s' % (reverse('browse-movies'), urllib.quote(self.uri))		# Quote encodes the URL
+	
+	
+class Genre():
+	
+	def __init__(self, uri):
+		self.uri = URIRef(uri)
+		
+		self.label = graph.query_single (
+			"""SELECT ?l WHERE {
+						?u rdfs:subClassOf smdb:Genre .
+						?u rdfs:label ?l .
+					}""", initBindings={'u': self.uri})
+	
+	def __unicode__(self):
+		return u'%s' % self.label
+	
+	def get_absolute_url(self):
+		return u'%s?genre=%s' % (reverse('browse-movies'), self.label)
+	

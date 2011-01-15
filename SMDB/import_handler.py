@@ -44,7 +44,7 @@ class SMDB():
 		print "Triples in graph: ", len(self.graph)
 
 	
-	def addPerson(self, name, bio="LOREM IPSUM"):
+	def addPerson(self, name, bio="Sample Biography."):
 
 		uri = self.person[slugify(name) + '/']
 
@@ -99,7 +99,7 @@ class SMDB():
 		self.graph.commit()
 	
 	
-	def addMovie(self, title, releaseDate, synopsis="Sample synopsis here"):
+	def addMovie(self, title, releaseDate, synopsis="Sample synopsis."):
 
 		uri = self.movie[slugify(title) + '/']
 		
@@ -165,13 +165,22 @@ class SMDB():
 		
 			user.save()
 		
-			profile = UserProfile(uri=uri)
-			profile.user = user
-			profile.save()
-		
 		except IntegrityError:
+			user = User.objects.get(username=username)
 			print 'The user', username, 'was already created in the Django database.'
 		
+		# Add the Profile info if it doesn't exist yet
+		try:
+			profile = user.get_profile()
+			profile._uri = uri
+			
+		except UserProfile.DoesNotExist:
+			profile = UserProfile(_uri=uri)
+			profile.user = user
+			print 'Created Profile for:', uri
+		
+		# Save changes
+		profile.save()
 		self.graph.commit()
 		
 	

@@ -3,29 +3,37 @@
 {% load model_helpers %}
 
 {% block content %}
+	<div about="{{ movie.uri }}" typeof="smdb:Movie">
 	<h2>
-		{{ movie.title }} <span>({{ movie.releaseDate }})</span>
-		{% if request.user.is_authenticated %}<a href="#"><span class="button done">Mark as Seen</span></a>{% endif %}
+		<span property="smdb:title">{{ movie.title }}</span> <span class="smaller">({{ movie.releaseDate }})</span>
+		
+		{% if request.user.is_authenticated %}
+			{% if request.user|hasSeen:movie %}
+				<span class="button seen">You've seen this Movie!</span>
+			{% else %}
+				<a href="mark-seen/"><span class="button unseen">Mark as Seen</span></a>
+			{% endif %}
+		{% endif %}
 	</h2>
 	
-	<img class="description-photo" src="{{ MEDIA_URL }}/images/movie-default.png" style="width: 80px"/>
+	<img property="smdb:posterURL" about="{{ movie.uri }}" content="{{ MEDIA_URL }}images/movie-default.png" class="description-photo" src="{{ MEDIA_URL }}images/movie-default.png" alt="Poster" style="width: 80px"/>
 	
 	<div class="description">
 		
 		<p>
 			<b class="label">Synopsis:</b><br />
-			<div class="text-box">{{ movie.smdb__synopsis }}</div>
+			<span class="text-box" property="smdb:synopsis">{{ movie.synopsis }}</span>
 		</p>
 		
-		<p><b class="label">Director:</b> <a href="{{ movie.directedBy.get_absolute_url }}">{{ movie.directedBy.name }}</a></p>
-		<p><b class="label">Writers:</b> {% for obj in movie.writtenBy %}<a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a> {% if not forloop.last %}, {% endif %}{% endfor %}</p>
+		<p><b class="label">Director:</b> {% for obj in movie.directedBy %}<a rel="smdb:directedBy" href="{{ obj.get_absolute_url }}">{{ obj.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+		<p><b class="label">Writers:</b> {% for obj in movie.writtenBy %}<a rel="smdb:writtenBy" href="{{ obj.get_absolute_url }}">{{ obj.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 		
-		<p><b class="label">Genres:</b> {% for obj in movie.isOfGenre %}<a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a> {% if not forloop.last %}, {% endif %}{% empty %}&nbsp;{% endfor %}</p>
-		<p><b class="label">Duration:</b> {{ movie.duration|default:"0" }} min</p>
-		<p><b class="label">Release Date:</b> {{ movie.releaseDate }}</p>
+		<p><b class="label">Genres:</b> {% for obj in movie.isOfGenre %}<a rel="smdb:isOfGenre" resource="{{ obj.uri }}" href="{{ obj.get_absolute_url }}">{{ obj }}</a>{% if not forloop.last %}, {% endif %}{% empty %}&nbsp;{% endfor %}</p>
+		{% if movie.hasRating %}<p><b class="label">MPAA Rating:</b> <a rel="smdb:hasRating" resource="{{ movie.hasRating.uri }}" href="{{ movie.hasRating.get_absolute_url }}">{{ movie.hasRating }}</a></p>{% endif %}
+		{% if movie.duration %}<p><b class="label">Duration:</b> <span property="smdb:duration">{{ movie.duration }}</span> min</p>{% endif %}
+		<p><b class="label">Release Year:</b> <span property="smdb:releaseDate">{{ movie.releaseDate }}</span></p>
 		
-		<p><b class="label">Filmed In:</b> &nbsp;</p>
-		<p><b class="label">Takes Place In:</b> &nbsp;</p>
+		{% if movie.shotIn %}<p><b class="label">Shot In:</b> {% for obj in movie.shotIn %}<a property="smdb:shotIn" resource="{{ movie.uri }}" href="{{ obj.get_absolute_url }}">{{ obj }}</a>{% if not forloop.last %}, {% endif %}{% empty %}&nbsp;{% endfor %}</p>{% endif %}
 		
 	</div>
 	
@@ -36,9 +44,9 @@
 			
 			{% for actor, character in movie.get_actor_character %}
 				
-				<tr>
-					<td><a href="{{ actor.get_absolute_url }}">{{ actor.name }}</a></td>
-					<td><a href="{{ character.get_absolute_url }}" class="not-bold">{{ character.name }}</a></td>
+				<tr >
+					<td><a rel="smdb:featured" href="{{ actor.get_absolute_url }}"><span rel="smdb:playsCharacter" resource="{{character.uri}}">{{ actor.name }}</span></a></td>
+					<td><a rev="smdb:inMovie" href="{{ character.get_absolute_url }}" class="not-bold"><span rel="smdb:portrayedBy" resource="{{actor.uri}}">{{ character.name }}</span></a></td>
 				</tr>
 				
 			{% empty %}
@@ -65,7 +73,20 @@
 	{% endif %}
 	
 	<div class="section">
-		<h3 class="context-header"><span>Reviews - <a href="#" style="font-size: 16px; font-weight: normal">Write a Review</a></span></h3>
+		<h3 class="context-header"><span>Reviews <span class="new-review">- <a href="javascript:showReviewForm();" style="font-size: 16px; font-weight: normal">Write a Review</a></span></span></h3>
+		
+		<fieldset id="review-form">
+			<form method="post" action="add-review/">
+				<table>
+					<tr>
+						<th><label for="id_text">Review:</label></th>
+						<td><textarea id="id_text" rows="3" cols="40" name="text"></textarea></td>
+						<td><input type="submit" value="Post" /></td>
+					</tr>
+				</table>
+				<div><input type="hidden" name="rev_ID" value="{{ movie.nextReviewID }}" /></div>
+			</form>
+		</fieldset>
 		
 		<table class="review-list">
 		
@@ -74,7 +95,7 @@
 			{% include 'widgets/review-list.html' %}
 		
 		{% empty %}
-			<p>No reviews. <a href="#">Write one?</a></p>
+			<p class="new-review">No reviews. <a href="javascript:showReviewForm();">Write one?</a></p>
 		{% endfor %}
 		
 		</table>
@@ -87,17 +108,17 @@
 		<table class="movie-gallery">
 			<tr>
 				{% for uri, title, score in suggestions %}
-					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
+					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}images/movie-default.png" alt="Poster" /></a></td>
 				{% endfor %}
 			</tr>
 		
 			<tr>
 				{% for uri, title, score in suggestions %}
-					<td><a href="{{ uri }}" alt="Score: {{score}}" title="Score: {{score}}">{{ title }}</a></td>
+					<td><a href="{{ uri }}" title="Score: {{score}}">{{ title }}</a></td>
 				{% endfor %}
 			</tr>
 		
 		</table>
 	</div>
-	
+	</div>
 {% endblock %}

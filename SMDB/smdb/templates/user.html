@@ -1,9 +1,20 @@
 {% extends "base.html" %}
 
+{% load model_helpers %}
+
 {% block content %}
 	<h2>
 		{% firstof user.fullName user.username %}
-		{% if request.user.is_authenticated %}<a href="#"><span class="button done">Add as Friend</span></a>{% endif %}
+		
+		{% if request.user.is_authenticated %}
+			{% ifnotequal request.user.username user.username %}
+				{% if request.user|isFriendsWith:user %}
+					<a href="remove-friend/"><span class="button undo">Remove from Friends</span></a>
+				{% else %}
+					<a href="add-friend/"><span class="button unseen">Add as Friend</span></a>
+				{% endif %}
+			{% endifnotequal %}
+		{% endif %}
 	</h2>
 	
 	<img class="description-photo" src="{{ MEDIA_URL }}images/user-default.png" />

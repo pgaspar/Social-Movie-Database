@@ -129,29 +129,29 @@ owls=Namespace("http://www.w3.org/2002/07/owl#")
 # for i in res:
 # 	print i[0] + ":::" + str(i[1]) + ":::" + str(i[2])
 
-n_iter = 1000
-time_sum = 0
-for i in range(n_iter):
-	a = time.time()
-
-	res = s.graph.query("""SELECT ?un ?f WHERE {
-					?u rdf:type smdb:SMDBUser .
-					?u smdb:username ?un .
-					?u smdb:hasSeen ?m .
-					?me smdb:hasSeen ?m .
-					OPTIONAL{ ?me smdb:isFriendsWith ?f . ?u smdb:isFriendsWith ?f } .
-					OPTIONAL{ ?u smdb:isFriendsWith ?me . ?u2 rdf:type smdb:SMDBUser . }
-					FILTER( !bound(?u2) && ?u != ?me) .
-					}""", initBindings={'me': URIRef("/user/pgaspar/")}, initNs=initNs).result
-
-	res = [ (u, f) for (u, f) in res if u]
-
-	#for u, f in res: print u, f
-
-	b = time.time()
-	time_sum += (b - a)
-
-print "--- Big Query Method: %f ---" % (time_sum/n_iter)
+# n_iter = 1000
+# time_sum = 0
+# for i in range(n_iter):
+# 	a = time.time()
+# 
+# 	res = s.graph.query("""SELECT ?un ?f WHERE {
+# 					?u rdf:type smdb:SMDBUser .
+# 					?u smdb:username ?un .
+# 					?u smdb:hasSeen ?m .
+# 					?me smdb:hasSeen ?m .
+# 					OPTIONAL{ ?me smdb:isFriendsWith ?f . ?u smdb:isFriendsWith ?f } .
+# 					OPTIONAL{ ?u smdb:isFriendsWith ?me . ?u2 rdf:type smdb:SMDBUser . }
+# 					FILTER( !bound(?u2) && ?u != ?me) .
+# 					}""", initBindings={'me': URIRef("/user/pgaspar/")}, initNs=initNs).result
+# 
+# 	res = [ (u, f) for (u, f) in res if u]
+# 
+# 	#for u, f in res: print u, f
+# 
+# 	b = time.time()
+# 	time_sum += (b - a)
+# 
+# print "--- Big Query Method: %f ---" % (time_sum/n_iter)
 
 
 # n_iter = 1000
@@ -204,5 +204,5 @@ print "--- Big Query Method: %f ---" % (time_sum/n_iter)
 # 	
 # print '--- Processed', c, 'Directors ---'
 
-#s.exportData()
+s.exportData()
 
