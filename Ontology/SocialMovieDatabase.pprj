@@ -1,4 +1,4 @@
-; Tue Jan 04 17:22:36 WET 2011
+; Mon Jan 10 19:38:04 WET 2011
 ; 
 ;+ (version "3.4.4")
 ;+ (build "Build 579")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[SocialMovieDatabase_ProjectKB_Class71]
-		[SocialMovieDatabase_ProjectKB_Class72]
-		[SocialMovieDatabase_ProjectKB_Class73]
-		[SocialMovieDatabase_ProjectKB_Class74]
-		[SocialMovieDatabase_ProjectKB_Class75]))
+		[SocialMovieDatabase_ProjectKB_Class10004]
+		[SocialMovieDatabase_ProjectKB_Class10005]
+		[SocialMovieDatabase_ProjectKB_Class10006]
+		[SocialMovieDatabase_ProjectKB_Class10007]
+		[SocialMovieDatabase_ProjectKB_Class10008]))
 
 ([CLSES_TAB] of  Widget
 
@@ -163,6 +163,7 @@
 	(display_multi_parent_class_icon FALSE)
 	(is_readonly FALSE)
 	(tabbed_instance_form_layout TRUE)
+	(undo_enabled TRUE)
 	(update_modification_slots FALSE))
 
 ([Instance_581] of  Widget
@@ -745,7 +746,11 @@
 	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.OWLFormWidget"))
 
 ([KB_325529_Class0] of  Map
-)
+
+	(entries
+		[SocialMovieDatabase_ProjectKB_Class10009]
+		[SocialMovieDatabase_ProjectKB_Class10010]
+		[SocialMovieDatabase_ProjectKB_Class10011]))
 
 ([KB_325529_Class4] of  String
 
@@ -3331,6 +3336,9 @@
 	(boolean_value FALSE)
 	(name "ButtonDisplayed-Delete Instance"))
 
+([KB_909749_Class3] of  Map
+)
+
 ([KB_933314_Instance_11] of  Boolean
 
 	(boolean_value FALSE)
@@ -5323,9 +5331,6 @@
 ([KB_941921_Instance_7] of  Property_List
 )
 
-([KB_950071_Class0] of  Map
-)
-
 ([OWL_ProjectKB_Instance_3] of  String
 
 	(name "owl_build")
@@ -5583,18 +5588,48 @@
 		[Instance_2534]
 		[Instance_86]
 		[Instance_2600]
-		[FORMS_TAB]
 		[Instance_3234]
+		[KB_865583_Instance_8]
+		[SocialMovieDatabase_ProjectKB_Class31]
+		[SocialMovieDatabase_ProjectKB_Class41]
+		[SocialMovieDatabase_ProjectKB_Class27]
+		[SocialMovieDatabase_ProjectKB_Class47]
 		[Instance_43]
 		[CLSES_TAB]
+		[SocialMovieDatabase_ProjectKB_Class53]
 		[KB_865583_Instance_6]
+		[SocialMovieDatabase_ProjectKB_Class49]
+		[FORMS_TAB]
 		[INSTANCES_TAB]
+		[SocialMovieDatabase_ProjectKB_Class11]
+		[SocialMovieDatabase_ProjectKB_Class9]
+		[SocialMovieDatabase_ProjectKB_Class1]
 		[Instance_45]
+		[SocialMovieDatabase_ProjectKB_Class51]
+		[SocialMovieDatabase_ProjectKB_Class23]
+		[SocialMovieDatabase_ProjectKB_Class21]
+		[SocialMovieDatabase_ProjectKB_Class17]
+		[SocialMovieDatabase_ProjectKB_Class55]
 		[KB_865583_Instance_12]
-		[KB_865583_Instance_8]
+		[SocialMovieDatabase_ProjectKB_Class19]
+		[SocialMovieDatabase_ProjectKB_Class13]
+		[SocialMovieDatabase_ProjectKB_Class59]
+		[SocialMovieDatabase_ProjectKB_Class3]
+		[SocialMovieDatabase_ProjectKB_Class45]
 		[KB_865583_Instance_4]
 		[SLOTS_TAB]
-		[KB_865583_Instance_10]))
+		[SocialMovieDatabase_ProjectKB_Class43]
+		[KB_865583_Instance_10]
+		[SocialMovieDatabase_ProjectKB_Class29]
+		[SocialMovieDatabase_ProjectKB_Class25]
+		[SocialMovieDatabase_ProjectKB_Class35]
+		[SocialMovieDatabase_ProjectKB_Class33]
+		[SocialMovieDatabase_ProjectKB_Class57]
+		[SocialMovieDatabase_ProjectKB_Class39]
+		[SocialMovieDatabase_ProjectKB_Class5]
+		[SocialMovieDatabase_ProjectKB_Class37]
+		[SocialMovieDatabase_ProjectKB_Class7]
+		[SocialMovieDatabase_ProjectKB_Class15]))
 
 ([SLOTS_TAB] of  Widget
 
@@ -5611,6 +5646,52 @@
 
 ([SocialMovieDatabase_ProjectKB_Class10] of  Property_List
 )
+
+([SocialMovieDatabase_ProjectKB_Class10004] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([SocialMovieDatabase_ProjectKB_Class10005] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Class")
+	(string_value "%3ANAME"))
+
+([SocialMovieDatabase_ProjectKB_Class10006] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([SocialMovieDatabase_ProjectKB_Class10007] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([SocialMovieDatabase_ProjectKB_Class10008] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Thing")
+	(string_value "%3ANAME"))
+
+([SocialMovieDatabase_ProjectKB_Class10009] of  Map_Entry
+
+	(key "add_name_on_instance_form")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([SocialMovieDatabase_ProjectKB_Class10010] of  Map_Entry
+
+	(key "change_tracking_active")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([SocialMovieDatabase_ProjectKB_Class10011] of  Map_Entry
+
+	(key "suppress_instance_counting")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
 
 ([SocialMovieDatabase_ProjectKB_Class11] of  Widget
 
@@ -5830,7 +5911,7 @@
 
 ([SocialMovieDatabase_ProjectKB_Class55] of  Widget
 
-	(is_hidden TRUE)
+	(is_hidden FALSE)
 	(property_list [SocialMovieDatabase_ProjectKB_Class56])
 	(widget_class_name "dfki.protege.ontoviz_tab.OntovizTab"))
 
@@ -5863,31 +5944,6 @@
 	(is_hidden TRUE)
 	(property_list [SocialMovieDatabase_ProjectKB_Class8])
 	(widget_class_name "edu.stanford.smi.protegex.server_changes.prompt.UsersTab"))
-
-([SocialMovieDatabase_ProjectKB_Class71] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([SocialMovieDatabase_ProjectKB_Class72] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Class")
-	(string_value "%3ANAME"))
-
-([SocialMovieDatabase_ProjectKB_Class73] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([SocialMovieDatabase_ProjectKB_Class74] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([SocialMovieDatabase_ProjectKB_Class75] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Thing")
-	(string_value "%3ANAME"))
 
 ([SocialMovieDatabase_ProjectKB_Class8] of  Property_List
 )
