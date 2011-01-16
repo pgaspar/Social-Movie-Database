@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<h2>{{ character.name }} <span>(Character)</span></h2>
+	<div about="{{ character.uri }}" typeof="smdb:Character">
+	<h2><span property="smdb:name">{{ character.name }}</span> <span class="smaller">(Character)</span></h2>
 	
 	<div class="section">
 		<h3 class="context-header"><span>Portrayed In</span></h3>
@@ -10,7 +11,7 @@
 			
 			{% for movie, actor in character.get_movie_actors %}
 			<tr>
-				<td><a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a> by <a href="{{ actor.get_absolute_url }}" class="not-bold">{{ actor.name }}</a></td>
+				<td><a rel="smdb:inMovie" href="{{ movie.get_absolute_url }}">{{ movie.title }}</a> by <a rel="smdb:portrayedBy" href="{{ actor.get_absolute_url }}" class="not-bold">{{ actor.name }}</a></td>
 				<td>{{ movie.releaseDate }}</td>
 			</tr>
 			{% empty %}
