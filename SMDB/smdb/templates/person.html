@@ -53,11 +53,12 @@
 		
 		<table class="movie-list">
 			
-			{% with "smdb:performedIn" as rel %}
-				{% for movie in person.performedIn %}
-					{% include 'widgets/movie-list.html' %}
-				{% endfor %}
-			{% endwith %}
+			{% for movie, character in person.get_movie_characters %}
+			<tr>
+				<td><a rel="smdb:performedIn" href="{{ movie.get_absolute_url }}">{{ movie.title }}</a> as <a rel="smdb:playsCharacter" href="{{ character.get_absolute_url }}" class="not-bold">{{ character.name }}</a></td>
+				<td>{{ movie.releaseDate }}</td>
+			</tr>
+			{% endfor %}
 			
 		</table>
 	</div>

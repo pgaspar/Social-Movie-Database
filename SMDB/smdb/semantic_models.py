@@ -223,6 +223,15 @@ class Person(BaseModel):
 	def get_playsCharacter(self):
 		print '>> fetching [Person-playsCharacter]'
 		return [ Character(obj.uri) for obj in self.smdb__playsCharacter__m ]
+		
+	def get_movie_characters(self):
+		for uriMovie, uriCharacter, year in graph.query("""SELECT ?m ?c ?y WHERE {
+										?a smdb:performedIn ?m.
+										?c smdb:inMovie ?m .
+										?m smdb:releaseDate ?y .
+										?c smdb:portrayedBy ?a .
+										} ORDER BY ?y""", initBindings={'a': self.uri}):
+			yield Movie(uriMovie), Character(uriCharacter)
 
 	@classmethod
 	def getFilterList(model, occupations=[]):
@@ -262,11 +271,12 @@ class Character(BaseModel):
 		return [ Movie(obj.uri) for obj in self.smdb__inMovie__m ]
 	
 	def get_movie_actors(self):
-		for uriMovie, uriActor in graph.query("""SELECT ?m ?a WHERE {
+		for uriMovie, uriActor, year in graph.query("""SELECT ?m ?a ?y WHERE {
 										?a smdb:performedIn ?m.
 										?c smdb:inMovie ?m .
+										?m smdb:releaseDate ?y .
 										?c smdb:portrayedBy ?a .
-										}""", initBindings={'c': self.uri}):
+										} ORDER BY ?y""", initBindings={'c': self.uri}):
 			yield Movie(uriMovie), Person(uriActor)
 	
 	

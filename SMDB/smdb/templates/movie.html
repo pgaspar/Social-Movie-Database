@@ -46,7 +46,7 @@
 			{% for actor, character in movie.get_actor_character %}
 				
 				<tr>
-					<td><a rel="smdb:featured" href="{{ actor.get_absolute_url }}"><span rel="smdb:playsCharacter" resource="{{character.uri}}">{{ actor.name }}</span></a></td>
+					<td><a rel="smdb:featured" href="{{ actor.get_absolute_url }}">{{ actor.name }}</a></td>
 					<td><a rev="smdb:inMovie" href="{{ character.get_absolute_url }}" class="not-bold">{{ character.name }}</a></td>
 				</tr>
 				
