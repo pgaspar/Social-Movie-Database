@@ -2,6 +2,7 @@
 
 {% block content %}
 	<div about="{{ character.uri }}" typeof="smdb:Character">
+	
 	<h2><span property="smdb:name">{{ character.name }}</span> <span class="smaller">(Character)</span></h2>
 	
 	<div class="section">
@@ -18,6 +19,8 @@
 				<p>No movies found.</p>
 			{% endfor %}
 		</table>
+	</div>
+	
 	</div>
 	
 {% endblock %}

@@ -4,6 +4,7 @@
 
 {% block content %}
 	<div about="{{ movie.uri }}" typeof="smdb:Movie">
+	
 	<h2>
 		<span property="smdb:title">{{ movie.title }}</span> <span class="smaller">({{ movie.releaseDate }})</span>
 		
@@ -120,5 +121,6 @@
 		
 		</table>
 	</div>
+	
 	</div>
 {% endblock %}

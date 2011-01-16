@@ -84,8 +84,8 @@ def index(request):
 	context = {}
 	
 	#TEMP - remove after
-	searcher = Search(graph)
-	searcher.semanticSearch("movies directed by Quentin Tarantino")
+	#searcher = Search(graph)
+	#searcher.semanticSearch("movies directed by Quentin Tarantino")
 	
 	# Fetch the Movies of the Year section
 	context['movies_of_the_year'] = suggestion.movies_of_the_year()

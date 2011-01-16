@@ -3,9 +3,18 @@
 {% load model_helpers %}
 
 {% block content %}
+	<div about="{{ user.uri }}" typeof="smdb:SMDBUser">
+	
 	<h2>
 		{% firstof user.fullName user.username %}
 		
+		<!-- RDFa Agents only! -->
+		<span style="display:none">
+			{% if user.fullName %}<span property="smdb:fullName">{{user.fullName}}</span>{% endif %}
+			<span property="smdb:username">{{user.username}}</span>
+		</span>
+		<!-- End of Agents-only code -->
+			
 		{% if request.user.is_authenticated %}
 			{% ifnotequal request.user.username user.username %}
 				{% if request.user|isFriendsWith:user %}
@@ -30,7 +39,9 @@
 		<table class="movie-list">
 			
 			{% for movie in user.hasSeen %}
-				{% include 'widgets/movie-list.html' %}
+				{% with "smdb:hasSeen" as rel %}
+					{% include 'widgets/movie-list.html' %}
+				{% endwith %}
 			{% empty %}
 				<p>This user has not seen any movies yet.</p>
 			{% endfor %}
@@ -67,6 +78,8 @@
 		
 		</table>
 		
+	</div>
+	
 	</div>
 	
 {% endblock %}
