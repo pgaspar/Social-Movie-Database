@@ -263,13 +263,40 @@ class Search:
 		
 		print subject + ":::" + verb + ":::" + obj
 		
-		query = """
+		query = """SELECT DISTINCT ?s ?n ?v ?o WHERE{
+					?s ?v ?uri .
+					?s rdfs:label ?n.
+					OPTIONAL {?uri rdfs:label ?o .} .
+					OPTIONAL {?uri rdfs:name ?o } .
+					OPTIONAL {?uri rdfs:title ?o } .
 				"""
 		
+<<<<<<< HEAD
+		if subject:
+			query += """FILTER( regex(str(?n), "%s", "i") ) .
+					"""%(subject)
+					
+		if verb:
+			query += """?v rdfs:label ?prop .
+						FILTER( regex(str(?prop), "%s", "i") ) .
+					"""%(verb)
+					
+		query += """FILTER( regex(str(?o), "%s", "i") ) .
+					}
+				"""%(obj)
+		
+		results = self.graph.query(query)
+		
+		print len(results)
+		
+		if not results and (len(words) >=3) :
+			#Second option, taking only first arg as subject, second arg as verb
+=======
 		results = []
 		
 		if not results:
 			#Second option, taking only 
+>>>>>>> 6aa3404675cc8110a64f158c86f88e3397add9cd
 			subject = stemmer.stem(tagged2.pop(0)[0])
 			verb = stemmer.stem(tagged2.pop(0)[0])
 			rest = [tag[0] for tag in tagged2]
