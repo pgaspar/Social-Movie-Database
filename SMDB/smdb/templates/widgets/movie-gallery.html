@@ -2,7 +2,7 @@
 	<table class="movie-gallery">
 		<tr>
 			{% for uri, title, score in movie_list %}
-				<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
+				<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}images/movie-default.png" alt="Poster" /></a></td>
 			{% endfor %}
 		</tr>
 

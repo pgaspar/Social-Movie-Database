@@ -107,18 +107,9 @@
 		<h3 class="context-header"><span>Related Movies</span></h3>
 	
 		<table class="movie-gallery">
-			<tr>
-				{% for uri, title, score in suggestions %}
-					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}images/movie-default.png" alt="Poster" /></a></td>
-				{% endfor %}
-			</tr>
-		
-			<tr>
-				{% for uri, title, score in suggestions %}
-					<td><a href="{{ uri }}" title="Score: {{score}}">{{ title }}</a></td>
-				{% endfor %}
-			</tr>
-		
+			{% with suggestions as movie_list %}
+				{% include 'widgets/movie-gallery.html' %}
+			{% endwith %}
 		</table>
 	</div>
 	
