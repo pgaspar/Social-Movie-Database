@@ -92,8 +92,8 @@ def person_suggestions(uri):
 	
 	sortedResults = sorted(results, key = lambda pair : pair[2], reverse = True )
 	
-	for result in sortedResults[:5]:
-		print results
+	#for result in sortedResults[:5]:
+	#	print results
 	
 	return sortedResults[:5]
 

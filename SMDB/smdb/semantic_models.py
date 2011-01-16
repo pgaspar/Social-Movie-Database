@@ -52,8 +52,8 @@ class Movie(BaseModel):
 						?u rdf:type smdb:Movie .
 						?u smdb:title ?t .
 						?u smdb:releaseDate ?y .
-						?u smdb:duration ?d .
 						?u smdb:synopsis ?s .
+						OPTIONAL { ?u smdb:duration ?d . }
 					}""", initBindings={'u': self.uri})
 		
 		self.dynamic = {
@@ -199,7 +199,7 @@ class Person(BaseModel):
 						?u rdf:type smdb:Person .
 						?u smdb:name ?n .
 					}""", initBindings={'u': self.uri})
-		
+					
 		self.dynamic = {
 			'directed': None,
 			'wrote': None,
@@ -210,15 +210,15 @@ class Person(BaseModel):
 		
 	def get_directed(self):
 		print '>> fetching [Person-directed]'
-		return [ Movie(obj.uri) for obj in self.smdb__directed__m ]
+		return sorted( [ Movie(obj.uri) for obj in self.smdb__directed__m ], key=lambda o: o.releaseDate )
 	
 	def get_wrote(self):
 		print '>> fetching [Person-wrote]'
-		return [ Movie(obj.uri) for obj in self.smdb__wrote__m ]
+		return sorted( [ Movie(obj.uri) for obj in self.smdb__wrote__m ], key=lambda o: o.releaseDate )
 		
 	def get_performedIn(self):
 		print '>> fetching [Person-performedIn]'
-		return [ Movie(obj.uri) for obj in self.smdb__performedIn__m ]
+		return sorted( [ Movie(obj.uri) for obj in self.smdb__performedIn__m ], key=lambda o: o.releaseDate )
 	
 	def get_playsCharacter(self):
 		print '>> fetching [Person-playsCharacter]'

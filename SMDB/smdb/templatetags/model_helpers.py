@@ -14,7 +14,7 @@ def getOccupations(person):
 	if person.directed: html.append(director)
 	if person.wrote: html.append(writer)
 	if person.performedIn: html.append(actor)
-
+	
 	return " - ".join(html)
 
 
