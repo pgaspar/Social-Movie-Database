@@ -50,6 +50,13 @@
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >Drama</rdfs:label>
   </rdfs:Class>
+  <rdfs:Class rdf:ID="Music">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="#Genre"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Music</rdfs:label>
+  </rdfs:Class>
   <rdfs:Class rdf:ID="SMDBUser">
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >SMDB User</rdfs:label>
@@ -194,6 +201,16 @@
     >has seen</rdfs:label>
     <rdfs:domain rdf:resource="#SMDBUser"/>
   </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="refersTo">
+    <rdfs:range rdf:resource="#Movie"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >refers to</rdfs:label>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:ID="hasReview"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="#MovieReview"/>
+  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="wrote">
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >wrote</rdfs:label>
@@ -217,16 +234,6 @@
     </rdfs:subPropertyOf>
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >has performed in</rdfs:label>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="playsCharacter">
-    <rdfs:range rdf:resource="#Character"/>
-    <owl:inverseOf>
-      <owl:ObjectProperty rdf:ID="portrayedBy"/>
-    </owl:inverseOf>
-    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >plays character</rdfs:label>
-    <rdfs:domain rdf:resource="#Person"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="isOfGenre">
     <rdfs:range rdf:resource="#Genre"/>
@@ -253,24 +260,21 @@
     <rdfs:domain rdf:resource="#Movie"/>
     <rdfs:range rdf:resource="#Person"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="#portrayedBy">
-    <owl:inverseOf rdf:resource="#playsCharacter"/>
-    <rdfs:domain rdf:resource="#Character"/>
-    <rdfs:range rdf:resource="#Person"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >portrayed by</rdfs:label>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="hasRating">
-    <rdfs:range rdf:resource="#MPAA_Rating"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-    <rdfs:domain rdf:resource="#Movie"/>
-  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="inMovie">
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >featured in movie</rdfs:label>
     <rdfs:range rdf:resource="#Movie"/>
     <rdfs:domain rdf:resource="#Character"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="writtenByUser">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="#MovieReview"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:ID="hasWritten"/>
+    </owl:inverseOf>
+    <rdfs:range rdf:resource="#SMDBUser"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >wrtten by user</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="#featured">
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
@@ -279,13 +283,21 @@
     <owl:inverseOf rdf:resource="#performedIn"/>
     <rdfs:range rdf:resource="#Person"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="isFriendsWith">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
-    <rdfs:range rdf:resource="#SMDBUser"/>
-    <rdfs:domain rdf:resource="#SMDBUser"/>
-    <owl:inverseOf rdf:resource="#isFriendsWith"/>
+  <owl:ObjectProperty rdf:about="#hasWritten">
+    <owl:inverseOf rdf:resource="#writtenByUser"/>
+    <rdfs:range rdf:resource="#MovieReview"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >is friends with</rdfs:label>
+    >has written</rdfs:label>
+    <rdfs:domain rdf:resource="#SMDBUser"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasReview">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+    <rdfs:domain rdf:resource="#Movie"/>
+    <owl:inverseOf rdf:resource="#refersTo"/>
+    <rdfs:range rdf:resource="#MovieReview"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >has review</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="#participatedInMovie">
     <rdfs:range rdf:resource="#Movie"/>
@@ -298,17 +310,75 @@
     <owl:inverseOf rdf:resource="#wrote"/>
     <rdfs:domain rdf:resource="#Movie"/>
   </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="fullName">
+    <rdfs:domain rdf:resource="#SMDBUser"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >full name</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="duration">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:domain rdf:resource="#Movie"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >duration</rdfs:label>
+  </owl:DatatypeProperty>
   <owl:DatatypeProperty rdf:ID="shotIn">
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >shot in</rdfs:label>
     <rdfs:domain rdf:resource="#Movie"/>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
   </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="name">
+  <owl:DatatypeProperty rdf:ID="reviewText">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="#MovieReview"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >review text</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="posterURL">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="#Movie"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >movie poster URL</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="email">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="#SMDBUser"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >email</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:SymmetricProperty rdf:ID="isFriendsWith">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="#SMDBUser"/>
+    <rdfs:domain rdf:resource="#SMDBUser"/>
+    <owl:inverseOf rdf:resource="#isFriendsWith"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >is friends with</rdfs:label>
+  </owl:SymmetricProperty>
+  <owl:FunctionalProperty rdf:ID="portrayedBy">
+    <owl:inverseOf>
+      <owl:InverseFunctionalProperty rdf:ID="playsCharacter"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="#Character"/>
+    <rdfs:range rdf:resource="#Person"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >portrayed by</rdfs:label>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="hasRating">
+    <rdfs:range rdf:resource="#MPAA_Rating"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="#Movie"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="name">
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >name</rdfs:label>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
     <rdfs:domain>
       <owl:Class>
         <owl:unionOf rdf:parseType="Collection">
@@ -317,134 +387,71 @@
         </owl:unionOf>
       </owl:Class>
     </rdfs:domain>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="title">
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="title">
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >title</rdfs:label>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <rdfs:domain rdf:resource="#Movie"/>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="releaseDate">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="releaseDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >release date</rdfs:label>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
     <rdfs:domain rdf:resource="#Movie"/>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="synopsis">
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="synopsis">
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >synopsis</rdfs:label>
     <rdfs:domain rdf:resource="#Movie"/>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="username">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="username">
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >username</rdfs:label>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
     <rdfs:domain rdf:resource="#SMDBUser"/>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="biography">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="biography">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >biography</rdfs:label>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <rdfs:domain rdf:resource="#Person"/>
-  </owl:DatatypeProperty>
-  <owl:FunctionalProperty rdf:ID="fullName">
-    <rdfs:domain rdf:resource="#SMDBUser"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >full name</rdfs:label>
   </owl:FunctionalProperty>
-  <owl:FunctionalProperty rdf:ID="duration">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
-    <rdfs:domain rdf:resource="#Movie"/>
+  <owl:InverseFunctionalProperty rdf:about="#playsCharacter">
+    <rdfs:range rdf:resource="#Character"/>
+    <owl:inverseOf rdf:resource="#portrayedBy"/>
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >duration</rdfs:label>
-  </owl:FunctionalProperty>
-  <owl:FunctionalProperty rdf:ID="refersTo">
-    <rdfs:range rdf:resource="#Movie"/>
+    >plays character</rdfs:label>
+    <rdfs:domain rdf:resource="#Person"/>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >refers to</rdfs:label>
-    <owl:inverseOf>
-      <owl:InverseFunctionalProperty rdf:ID="hasReview"/>
-    </owl:inverseOf>
-    <rdfs:domain rdf:resource="#MovieReview"/>
-  </owl:FunctionalProperty>
-  <owl:FunctionalProperty rdf:ID="writtenByUser">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="#MovieReview"/>
-    <owl:inverseOf>
-      <owl:InverseFunctionalProperty rdf:ID="hasWritten"/>
-    </owl:inverseOf>
-    <rdfs:range rdf:resource="#SMDBUser"/>
-    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >wrtten by user</rdfs:label>
-  </owl:FunctionalProperty>
-  <owl:FunctionalProperty rdf:ID="reviewText">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="#MovieReview"/>
-    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >review text</rdfs:label>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:FunctionalProperty>
-  <owl:FunctionalProperty rdf:ID="posterURL">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="#Movie"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >movie poster URL</rdfs:label>
-  </owl:FunctionalProperty>
-  <owl:FunctionalProperty rdf:ID="email">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="#SMDBUser"/>
-    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >email</rdfs:label>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:FunctionalProperty>
-  <owl:InverseFunctionalProperty rdf:about="#hasWritten">
-    <owl:inverseOf rdf:resource="#writtenByUser"/>
-    <rdfs:range rdf:resource="#MovieReview"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >has written</rdfs:label>
-    <rdfs:domain rdf:resource="#SMDBUser"/>
-  </owl:InverseFunctionalProperty>
-  <owl:InverseFunctionalProperty rdf:about="#hasReview">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="#Movie"/>
-    <owl:inverseOf rdf:resource="#refersTo"/>
-    <rdfs:range rdf:resource="#MovieReview"/>
-    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >has review</rdfs:label>
   </owl:InverseFunctionalProperty>
   <owl:DataRange>
     <owl:oneOf rdf:parseType="Resource">
-      <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-      >NC-17</rdf:first>
       <rdf:rest rdf:parseType="Resource">
+        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >R</rdf:first>
         <rdf:rest rdf:parseType="Resource">
-          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-          >PG-13</rdf:first>
           <rdf:rest rdf:parseType="Resource">
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >PG</rdf:first>
             <rdf:rest rdf:parseType="Resource">
               <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
               <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
               >G</rdf:first>
             </rdf:rest>
-            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-            >PG</rdf:first>
           </rdf:rest>
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >PG-13</rdf:first>
         </rdf:rest>
-        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-        >R</rdf:first>
       </rdf:rest>
+      <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+      >NC-17</rdf:first>
     </owl:oneOf>
   </owl:DataRange>
 </rdf:RDF>
