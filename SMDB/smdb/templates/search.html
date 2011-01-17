@@ -15,6 +15,36 @@
 	<div class="section search-results">
 		<h3 class="context-header"><span>Results</span></h3>
 		
+		<h4>Semantic Results</h4>
+		{% with semantic_list as result_list %}
+			{% for page in result_list %}
+			<div id="page-{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
+				<table class="movie-list">
+					{% for uri, title, label, name in page %}
+						<tr>
+							<td>
+							<a href="{{ uri }}">{{ title }}</a>
+							</td>
+							<td>
+								<span class="note">
+									({{ label }} {{ name }})
+								</span>
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+				<div class="clear-both"></div>
+			</div>
+			{% empty %}
+				<p>No interpretation found.</p>
+				<div class="clear-both"></div>
+			{% endfor %}
+			
+			{% include 'widgets/paging-nav.html' %}
+		{% endwith %}
+		
+		<br /><br />
+		
 		<h4>Movies</h4>
 		{% with movie_list as result_list %}
 		{% with "Movie" as type %}
@@ -80,6 +110,8 @@
 			{% include 'widgets/paging-nav.html' %}
 		{% endwith %}
 		{% endwith %}
+		
+		<br /><br />
 		
 		<h4>Characters</h4>
 		{% with char_list as result_list %}

@@ -23,6 +23,20 @@ xsd=Namespace("http://www.w3.org/2001/XMLSchema#")
 rdfs=Namespace("http://www.w3.org/2000/01/rdf-schema#")
 owls=Namespace("http://www.w3.org/2002/07/owl#")
 
+term_1 = "person"
+
+query = """SELECT DISTINCT ?u WHERE{
+		?u rdf:type ?p .
+		?u rdfs:label ?l .
+		FILTER ( regex(str(?p), "class", "i") ).
+		FILTER ( regex(str(?l), "%s", "i") ).
+		}"""%term_1
+
+results = s.graph.query(query, initNs = initNs)
+
+for res in results:
+	print res
+
 # for a, b, c in s.graph.query('SELECT ?a ?b ?c WHERE { ?a smdb:wrote ?c . }', initNs=initNs):
 # 	print a, "\n WROTE \n", c, '\n'
 # 
@@ -204,5 +218,5 @@ owls=Namespace("http://www.w3.org/2002/07/owl#")
 # 	
 # print '--- Processed', c, 'Directors ---'
 
-s.exportData()
+#s.exportData()
 

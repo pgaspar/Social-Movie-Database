@@ -95,7 +95,13 @@ def person_suggestions(uri):
 	#for result in sortedResults[:5]:
 	#	print results
 	
-	return sortedResults[:5]
+	res = sortedResults[:5]
+	
+	for r in res:
+		if r[1] == 0:
+			res.remove(r)
+	
+	return res
 
 
 def movies_of_the_year():

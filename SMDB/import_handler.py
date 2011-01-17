@@ -60,6 +60,7 @@ class SMDB():
 		uriMovie = self.movie[slugify(movie) + '/']
 		
 		self.graph.add((uriActor, self.smdb['performedIn'], uriMovie))
+		self.graph.add((uriMovie, self.smdb['featured'], uriActor))
 		
 		self.graph.commit()
 	
@@ -69,6 +70,7 @@ class SMDB():
 		uriMovie = self.movie[slugify(movie) + '/']
 		
 		self.graph.add((uriDirector, self.smdb['directed'], uriMovie))
+		self.graph.add((uriMovie, self.smdb['directedBy'], uriDirector))
 		
 		self.graph.commit()
 		
@@ -78,6 +80,7 @@ class SMDB():
 		uriMovie = self.movie[slugify(movie) + '/']
 
 		self.graph.add((uriWriter, self.smdb['wrote'], uriMovie))
+		self.graph.add((uriMovie, self.smdb['writtenBy'], uriWriter))
 
 		self.graph.commit()
 

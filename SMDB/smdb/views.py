@@ -83,10 +83,6 @@ def add_review(request, movieURI):
 def index(request):
 	context = {}
 	
-	#TEMP - remove after
-	#searcher = Search(graph)
-	#searcher.semanticSearch("movies directed by Quentin Tarantino")
-	
 	# Fetch the Movies of the Year section
 	context['movies_of_the_year'] = suggestion.movies_of_the_year()
 	
@@ -192,6 +188,7 @@ def search(request):
 	
 	searcher = Search(graph)
 	
+	semanticResults = searcher.semanticSearch(searchString)
 	(movies, people, chars)  = searcher.keywordSearch(searchString)
 	
-	return render(request, 'search.html', {'movie_list': split_array(movies, settings.ITEMS_PER_PAGE), 'person_list': split_array(people, settings.ITEMS_PER_PAGE), 'char_list': split_array(chars, settings.ITEMS_PER_PAGE)})
+	return render(request, 'search.html', {'semantic_list': split_array(semanticResults, settings.ITEMS_PER_PAGE),'movie_list': split_array(movies, settings.ITEMS_PER_PAGE), 'person_list': split_array(people, settings.ITEMS_PER_PAGE), 'char_list': split_array(chars, settings.ITEMS_PER_PAGE)})

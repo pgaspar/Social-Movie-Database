@@ -21,7 +21,7 @@ class Search:
 	def keywordSearch(self, keyword):
 		
 		print '[Searching Movies]'
-		movieList = self.movieSearch(keyword)
+		movieList = self.movieSearch(keyword.replace(" ",".*?"))
 		print '[Found %d movies]'%len(movieList)
 		
 		filtered = keyword
@@ -29,25 +29,28 @@ class Search:
 		for word in stopwords:
 			filtered = filtered.replace(word, "")
 		
-		print '[Searching People]'
-		personList = self.personSearch(filtered)
+		filtered = filtered.strip()
+		
+		print '[Searching People] '  + filtered
+		personList = self.personSearch(filtered.replace(" ",".*?"))
 		print '[Found %d people]'%len(personList)
 		
 		print '[Searching Characters]'
-		charList = self.characterSearch(keyword)
+		charList = self.characterSearch(keyword.replace(" ",".*?"))
 		print '[Found %d characters]'%len(charList)
 		
 		if(movieList and not personList):
 			print '[No people found, searching based on movies]'
-			personList = self.personSearch(None, keyword)
+			personList = self.personSearch(None, keyword.replace(" ",".*?"))
 		
 		if(movieList and not charList):
 			print '[No characters found, searching based on movies]'
-			charList = self.characterSearch(None, keyword)	
+			charList = self.characterSearch(None, keyword.replace(" ",".*?"))	
 		
 		if(not movieList and (personList or charList)):
 			print '[No movies found, searching based on people]'
-			movieList = self.movieSearch(None, keyword)
+			movieList = self.movieSearch(None, filtered.replace(" ",".*?"))
+		
 		
 		return (movieList, personList, charList)
 				
@@ -223,11 +226,11 @@ class Search:
 	
 	def semanticSearch(self, sentence):
 		
-		stopwords = ['the','in', 'on', 'by', 'is', 'of']
+		stopwords = ['the','in', 'on', 'by', 'is', 'of', 'has']
 		
 		sentence = sentence.lower()
 		
-		stemmer = stem.porter.PorterStemmer()
+		#TODO : aplly some kind of symNet
 		
 		#Split the sentence up in words
 		words = word_tokenize(sentence)
@@ -236,65 +239,104 @@ class Search:
 		if len(words) <= 1:
 			return None
 		
-		#Tag to identify triples
-		tagged = pos_tag(words)
-		tagged2 = deepcopy(tagged)
+		(subjects, verbs, obj) =  self.getSearchElements(words)
 		
-		subject = ""
-		verb = ""
-		obj = ""
+		print str(subjects) + ":::" + str(verbs) + ":::" + str(obj)
 		
-		#One of the options, based on the tags, second option follows
-		while not tagged[0][1].startswith('V'):
-			subject += stemmer.stem(tagged.pop(0)[0]) + " "
-		subject = subject.strip()
+		if not obj:
+			return []
+			
+		obj = ".*?".join(obj)
 		
-		while tagged[0][1].startswith('V'):
-			verb += stemmer.stem(tagged.pop(0)[0]) + " "
-		verb = verb.strip()
+		if not subjects: subjects = ["stub"]
 		
-		if verb != "":
-			for tag in tagged:
-				obj += tag[0] + " "
-			obj = obj.strip()
-		else:
-			subject = stemmer.stem(words[0])
-			obj = " ".join(words[1:])
+		results = []
 		
-		print subject + ":::" + verb + ":::" + obj
-		
-		query = """SELECT DISTINCT ?s ?n ?v ?o WHERE{
-					?s ?v ?uri .
-					?s rdfs:label ?n.
-					OPTIONAL {?uri rdfs:label ?o .} .
-					OPTIONAL {?uri rdfs:name ?o } .
-					OPTIONAL {?uri rdfs:title ?o } .
-				"""
-		
-		if subject:
-			query += """FILTER( regex(str(?n), "%s", "i") ) .
-					"""%(subject)
-					
-		if verb:
-			query += """?v rdfs:label ?prop .
-						FILTER( regex(str(?prop), "%s", "i") ) .
-					"""%(verb)
-					
-		query += """FILTER( regex(str(?o), "%s", "i") ) .
-					}
-				"""%(obj)
-		
-		results = self.graph.query(query)
-		
-		print len(results)
-		
-		if not results and (len(words) >=3) :
-			#Second option, taking only first arg as subject, second arg as verb
-			subject = stemmer.stem(tagged2.pop(0)[0])
-			verb = stemmer.stem(tagged2.pop(0)[0])
-			rest = [tag[0] for tag in tagged2]
-			obj = " ".join(rest)
-		
-			print subject + ":::" + verb + ":::" + obj
-		
+		for verb in verbs:
+			for subject in subjects:
+				query = """SELECT DISTINCT ?u ?n ?lprop ?obj ?lobj WHERE {
+							?u <%s> ?obj .
+							<%s> rdfs:label ?lprop .
+							"""%(verb,verb)
+							
+				if(subject != 'stub'):
+					query += '?u rdf:type <%s> .\n'%subject
+							
+				query += """	OPTIONAL { ?obj smdb:title ?lobj } .
+								OPTIONAL { ?obj smdb:name ?lobj } .
+								OPTIONAL { ?u smdb:title ?n } .
+								OPTIONAL { ?u smdb:name ?n } . 
+								FILTER ( regex( str(?obj), "%s", "i") ) .}""" %obj
+				
+				res = self.graph.query(query)
+				
+				
+				for r in res:
+					if not r[0]:
+						continue
+					if r[4]:
+						results.append((r[0],r[1],r[2],r[4]))
+					else:
+						results.append((r[0],r[1],r[2],r[3]))
+	
 		return results
+	
+	def getSearchElements(self, words):
+		
+		stemmer = stem.porter.PorterStemmer()
+		
+		
+		term_1 = self.translateSpecialCases(words[0])
+		term_1 = stemmer.stem(term_1)
+		
+		term_2 = self.translateSpecialCases(words[1])
+		term_2 = stemmer.stem(term_2)
+		
+		query = """SELECT DISTINCT ?u WHERE{
+				?u rdf:type ?p .
+				?u rdfs:label ?l .
+				FILTER ( regex(str(?p), "%s", "i") ).
+				FILTER ( regex(str(?l), "%s", "i") ).
+				}"""
+		
+		queryClass = query%("class", term_1)
+		
+		classes = self.graph.query(queryClass)
+		
+		if not classes:
+			queryProp = query%("property", term_1)
+			
+			props = self.graph.query(queryProp)
+			
+			if props:
+				return (None, props, words[1:])
+			else:
+				return (None, None, None)
+				
+		else:
+			if len(words) == 2: return (None, None, None)
+			
+			queryProp = query%("property", term_2)
+			
+			props = self.graph.query(queryProp)
+			
+			if props:
+				return (classes, props, words[2:])
+			else:
+				return (None, None, None)
+	
+	
+	def translateSpecialCases(self, word):
+		specialCases = {"director" : "directed",
+						"writer" : "wrote",
+						"acted" : "performed",
+						"actor" : "performed",
+						"actress" : "performed",
+						"date" : "released",
+						"location" : "shot",
+						"who" : "person"}
+						
+		if word in specialCases.keys():
+			return specialCases[word]
+		else:
+			return word
