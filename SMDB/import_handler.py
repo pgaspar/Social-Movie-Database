@@ -92,7 +92,9 @@ class SMDB():
 
 		self.graph.add((uriCharacter, RDF.type, self.smdb['Character']))
 		self.graph.add((uriCharacter, self.smdb['name'], Literal(character)))
+		
 		self.graph.add((uriCharacter, self.smdb['portrayedBy'], uriActor))
+		self.graph.add((uriActor, self.smdb['playsCharacter'], uriCharacter))
 		
 		self.graph.add((uriCharacter, self.smdb['inMovie'], uriMovie))
 			

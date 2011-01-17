@@ -4,6 +4,7 @@
 
 {% block content %}
 	<div about="{{ movie.uri }}" typeof="smdb:Movie">
+	
 	<h2>
 		<span property="smdb:title">{{ movie.title }}</span> <span class="smaller">({{ movie.releaseDate }})</span>
 		
@@ -44,9 +45,9 @@
 			
 			{% for actor, character in movie.get_actor_character %}
 				
-				<tr >
-					<td><a rel="smdb:featured" href="{{ actor.get_absolute_url }}"><span rel="smdb:playsCharacter" resource="{{character.uri}}">{{ actor.name }}</span></a></td>
-					<td><a rev="smdb:inMovie" href="{{ character.get_absolute_url }}" class="not-bold"><span rel="smdb:portrayedBy" resource="{{actor.uri}}">{{ character.name }}</span></a></td>
+				<tr>
+					<td><a rel="smdb:featured" href="{{ actor.get_absolute_url }}">{{ actor.name }}</a></td>
+					<td><a rev="smdb:inMovie" href="{{ character.get_absolute_url }}" class="not-bold">{{ character.name }}</a></td>
 				</tr>
 				
 			{% empty %}
@@ -106,19 +107,11 @@
 		<h3 class="context-header"><span>Related Movies</span></h3>
 	
 		<table class="movie-gallery">
-			<tr>
-				{% for uri, title, score in suggestions %}
-					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}images/movie-default.png" alt="Poster" /></a></td>
-				{% endfor %}
-			</tr>
-		
-			<tr>
-				{% for uri, title, score in suggestions %}
-					<td><a href="{{ uri }}" title="Score: {{score}}">{{ title }}</a></td>
-				{% endfor %}
-			</tr>
-		
+			{% with suggestions as movie_list %}
+				{% include 'widgets/movie-gallery.html' %}
+			{% endwith %}
 		</table>
 	</div>
+	
 	</div>
 {% endblock %}

@@ -3,16 +3,17 @@
 {% load model_helpers %}
 
 {% block content %}
-	<h2>{{ person.name }}</h2>
+	<div about="{{ person.uri }}" typeof="smdb:Person">
+	
+	<h2 property="smdb:name">{{ person.name }}</h2>
 	
 	<div class="description">
 		<p>{{ person|getOccupations|safe }}</p>
 		<br />
 		<p>
 			<b class="label">Biography:</b><br />
-			<span class="text-box">{{ person.biography }}</span>
+			<span class="text-box" property="smdb:biography">{{ person.biography }}</span>
 		</p>
-		<p><b class="label">Date of Birth:</b> {{ person.dateOfBirth|date:"F d, Y" }}</p>
 	</div>
 	
 	{% if person.directed %}
@@ -21,10 +22,11 @@
 		
 		<table class="movie-list">
 			
-			{% for movie in person.directed %}
-				{% include 'widgets/movie-list.html' %}
-			{% endfor %}
-			
+			{% with "smdb:directed" as rel %}
+				{% for movie in person.directed %}
+					{% include 'widgets/movie-list.html' %}
+				{% endfor %}
+			{% endwith %}
 		</table>
 	</div>
 	{% endif %}
@@ -35,9 +37,11 @@
 		
 		<table class="movie-list">
 			
-			{% for movie in person.wrote %}
-				{% include 'widgets/movie-list.html' %}
-			{% endfor %}
+			{% with "smdb:wrote" as rel %}
+				{% for movie in person.wrote %}
+					{% include 'widgets/movie-list.html' %}
+				{% endfor %}
+			{% endwith %}
 			
 		</table>
 	</div>
@@ -48,9 +52,14 @@
 		<h3 class="context-header"><span>Performed in</span></h3>
 		
 		<table class="movie-list">
-			{% for movie in person.performedIn %}
-				{% include 'widgets/movie-list.html' %}
+			
+			{% for movie, character in person.get_movie_characters %}
+			<tr>
+				<td><a rel="smdb:performedIn" href="{{ movie.get_absolute_url }}">{{ movie.title }}</a> as <a rel="smdb:playsCharacter" href="{{ character.get_absolute_url }}" class="not-bold">{{ character.name }}</a></td>
+				<td>{{ movie.releaseDate }}</td>
+			</tr>
 			{% endfor %}
+			
 		</table>
 	</div>
 	{% endif %}
@@ -59,19 +68,12 @@
 		<h3 class="context-header"><span>Related People</span></h3>
 	
 		<table class="movie-gallery">
-			<tr>
-				{% for uri, name, score in suggestions %}
-					<td><a href="{{ uri }}"><img src="{{MEDIA_URL}}/images/movie-default.png" /></a></td>
-				{% endfor %}
-			</tr>
-		
-			<tr>
-				{% for uri, name, score in suggestions %}
-					<td><a href="{{ uri }}" alt="Score: {{score}}" title="Score: {{score}}">{{ name }}</a></td>
-				{% endfor %}
-			</tr>
-		
+			{% with suggestions as movie_list %}
+				{% include 'widgets/movie-gallery.html' %}
+			{% endwith %}
 		</table>
+	</div>
+	
 	</div>
 	
 {% endblock %}
