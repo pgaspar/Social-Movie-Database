@@ -102,10 +102,12 @@ class Search:
 				prev.pop(3)
 				distinctPeople.append(prev)
 				
-			
+			sortedPeople = sorted(distinctPeople, key = lambda pair : len(pair[2]), reverse = True )
 			#print distinctMovies
+			if not sortedPeople:
+				sortedPeople = []
 			
-			return distinctPeople
+			return sortedPeople
 			
 		else:
 			return people
@@ -157,9 +159,12 @@ class Search:
 				distinctChars.append(prev)
 				
 			
+			sortedChars = sorted(distinctChars, key = lambda pair : len(pair[2]), reverse = True )
 			#print distinctMovies
+			if not sortedChars:
+				sortedChars = []
 			
-			return distinctChars
+			return sortedChars
 			
 		else:
 			return chars
@@ -216,9 +221,12 @@ class Search:
 				distinctMovies.append(prev)
 				
 			
+			sortedMovies = sorted(distinctMovies, key = lambda pair : len(pair[3]), reverse = True )
 			#print distinctMovies
-			
-			return distinctMovies
+			if not sortedMovies:
+				sortedMovies = []
+
+			return sortedMovies
 			
 		else:
 			return movies
@@ -237,7 +245,7 @@ class Search:
 		words = [word for word in words if word not in stopwords]
 		
 		if len(words) <= 1:
-			return None
+			return []
 		
 		(subjects, verbs, obj) =  self.getSearchElements(words)
 		
