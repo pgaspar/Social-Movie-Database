@@ -56,7 +56,7 @@ def browse_people(occupations):
 	return [f, res]
 	
 def browse_users(filters, user):
-	userUri = URIRef(user.get_profile().uri)
+	userUri = URIRef(user.get_profile().uri) if user.is_authenticated() else ''
 	
 	initBindings = {}
 	
