@@ -7,14 +7,14 @@
 	
 	<div class="description">
 		<form method="get" action="#">
-			<label for="id_find">Looking for:</label> <input type="text" name="find" id="id_find">
+			<label for="id_find">Looking for:</label> <input type="text" name="find" id="id_find" value="{{ search_term }}">
 			<input type="submit" value="Find">
 		</form>
 	</div>
 	
 	<div class="section search-results">
 		<h3 class="context-header"><span>Results</span></h3>
-		
+		<br />
 		<h4>Semantic Results</h4>
 		{% with semantic_list as result_list %}
 			{% for page in result_list %}

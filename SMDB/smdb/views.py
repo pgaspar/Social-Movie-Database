@@ -191,4 +191,4 @@ def search(request):
 	semanticResults = searcher.semanticSearch(searchString)
 	(movies, people, chars)  = searcher.keywordSearch(searchString)
 	
-	return render(request, 'search.html', {'semantic_list': split_array(semanticResults, settings.ITEMS_PER_PAGE),'movie_list': split_array(movies, settings.ITEMS_PER_PAGE), 'person_list': split_array(people, settings.ITEMS_PER_PAGE), 'char_list': split_array(chars, settings.ITEMS_PER_PAGE)})
+	return render(request, 'search.html', {'search_term': searchString, 'semantic_list': split_array(semanticResults, settings.ITEMS_PER_PAGE),'movie_list': split_array(movies, settings.ITEMS_PER_PAGE), 'person_list': split_array(people, settings.ITEMS_PER_PAGE), 'char_list': split_array(chars, settings.ITEMS_PER_PAGE)})
