@@ -199,7 +199,9 @@ class Person(BaseModel):
 						?u rdf:type smdb:Person .
 						?u smdb:name ?n .
 					}""", initBindings={'u': self.uri})
-					
+		
+		if self.name == None: raise TypeError
+		
 		self.dynamic = {
 			'directed': None,
 			'wrote': None,
@@ -255,6 +257,7 @@ class Character(BaseModel):
 						?u smdb:name ?n .
 					}""", initBindings={'u': self.uri})
 					
+		if self.name == None: raise TypeError
 		
 		self.dynamic = {
 			'portrayedBy': None,
