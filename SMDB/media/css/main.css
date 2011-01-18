@@ -125,7 +125,7 @@ h1#header-title a {
 
 #search {
 	position: absolute; 
-	top: 20px; 
+	top: 15px; 
 	right: 80px; 
 	z-index: 598;
 }
@@ -134,7 +134,9 @@ h1#header-title a {
 	color: #AAAAAA; 
 	border-color:#006EA4; 
 	border-style:solid; 
-	border-width:1px; 
+	border-width:1px;
+	padding: 5px;
+	font-size: 16px;
 }
 
 /*** ACTIVITY STREAM ***/

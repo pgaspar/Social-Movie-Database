@@ -74,6 +74,7 @@ class Search:
 		
 		#print query
 		
+		
 		people = self.graph.query(query + '} ORDER BY ?a')
 		
 		
